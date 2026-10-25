@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sistema experto educativo para explorar condiciones en acuaponía de tilapia y lechuga.">
+  <title>Acuaponía · Laboratorio académico</title>
+  <link rel="stylesheet" href="/academico.css">
+  <script src="/academico.js" defer></script>
+</head>
+<body>
+<a href="#main" class="skip">Saltar al contenido</a>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Volver a la consulta guiada"><span class="brand-icon">≈</span><span>acuaponía<small>SISTEMA EXPERTO</small></span></a>
+  <div class="sidebar-label">ESPACIO DE ANÁLISIS</div>
+  <nav aria-label="Secciones">
+    <button class="nav active" data-view="consult" aria-current="page"><span>01</span> Consulta</button>
+    <button class="nav" data-view="knowledge"><span>02</span> Base de conocimientos</button>
+    <button class="nav" data-view="ejemplos"><span>03</span> Casos de ejemplo</button>
+    <button class="nav" data-view="about"><span>04</span> Acerca del sistema</button>
+  </nav>
+  <div class="ecosystem" aria-hidden="true"><div class="planta">♧</div><div class="agua">≈ ≈ ≈</div><div class="peces">><(((°></div><div class="ecosystem-label">PECES · BACTERIAS · PLANTAS</div></div>
+  <div class="sidebar-footer"><span class="status-dot"></span> Entorno educativo local<small>Tilapia del Nilo + lechuga</small></div>
+</aside>
+<main id="main">
+  <header class="topbar"><span>Laboratorio de acuaponía <span class="slash">/</span> <strong id="breadcrumb">Consulta</strong></span><span class="version">PROTOTIPO ACADÉMICO</span></header>
+  <div id="error" role="alert" hidden></div>
+  <section id="consult" class="view">
+    <div class="page-heading"><div><p class="eyebrow">OBSERVAR · RAZONAR · VERIFICAR</p><h1>Laboratorio académico</h1><p class="lead">Herramientas de evaluación del motor y consulta de las reglas. <a href="/">Volver a la consulta guiada</a></p></div><button id="reset" class="button secondary">↻ Nueva consulta</button></div>
+    <div class="notice"><span class="notice-icon">i</span><p><strong>Una guía para aprender.</strong> Trabaja con un escenario simulado. Las hipótesis no son diagnósticos y las recomendaciones son verificaciones, no tratamientos.</p></div>
+    <div class="metrics"><div><span id="answered-count">0 / 45</span><small>Preguntas respondidas</small></div><div><span id="resultado-count">0</span><small>Resultados sustentados</small></div><div><span id="regla-count">0</span><small>Reglas activadas</small></div><div><span>V · F · D</span><small>Sí · No · Desconozco</small></div></div>
+    <div class="workspace">
+      <div class="consult-column">
+        <section class="tarjeta settings"><div class="section-top"><h2>Configura la consulta</h2><span class="step">01</span></div>
+          <fieldset class="modo-picker"><legend>Mecanismo de inferencia</legend><label><input type="radio" name="modo" value="adelante" checked><span><strong>Hacia adelante</strong><small>De los hechos a los resultados</small></span></label><label><input type="radio" name="modo" value="atras"><span><strong>Hacia atrás</strong><small>De una meta a sus premisas</small></span></label></fieldset>
+          <label class="field-label" for="objetivo">Objetivo para investigar o comparar</label><select id="objetivo"></select>
+          <p id="modo-ayuda" class="muted">Se buscarán todas las conclusiones que permitan tus respuestas.</p>
+        </section>
+        <section class="tarjeta pregunta-tarjeta"><div class="section-top"><h2>Observación guiada</h2><span class="step">02</span></div><div id="pregunta-content"><p>Cargando base de conocimientos…</p></div></section>
+        <details class="tarjeta hechos-panel"><summary>Revisar o capturar respuestas <span id="hechos-count">0</span></summary><p class="muted">Todas las respuestas de una consulta deben corresponder a la misma muestra o período. Puedes corregirlas aquí.</p><label class="field-label" for="categoria">Filtrar por categoría</label><select id="categoria"><option value="">Todas las categorías</option></select><div id="hechos-list"></div></details>
+      </div>
+      <div class="resultados-column">
+        <section class="tarjeta resultados-tarjeta"><div class="section-top"><h2>Lectura del sistema</h2><span class="live-badge">ACTUALIZACIÓN POR RESPUESTA</span></div><div id="conflictos" role="status"></div><div id="objetivo-estado"></div><div id="resultados" aria-live="polite"><div class="empty"><span class="empty-icon">◎</span><h3>El análisis comienza contigo</h3><p>Responde una observación o carga un caso de ejemplo. Aquí verás las condiciones y verificaciones sustentadas.</p></div></div><div class="resultado-actions"><button id="compare" class="button secondary">Comparar mecanismos</button><button id="export" class="button texto-button">↓ Exportar consulta</button></div><div id="comparacion" aria-live="polite" hidden></div></section>
+        <details class="tarjeta traza-panel"><summary>Traza del razonamiento <span id="traza-count">0</span></summary><p class="muted">Secuencia de reglas, premisas y fuentes que sostienen los resultados de esta consulta.</p><div id="traza"></div></details>
+      </div>
+    </div>
+  </section>
+  <section id="knowledge" class="view" hidden><p class="eyebrow">CONOCIMIENTO TRAZABLE</p><h1>Una base que puedes explicar.</h1><p class="lead">45 preguntas · 51 reglas · 36 conclusiones · 15 verificaciones</p><label for="regla-buscar" class="field-label">Buscar reglas por identificador, condición o fuente</label><input id="regla-buscar" type="search" placeholder="Por ejemplo: R33, Q02, oxígeno, F03"><div id="reglas-list" class="regla-grid"></div><h2>Fuentes registradas</h2><p class="muted">Referencias tomadas del documento de diseño. La bibliografía completa y su cotejo documental quedan pendientes.</p><div id="fuentes-list"></div></section>
+  <section id="ejemplos" class="view" hidden><p class="eyebrow">APRENDE EXPLORANDO</p><h1>Un caso, varias formas de razonar.</h1><p class="lead">Escenarios simulados con respuestas y resultados esperados. Cargar un caso reemplaza la consulta actual.</p><div id="ejemplos-list" class="example-grid"></div></section>
+  <section id="about" class="view" hidden><p class="eyebrow">ALCANCE DEL PROTOTIPO</p><h1>Conocimiento explícito.<br>Resultados que se pueden seguir.</h1><div class="about-grid"><article class="tarjeta"><h2>Qué puedes explorar</h2><p>Calidad del agua, comportamiento de tilapia, desarrollo de lechuga, circulación, aireación y biofiltración en escenarios de pequeña escala.</p><p>El sistema usa respuestas Sí (V), No (F) y Desconozco (D). Una respuesta desconocida nunca se interpreta como negativa.</p></article><article class="tarjeta"><h2>Cómo razona</h2><p>Python evalúa las reglas editables con lógica trivaluada de Kleene fuerte. Hacia adelante acumula resultados; hacia atrás busca las premisas necesarias para una meta.</p><p>Las reglas se consideran en orden de identificador. Se conservan las justificaciones compatibles y se detienen las derivaciones afectadas por contradicciones.</p></article><article class="tarjeta"><h2>Lo que queda fuera</h2><p>No conecta sensores, controla equipos, prescribe sustancias ni establece diagnósticos veterinarios o causas definitivas de mortalidad. No calcula probabilidades ni ha sido validado en instalaciones reales.</p></article><article class="tarjeta"><h2>Tus respuestas</h2><p>La consulta vive en la memoria de esta pestaña y se envía al servidor local para calcular resultados. No se guarda en una base de datos ni en almacenamiento del navegador. Reiniciar o recargar elimina la consulta.</p><p>La exportación es voluntaria y descarga un archivo JSON.</p></article></div></section>
+  <footer>Proyecto Integrador 2 <span>Inteligencia Artificial I · Sistema experto basado en reglas</span></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "nota": "Política de navegación: los temas delimitan qué investigar, no añaden reglas de diagnóstico ni probabilidades. Elegir un síntoma es una observación explícita que puede corregirse.",
+  "temas": [
+    {
+      "id": "peces",
+      "titulo": "Los peces boquean",
+      "descripcion": "Suben a la superficie buscando aire.",
+      "icono": "peces",
+      "hechos": {
+        "Q16": "V"
+      },
+      "metas": [
+        "C27",
+        "C18",
+        "C08",
+        "C09"
+      ]
+    },
+    {
+      "id": "plantas",
+      "titulo": "Las hojas están amarillas",
+      "descripcion": "Notas un cambio en las lechugas.",
+      "icono": "planta",
+      "hechos": {
+        "Q34": "V"
+      },
+      "metas": [
+        "C30",
+        "C23",
+        "C24"
+      ]
+    },
+    {
+      "id": "circulacion",
+      "titulo": "El agua no circula",
+      "descripcion": "No hay flujo en la salida habitual.",
+      "icono": "agua",
+      "hechos": {
+        "Q25": "F"
+      },
+      "metas": [
+        "C31",
+        "C32",
+        "C33",
+        "C17"
+      ]
+    },
+    {
+      "id": "explorar",
+      "titulo": "Quiero revisar otro problema",
+      "descripcion": "Te ayudamos a explorar lo que observas.",
+      "icono": "buscar",
+      "hechos": {},
+      "metas": [
+        "C12",
+        "C11",
+        "C14",
+        "C21",
+        "C16",
+        "C19",
+        "C20"
+      ]
+    }
+  ],
+  "seguimientos": [
+    {
+      "cuando": "C11",
+      "metas": [
+        "C27",
+        "C18",
+        "C08",
+        "C09"
+      ]
+    },
+    {
+      "cuando": "C12",
+      "metas": [
+        "C13",
+        "C27",
+        "C08",
+        "C09"
+      ]
+    },
+    {
+      "cuando": "C14",
+      "metas": [
+        "C28",
+        "C35"
+      ]
+    },
+    {
+      "cuando": "C21",
+      "metas": [
+        "C30",
+        "C23",
+        "C24"
+      ]
+    },
+    {
+      "cuando": "C16",
+      "metas": [
+        "C31",
+        "C32",
+        "C33",
+        "C17"
+      ]
+    }
+  ]
+}

@@ -1,26 +1,35 @@
-# Secretos y configuración local. Publicar solo plantillas sin datos reales.
+# Se conservan sistema/, interfaz/, conocimientos/, documentacion/, pruebas/
+# y los archivos necesarios para instalar, ejecutar y entender el proyecto.
+
+# Secretos y configuración local. Las plantillas deben contener solo ejemplos.
 .env
 .env.*
 !.env.example
 !.env.sample
 !.env.template
+!.env.ejemplo
 *.pem
 *.key
 *.p12
 *.pfx
 credentials.json
 credentials.*.json
-secrets.json
+credenciales.json
+credenciales.*.json
 secrets.*
+secretos.*
 service-account*.json
+service_account*.json
 client_secret*.json
+secrets/
+secretos/
+credentials/
+credenciales/
 .aws/
 .azure/
 .ssh/
-secrets/
-credentials/
 
-# Archivos locales de ChatGPT, Codex y otros asistentes.
+# Datos locales de ChatGPT, Codex y otros asistentes.
 .codex/
 .agents/
 .chatgpt/
@@ -31,7 +40,7 @@ ChatGPT/
 .cursor/
 .aider*
 
-# Entornos, dependencias y cachés (conservar manifiestos y lockfiles).
+# Entornos, dependencias y cachés. No se ignoran manifiestos ni lockfiles.
 .venv/
 venv/
 env/
@@ -46,11 +55,9 @@ __pycache__/
 .ipynb_checkpoints/
 node_modules/
 .npm/
-.next/
-.nuxt/
 .cache/
 
-# Compilaciones, reportes y archivos temporales.
+# Compilaciones y reportes de pruebas.
 /build/
 /dist/
 /htmlcov/
@@ -60,54 +67,52 @@ coverage/
 coverage.xml
 test-results/
 playwright-report/
+reportes_pruebas/
+
+# Archivos temporales, registros y respaldos locales.
 *.log
 logs/
+.tmp/
 tmp/
 temp/
+temporales/
 *.tmp
 *.bak
 *.swp
 *.swo
 ~$*
+/backups/
+/respaldos/
 
-# Estado local de ejecución; conservar datos de ejemplo anonimizados.
-*.sqlite
-*.sqlite3
-*.sqlite-journal
-*.sqlite3-journal
-*.sqlite-wal
-*.sqlite-shm
-*.sqlite3-wal
-*.sqlite3-shm
+# Consultas exportadas por la aplicación, incluidas copias de descargas.
+consulta-acuaponia*.json
+/exportaciones/
+/datos/privados/
+/datos/locales/
 /data/private/
 /data/local/
-/backups/
-/uploads/
 
-# Excluir solo pruebas privadas/locales y datos sensibles de prueba.
-# Las demás pruebas, tests/examples/ y tests/fixtures/ se pueden publicar.
+# Pruebas locales o privadas. Las tres suites públicas sí se versionan.
+/pruebas/privadas/
+/pruebas/locales/
+/pruebas/datos/privados/
 /tests/private/
 /tests/local/
 /tests/fixtures/private/
-/test/private/
-/test/local/
 test_*.local.py
 *.local.test.*
 
-# Preferencias personales del editor y archivos del sistema operativo.
-.idea/
+# Configuración personal del editor y del sistema operativo.
 .vscode/
+.idea/
 .vs/
 .DS_Store
 Thumbs.db
 Desktop.ini
 
-# Documentos de trabajo y bibliografía actuales (no necesarios para ejecutar).
-# Se enumeran para permitir publicar otros PDF/DOCX que sí sean esenciales.
-/Acuaponia.pdf
-/Contenido.docx
-/Ficha de dominio.docx
-/nitrification-and-maintenance-in-media-bed-aquaponics-hla-6729.pdf
-/Producción de alimentos en acuaponía a pequeña escala – Cultivo integral de peces y plantas.pdf
-/Proyecto_2_Sistema_Experto.pdf
-/SUSPRO_2020-2024-Terra+Lat.pdf
+# Bibliografía y documentos originales: no se necesitan para ejecutar.
+/archivos/
+
+# Documentación anterior a la adaptación; la vigente está en documentacion/.
+/docs/
+/GUIA_DE_CAMBIOS.md

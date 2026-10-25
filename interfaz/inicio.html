@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Una consulta guiada para comprender qué ocurre en tu sistema acuapónico."><title>Acuaponía · Consulta guiada</title><link rel="stylesheet" href="/estilos.css"><script src="/aplicacion.js" defer></script></head>
+<body>
+<header><a class="brand" href="/" aria-label="Acuaponía, inicio"><span class="brand-mark">≈</span>acuaponía</a><span class="header-note">Tilapia y lechuga</span></header>
+<main>
+<div id="error" class="error" role="alert" hidden><p id="error-texto"></p><button id="retry">Volver a intentar</button></div>
+<section id="welcome">
+  <p class="eyebrow">OBSERVA. RESPONDE. COMPRENDE.</p>
+  <h1>¿Qué notas en<br>tu sistema?</h1>
+  <p class="intro">Cuéntanos qué ocurre. Te haremos algunas preguntas<br class="wide"> para ayudarte a saber qué revisar.</p>
+  <div id="temas" class="temas"><p>Cargando…</p></div>
+  <p class="quiet">Las preguntas cambian según tus respuestas.<br>Si no tienes un dato, puedes responder «Desconozco».</p>
+</section>
+<section id="consultation" hidden>
+  <div class="consult-top"><button id="reiniciarConsulta" class="texto-button">← Volver al inicio</button><span id="tema-titulo"></span></div>
+  <div id="pregunta-tarjeta" class="pregunta-tarjeta" aria-live="polite"></div>
+  <div id="outcome" hidden aria-live="polite"></div>
+  <details id="history" class="history" hidden><summary>Revisar mis respuestas</summary><p class="small">Usa la misma muestra o período de observación. Puedes corregir una respuesta y volveremos a analizarla.</p><div id="answers-list"></div></details>
+  <details id="technical" class="technical" hidden><summary>Detalle del razonamiento</summary><div id="technical-content"></div></details>
+</section>
+<footer><p>Guía educativa para escenarios simulados. No sustituye una valoración especializada.</p><a href="/academico.html">Material académico</a></footer>
+</main>
+</body></html>

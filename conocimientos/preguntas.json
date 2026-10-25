@@ -1,0 +1,812 @@
+[
+  {
+    "id": "Q01",
+    "simbolo": "oxigeno_menor_2",
+    "texto": "¿El oxígeno disuelto es inferior a 2 mg/L?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar una lectura válida del oxígeno disuelto y compararla con 2 mg/L.",
+      "unidad": "mg/L",
+      "ejemplo_si": "1.5 mg/L",
+      "ejemplo_no": "2.0 mg/L",
+      "advertencia": "Este criterio corresponde a la nitrificación, no a la tolerancia de los peces."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q02",
+    "simbolo": "oxigeno_no_supera_4",
+    "texto": "¿El oxígeno disuelto es igual o inferior a 4 mg/L?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar el oxígeno disuelto del agua y comprobar si no supera 4 mg/L.",
+      "unidad": "mg/L",
+      "ejemplo_si": "4.0 mg/L",
+      "ejemplo_no": "4.5 mg/L",
+      "advertencia": "El valor de referencia se utiliza para tilapia del Nilo; no confirma la causa de un síntoma."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q03",
+    "simbolo": "oxigeno_menor_5",
+    "texto": "¿El oxígeno disuelto es inferior a 5 mg/L?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Comprobar si el oxígeno disuelto está por debajo de 5 mg/L.",
+      "unidad": "mg/L",
+      "ejemplo_si": "4.9 mg/L",
+      "ejemplo_no": "5.0 mg/L",
+      "advertencia": "Es una referencia general de compromiso acuapónico, distinta de la de las bacterias."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q04",
+    "simbolo": "temperatura_menor_17",
+    "texto": "¿La temperatura del agua es inferior a 17 °C?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Medir la temperatura del agua, no la del aire, y compararla con 17 °C.",
+      "unidad": "°C",
+      "ejemplo_si": "16 °C",
+      "ejemplo_no": "17 °C",
+      "advertencia": "La comparación se relaciona con la actividad de bacterias nitrificantes."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q05",
+    "simbolo": "temperatura_mayor_34",
+    "texto": "¿La temperatura del agua supera los 34 °C?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Medir la temperatura del agua y comprobar si excede 34 °C.",
+      "unidad": "°C",
+      "ejemplo_si": "35 °C",
+      "ejemplo_no": "34 °C",
+      "advertencia": "El intervalo procede de referencias para nitrificación, no de mortalidad de tilapia."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q06",
+    "simbolo": "temperatura_menor_25",
+    "texto": "¿La temperatura del agua es inferior a 25 °C?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar la temperatura del agua y comprobar si es inferior a 25 °C.",
+      "unidad": "°C",
+      "ejemplo_si": "24 °C",
+      "ejemplo_no": "25 °C",
+      "advertencia": "Se analiza respecto a un intervalo de crecimiento de tilapia, no de supervivencia."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q07",
+    "simbolo": "temperatura_mayor_30",
+    "texto": "¿La temperatura del agua supera los 30 °C?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Comprobar si la temperatura del agua excede 30 °C.",
+      "unidad": "°C",
+      "ejemplo_si": "31 °C",
+      "ejemplo_no": "30 °C",
+      "advertencia": "Estar fuera del intervalo de crecimiento no implica automáticamente enfermedad."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q08",
+    "simbolo": "ph_menor_6",
+    "texto": "¿El pH del agua es inferior a 6?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar el medidor de pH y comparar la lectura con 6.",
+      "unidad": "pH",
+      "ejemplo_si": "5.8",
+      "ejemplo_no": "6.0",
+      "advertencia": "La referencia corresponde a tolerancia de bacterias nitrificantes."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q09",
+    "simbolo": "ph_mayor_7",
+    "texto": "¿El pH del agua es superior a 7?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar el medidor de pH y determinar si supera 7.",
+      "unidad": "pH",
+      "ejemplo_si": "7.1",
+      "ejemplo_no": "7.0",
+      "advertencia": "Esta clasificación no significa necesariamente que exista una condición peligrosa."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q10",
+    "simbolo": "ph_mayor_8_5",
+    "texto": "¿El pH del agua supera 8.5?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Comprobar si la lectura de pH es superior a 8.5.",
+      "unidad": "pH",
+      "ejemplo_si": "8.6",
+      "ejemplo_no": "8.5",
+      "advertencia": "La referencia corresponde a tolerancia bacteriana."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q11",
+    "simbolo": "tan_supera_025ppm",
+    "texto": "¿El resultado del análisis de nitrógeno amoniacal total (TAN) supera 0.25 ppm?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar el análisis de nitrógeno amoniacal total (TAN) e identificar la unidad reportada.",
+      "unidad": "ppm TAN",
+      "ejemplo_si": "0.30 ppm TAN",
+      "ejemplo_no": "0.20 ppm TAN",
+      "advertencia": "No comparar amoníaco libre y TAN como si fueran la misma medición. Verificar la forma química y la unidad."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q12",
+    "simbolo": "nitrito_no_menor_1",
+    "texto": "¿La concentración del ion nitrito (NO₂⁻) es igual o superior a 1 mg/L?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Consultar el análisis de concentración del ion nitrito NO₂⁻.",
+      "unidad": "mg/L de NO₂⁻",
+      "ejemplo_si": "1.0 mg/L de NO₂⁻",
+      "ejemplo_no": "0.8 mg/L de NO₂⁻",
+      "advertencia": "No confundir NO₂⁻ con nitrito expresado como nitrógeno NO₂-N."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q13",
+    "simbolo": "nitrato_bajo_persistente",
+    "texto": "¿El nitrato permanece por debajo de 10 mg/L durante varias semanas?",
+    "categoria": "Calidad del agua",
+    "ayuda": {
+      "descripcion": "Revisar varias semanas de mediciones comparables de nitrato.",
+      "unidad": "mg/L",
+      "ejemplo_si": "Registros inferiores a 10 mg/L durante varias semanas",
+      "ejemplo_no": "Una única lectura aislada",
+      "advertencia": "La pregunta exige persistencia: una medición aislada no basta."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q14",
+    "simbolo": "peces_muertos",
+    "texto": "¿Se encontró al menos un pez muerto recientemente?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Comprobar si se encontró al menos un pez muerto durante el período evaluado.",
+      "unidad": null,
+      "ejemplo_si": "Se encontró un pez muerto",
+      "ejemplo_no": "No se encontraron peces muertos",
+      "advertencia": "El hallazgo no permite determinar por sí solo la causa."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q15",
+    "simbolo": "varios_peces_muertos",
+    "texto": "¿Se encontraron dos o más peces muertos durante el mismo período de observación?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Contar los peces muertos durante el mismo período de observación.",
+      "unidad": null,
+      "ejemplo_si": "Se encontraron dos peces muertos",
+      "ejemplo_no": "Se encontró uno o ninguno",
+      "advertencia": "Las respuestas Q14 y Q15 deben referirse al mismo período."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q16",
+    "simbolo": "peces_boqueando",
+    "texto": "¿Se observan peces boqueando repetidamente en la superficie?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Observar si hay boqueo repetido en la superficie, distinto de una subida breve al alimentarse.",
+      "unidad": null,
+      "ejemplo_si": "Varios movimientos superficiales persistentes",
+      "ejemplo_no": "Comportamiento normal sin boqueo",
+      "advertencia": "Es un signo que requiere investigar condiciones del agua."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q17",
+    "simbolo": "respiracion_acelerada",
+    "texto": "¿Los peces presentan una frecuencia respiratoria mayor de lo habitual?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Comparar movimientos respiratorios con el comportamiento habitual del mismo lote.",
+      "unidad": null,
+      "ejemplo_si": "Respiración claramente más rápida",
+      "ejemplo_no": "Respiración habitual",
+      "advertencia": "Si no existe una referencia comparable, responder Desconozco."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q18",
+    "simbolo": "peces_se_frotan",
+    "texto": "¿Los peces se frotan repetidamente contra las paredes del tanque?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Observar si los peces rozan repetidamente las paredes del tanque.",
+      "unidad": null,
+      "ejemplo_si": "Roce repetido observable",
+      "ejemplo_no": "No hay roce anormal",
+      "advertencia": "No confirma una enfermedad específica."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q19",
+    "simbolo": "branquias_enrojecidas",
+    "texto": "¿Los peces presentan zonas rojizas anormales alrededor de las branquias?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Observar la región branquial en busca de enrojecimiento anormal visible.",
+      "unidad": null,
+      "ejemplo_si": "Zonas rojizas fuera de lo habitual",
+      "ejemplo_no": "Coloración habitual",
+      "advertencia": "No manipular peces sin necesidad ni interpretar el signo como diagnóstico."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q20",
+    "simbolo": "apetito_reducido",
+    "texto": "¿Los peces han disminuido su consumo habitual de alimento?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Comparar el consumo actual con registros del mismo lote o etapa.",
+      "unidad": null,
+      "ejemplo_si": "Consumen menos que de costumbre",
+      "ejemplo_no": "Mantienen consumo habitual",
+      "advertencia": "La cantidad ofrecida y la cantidad realmente consumida son distintas."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q21",
+    "simbolo": "alimento_sobrante",
+    "texto": "¿Se observa alimento sin consumir después del período habitual de alimentación?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Comprobar si queda alimento después del tiempo habitual de alimentación.",
+      "unidad": null,
+      "ejemplo_si": "Quedan pellets sin consumir",
+      "ejemplo_no": "No quedan restos fuera de lo habitual",
+      "advertencia": "No confundir alimento ofrecido en exceso con menor apetito demostrado."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q22",
+    "simbolo": "crecimiento_peces_reducido",
+    "texto": "¿Se observa una reducción del crecimiento de los peces respecto de registros comparables?",
+    "categoria": "Estado de los peces",
+    "ayuda": {
+      "descripcion": "Comparar biometrías entre fechas y lotes equivalentes.",
+      "unidad": null,
+      "ejemplo_si": "Ganancia de peso inferior a registros comparables",
+      "ejemplo_no": "Crecimiento dentro del registro habitual",
+      "advertencia": "Si no hay registro, responder Desconozco."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q23",
+    "simbolo": "electricidad_disponible",
+    "texto": "¿Existe suministro eléctrico en el sistema?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comprobar el indicador de alimentación eléctrica del sistema.",
+      "unidad": null,
+      "ejemplo_si": "El equipo dispone de suministro",
+      "ejemplo_no": "No hay suministro eléctrico",
+      "advertencia": "No manipular conexiones ni cables energizados."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q24",
+    "simbolo": "bomba_encendida",
+    "texto": "¿La bomba de recirculación está encendida?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comprobar el estado de encendido de la bomba de recirculación.",
+      "unidad": null,
+      "ejemplo_si": "Bomba encendida",
+      "ejemplo_no": "Bomba apagada",
+      "advertencia": "Encendida no garantiza caudal suficiente."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q25",
+    "simbolo": "agua_circula_salida",
+    "texto": "¿Se observa circulación de agua por la salida habitual?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Verificar si sale agua por el punto habitual de retorno.",
+      "unidad": null,
+      "ejemplo_si": "Se observa circulación",
+      "ejemplo_no": "No se observa circulación",
+      "advertencia": "El flujo debe observarse de forma segura."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q26",
+    "simbolo": "flujo_reducido",
+    "texto": "¿El flujo de agua es inferior al valor habitual registrado?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comparar el caudal observado con un registro habitual del mismo sistema.",
+      "unidad": null,
+      "ejemplo_si": "Flujo notablemente menor",
+      "ejemplo_no": "Flujo dentro de la referencia",
+      "advertencia": "Sin referencia comparable, responder Desconozco."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q27",
+    "simbolo": "prefiltro_obstruido",
+    "texto": "¿Se observa una obstrucción en el prefiltro de la bomba?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Inspeccionar visualmente el prefiltro accesible de la bomba.",
+      "unidad": null,
+      "ejemplo_si": "Hay material que obstruye el prefiltro",
+      "ejemplo_no": "Prefiltro sin obstrucción visible",
+      "advertencia": "No abrir equipos ni intervenir bombas energizadas."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q28",
+    "simbolo": "tuberias_obstruidas",
+    "texto": "¿Se observa una obstrucción en las tuberías de recirculación?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comprobar visualmente tuberías accesibles de recirculación.",
+      "unidad": null,
+      "ejemplo_si": "Se observa un bloqueo",
+      "ejemplo_no": "No se observa bloqueo",
+      "advertencia": "No afirmar una obstrucción no visible sin comprobación adicional."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q29",
+    "simbolo": "aireador_encendido",
+    "texto": "¿El equipo de aireación está encendido?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Consultar el estado del aireador o soplador.",
+      "unidad": null,
+      "ejemplo_si": "Equipo encendido",
+      "ejemplo_no": "Equipo apagado",
+      "advertencia": "Estar encendido no demuestra salida efectiva de aire."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q30",
+    "simbolo": "salida_aire_visible",
+    "texto": "¿Se observa salida de aire en el punto de aireación?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Observar el punto habitual de salida de aire.",
+      "unidad": null,
+      "ejemplo_si": "Se ven burbujas donde corresponde",
+      "ejemplo_no": "No se detecta salida de aire",
+      "advertencia": "La observación no sustituye una lectura de oxígeno disuelto."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q31",
+    "simbolo": "fuga_visible",
+    "texto": "¿Se observan fugas de agua en el sistema?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comprobar si el circuito presenta pérdidas de agua visibles.",
+      "unidad": null,
+      "ejemplo_si": "Se observa fuga",
+      "ejemplo_no": "No se observa fuga",
+      "advertencia": "Evitar acercarse a zonas con riesgo eléctrico."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q32",
+    "simbolo": "nivel_agua_bajo",
+    "texto": "¿El nivel del agua del tanque es inferior al nivel habitual de operación?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Comparar la altura del agua con una marca o lectura habitual.",
+      "unidad": null,
+      "ejemplo_si": "Nivel por debajo de la referencia",
+      "ejemplo_no": "Nivel dentro de la referencia",
+      "advertencia": "Usar una referencia definida para el mismo tanque."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q33",
+    "simbolo": "solidos_filtro",
+    "texto": "¿Se observa acumulación anormal de sólidos en el filtro?",
+    "categoria": "Equipos y circulación",
+    "ayuda": {
+      "descripcion": "Observar el filtro en puntos accesibles para comprobar acumulación anormal de residuos.",
+      "unidad": null,
+      "ejemplo_si": "Se observan sólidos acumulados de forma anormal",
+      "ejemplo_no": "No hay acumulación anormal",
+      "advertencia": "No desmontar partes en funcionamiento."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q34",
+    "simbolo": "hojas_amarillas",
+    "texto": "¿Las lechugas presentan amarillamiento anormal de hojas?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Comparar el color de hojas de lechugas de edad semejante.",
+      "unidad": null,
+      "ejemplo_si": "Amarillamiento fuera de lo habitual",
+      "ejemplo_no": "Hojas con color habitual",
+      "advertencia": "No confundir envejecimiento normal con una deficiencia concreta."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q35",
+    "simbolo": "varias_plantas_amarillas",
+    "texto": "¿Se observan hojas amarillentas anormales en dos o más lechugas?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Determinar si la alteración de color aparece en más de una lechuga.",
+      "unidad": null,
+      "ejemplo_si": "Varias plantas afectadas",
+      "ejemplo_no": "Una o ninguna afectada",
+      "advertencia": "La extensión del síntoma no demuestra su causa."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q36",
+    "simbolo": "crecimiento_lechuga_reducido",
+    "texto": "¿El crecimiento de las lechugas es inferior al esperado?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Comparar el tamaño y desarrollo del cultivo con registros de la misma variedad y edad.",
+      "unidad": null,
+      "ejemplo_si": "Crecimiento menor al habitual",
+      "ejemplo_no": "Crecimiento comparable",
+      "advertencia": "Se requiere una referencia apropiada."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q37",
+    "simbolo": "raices_poco_desarrolladas",
+    "texto": "¿Se observa un desarrollo de raíces inferior al esperado?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Observar el crecimiento de las raíces respecto a plantas comparables.",
+      "unidad": null,
+      "ejemplo_si": "Raíces notablemente menos desarrolladas",
+      "ejemplo_no": "Raíces de desarrollo habitual",
+      "advertencia": "Una raíz pequeña no identifica por sí sola la deficiencia."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q38",
+    "simbolo": "pulgones_visibles",
+    "texto": "¿Se observan pulgones sobre las lechugas?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Observar hojas y brotes para reconocer pulgones.",
+      "unidad": null,
+      "ejemplo_si": "Se observan pulgones",
+      "ejemplo_no": "No se observan pulgones",
+      "advertencia": "Si no se pueden reconocer los insectos, responder Desconozco."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q39",
+    "simbolo": "marchitez_visible",
+    "texto": "¿Las lechugas presentan marchitez visible?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Observar si las hojas de lechuga han perdido turgencia.",
+      "unidad": null,
+      "ejemplo_si": "Hojas decaídas o marchitas",
+      "ejemplo_no": "Hojas firmes",
+      "advertencia": "La marchitez puede tener distintas explicaciones."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q40",
+    "simbolo": "agua_verdosa",
+    "texto": "¿El agua del tanque presenta una coloración verde anormal?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Buscar material verdoso anormal visible en el agua o superficies del sistema.",
+      "unidad": null,
+      "ejemplo_si": "Hay material verde anormal",
+      "ejemplo_no": "No hay material verdoso fuera de lo habitual",
+      "advertencia": "El color no confirma por sí mismo el tipo de organismo."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q41",
+    "simbolo": "agua_llega_lechugas",
+    "texto": "¿El agua llega al punto de entrada de la zona de lechugas?",
+    "categoria": "Cultivo vegetal",
+    "ayuda": {
+      "descripcion": "Comprobar que el agua alcanza la zona de cultivo de lechugas.",
+      "unidad": null,
+      "ejemplo_si": "El suministro llega a la zona",
+      "ejemplo_no": "No llega el flujo previsto",
+      "advertencia": "La observación se limita al punto de suministro."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q42",
+    "simbolo": "ciclado_inicial",
+    "texto": "¿El sistema acuapónico se encuentra en su etapa inicial de ciclado?",
+    "categoria": "Biofiltro",
+    "ayuda": {
+      "descripcion": "Consultar el registro de puesta en marcha para saber si el sistema se encuentra en ciclado.",
+      "unidad": null,
+      "ejemplo_si": "Se está estableciendo el biofiltro",
+      "ejemplo_no": "El ciclado ya concluyó",
+      "advertencia": "La duración del ciclado no se deduce solo de una fecha."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q43",
+    "simbolo": "agua_circula_biofiltro",
+    "texto": "¿El agua circula por el biofiltro según la configuración del sistema?",
+    "categoria": "Biofiltro",
+    "ayuda": {
+      "descripcion": "Verificar el flujo de agua por el punto de inspección del biofiltro.",
+      "unidad": null,
+      "ejemplo_si": "Hay circulación prevista",
+      "ejemplo_no": "El agua no circula por el biofiltro",
+      "advertencia": "No confundir el flujo general del tanque con el del biofiltro."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q44",
+    "simbolo": "biofiltro_obstruido",
+    "texto": "¿El material del biofiltro presenta una obstrucción visible?",
+    "categoria": "Biofiltro",
+    "ayuda": {
+      "descripcion": "Revisar visualmente los medios del biofiltro accesibles.",
+      "unidad": null,
+      "ejemplo_si": "Se observa obstrucción",
+      "ejemplo_no": "No se observa obstrucción",
+      "advertencia": "Una obstrucción visible no demuestra pérdida bacteriana."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  },
+  {
+    "id": "Q45",
+    "simbolo": "biofiltro_interrumpido",
+    "texto": "¿Se ha interrumpido recientemente el funcionamiento del biofiltro?",
+    "categoria": "Biofiltro",
+    "ayuda": {
+      "descripcion": "Consultar registros de funcionamiento para detectar interrupciones recientes.",
+      "unidad": null,
+      "ejemplo_si": "Se registró una interrupción",
+      "ejemplo_no": "No se registró interrupción",
+      "advertencia": "No asumir muerte de bacterias a partir de una pausa sin otros datos."
+    },
+    "valores": [
+      "V",
+      "F",
+      "D"
+    ]
+  }
+]

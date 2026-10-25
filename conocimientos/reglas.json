@@ -1,0 +1,955 @@
+[
+  {
+    "id": "R01",
+    "condicion": {
+      "hecho": "Q01",
+      "valor": "V"
+    },
+    "expresion": "Q01=V",
+    "conclusion": "C01",
+    "explicacion": "Criterio de oxígeno que reduce nitrificación. Fuente: F01, §2.3.4, p. 15",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R02",
+    "condicion": {
+      "hecho": "Q02",
+      "valor": "V"
+    },
+    "expresion": "Q02=V",
+    "conclusion": "C02",
+    "explicacion": "Contrasta con la referencia para tilapia; no demuestra mortalidad. Fuente: F03, tabla 3, p. 4 (adaptada de Hager et al.)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R03",
+    "condicion": {
+      "hecho": "Q03",
+      "valor": "V"
+    },
+    "expresion": "Q03=V",
+    "conclusion": "C03",
+    "explicacion": "Identifica valor inferior al intervalo de compromiso acuapónico. Fuente: F03, tabla 2, p. 3 (adaptada de Hager et al.)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R04",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q04",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q05",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q04=V O Q05=V",
+    "conclusion": "C04",
+    "explicacion": "Evalúa extremos fuera del rango de productividad bacteriana. Fuente: F01, §2.3.3 y cuadro 2.1, pp. 15–16",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R05",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q06",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q07",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q06=V O Q07=V",
+    "conclusion": "C05",
+    "explicacion": "Evalúa extremos fuera del intervalo óptimo de crecimiento de tilapia. Fuente: F03, tabla 3, p. 4 (datos adaptados)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R06",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q08",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q10",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q08=V O Q10=V",
+    "conclusion": "C06",
+    "explicacion": "Evalúa pH fuera del intervalo de tolerancia bacteriana. Fuente: F01, cuadro 2.1, p. 16",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R07",
+    "condicion": {
+      "hecho": "Q09",
+      "valor": "V"
+    },
+    "expresion": "Q09=V",
+    "conclusion": "C07",
+    "explicacion": "Solo clasificación del pH respecto al compromiso 6–7; no equivale a peligro. Fuente: F03, tabla 2, p. 3 (datos adaptados)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R08",
+    "condicion": {
+      "hecho": "Q11",
+      "valor": "V"
+    },
+    "expresion": "Q11=V",
+    "conclusion": "C08",
+    "explicacion": "Verificación de TAN con el criterio de mantenimiento 0–0.25 ppm; unidad analítica coincidente obligatoria. Fuente: F03, apartado Ammonia, p. 3",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R09",
+    "condicion": {
+      "hecho": "Q12",
+      "valor": "V"
+    },
+    "expresion": "Q12=V",
+    "conclusion": "C09",
+    "explicacion": "La tabla establece NO₂⁻ < 1 mg/L para tilapia; valor ≥1 no cumple esa referencia. Fuente: F03, tabla 3, p. 4 (datos adaptados)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R10",
+    "condicion": {
+      "hecho": "Q13",
+      "valor": "V"
+    },
+    "expresion": "Q13=V",
+    "conclusion": "C10",
+    "explicacion": "Nitrato persistentemente <10 mg/L puede indicar desequilibrio de nutrientes. Fuente: F01, §2.4.4, p. 18",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R11",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q16",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q17",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q18",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q19",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q16=V O Q17=V O Q18=V O Q19=V",
+    "conclusion": "C11",
+    "explicacion": "Agrupa signos registrados sin atribuir una causa única. Fuente: F01, §2.4.3, p. 18; F03, Ammonia, p. 3",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R12",
+    "condicion": {
+      "hecho": "Q14",
+      "valor": "V"
+    },
+    "expresion": "Q14=V",
+    "conclusion": "C12",
+    "explicacion": "Registra mortalidad observada sin determinar causa. Fuente: F01, §2.4.3, p. 18",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R13",
+    "condicion": {
+      "hecho": "Q15",
+      "valor": "V"
+    },
+    "expresion": "Q15=V",
+    "conclusion": "C13",
+    "explicacion": "Distingue varios peces muertos; extensión del hallazgo, no causalidad. Fuente: F01, §2.4.3, p. 18 (adaptación operativa)",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R14",
+    "condicion": {
+      "hecho": "Q20",
+      "valor": "V"
+    },
+    "expresion": "Q20=V",
+    "conclusion": "C14",
+    "explicacion": "Registra disminución del consumo habitual; no atribuye la causa. Fuente: F02, Producción de Tilapia, p. 7",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R15",
+    "condicion": {
+      "hecho": "Q22",
+      "valor": "V"
+    },
+    "expresion": "Q22=V",
+    "conclusion": "C15",
+    "explicacion": "Registra crecimiento inferior a controles comparables. Fuente: F02, Producción de Tilapia, p. 7 (adaptación)",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R16",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q25",
+          "valor": "F"
+        },
+        {
+          "hecho": "Q26",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q25=F O Q26=V",
+    "conclusion": "C16",
+    "explicacion": "Detecta falta o reducción del flujo observado. Fuente: F03, tabla 6, p. 7; F02, manejo hidráulico, p. 5 (adaptación)",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R17",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q27",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q28",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q27=V O Q28=V",
+    "conclusion": "C17",
+    "explicacion": "Registra obstrucción visible sin inferir automáticamente pérdida de flujo. Fuente: F03, tabla 7, p. 8; F02, p. 5 (adaptación)",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R18",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q29",
+          "valor": "F"
+        },
+        {
+          "hecho": "Q30",
+          "valor": "F"
+        }
+      ]
+    },
+    "expresion": "Q29=F O Q30=F",
+    "conclusion": "C18",
+    "explicacion": "Justifica verificar aireación al no estar encendido el equipo o no apreciarse flujo de aire. Fuente: F03, apartado Dissolved oxygen, p. 5 (adaptación operativa)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R19",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q31",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q32",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q31=V O Q32=V",
+    "conclusion": "C19",
+    "explicacion": "Registra fuga o nivel bajo para investigación. Fuente: F03, tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R20",
+    "condicion": {
+      "hecho": "Q40",
+      "valor": "V"
+    },
+    "expresion": "Q40=V",
+    "conclusion": "C20",
+    "explicacion": "Color verdoso compatible con algas; requiere comprobarlo. Fuente: F03, apartado Algae, p. 5; tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R21",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q34",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q36",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q37",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q39",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q34=V O Q36=V O Q37=V O Q39=V",
+    "conclusion": "C21",
+    "explicacion": "Agrupa señales vegetales que justifican revisar condiciones. Fuente: F01, §2.4.3, p. 18; F03, tabla 7, p. 8",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R22",
+    "condicion": {
+      "hecho": "Q35",
+      "valor": "V"
+    },
+    "expresion": "Q35=V",
+    "conclusion": "C22",
+    "explicacion": "Registra extensión de amarillamiento a dos o más plantas. Fuente: F02, resultados de lechuga, p. 8 (adaptación)",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R23",
+    "condicion": {
+      "hecho": "Q38",
+      "valor": "V"
+    },
+    "expresion": "Q38=V",
+    "conclusion": "C23",
+    "explicacion": "Registra observación de pulgones descritos en el estudio. Fuente: F02, resultados de lechuga, p. 8",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R24",
+    "condicion": {
+      "hecho": "Q41",
+      "valor": "F"
+    },
+    "expresion": "Q41=F",
+    "conclusion": "C24",
+    "explicacion": "Registra ausencia de entrada de agua a zona vegetal. Fuente: F02, diseño de recirculación, pp. 2–4 (adaptación operativa)",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R25",
+    "condicion": {
+      "hecho": "Q42",
+      "valor": "V"
+    },
+    "expresion": "Q42=V",
+    "conclusion": "C25",
+    "explicacion": "Indica que el sistema está en proceso inicial de ciclado. Fuente: F03, Nitrogen Cycling/Nitrification, pp. 1–2",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R26",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "Q43",
+          "valor": "F"
+        },
+        {
+          "hecho": "Q44",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q45",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "Q43=F O Q44=V O Q45=V",
+    "conclusion": "C26",
+    "explicacion": "Registra condiciones operativas anómalas en el biofiltro sin deducir pérdida de colonias. Fuente: F01, §2.3, pp. 14–16; F03, tabla 6, p. 7 (adaptación)",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R27",
+    "condicion": {
+      "hecho": "Q23",
+      "valor": "F"
+    },
+    "expresion": "Q23=F",
+    "conclusion": "C31",
+    "explicacion": "Registra falta de energía comunicada. Fuente: F03, tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R28",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "Q23",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q24",
+          "valor": "F"
+        }
+      ]
+    },
+    "expresion": "Q23=V Y Q24=F",
+    "conclusion": "C32",
+    "explicacion": "Diferencia bomba apagada con energía disponible. Fuente: F03, tabla 7, p. 8 (adaptación)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R29",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "Q24",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q25",
+          "valor": "F"
+        }
+      ]
+    },
+    "expresion": "Q24=V Y Q25=F",
+    "conclusion": "C33",
+    "explicacion": "Diferencia bomba encendida y ausencia de flujo. Fuente: F03, tablas 6–7, pp. 7–8 (adaptación)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R30",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "Q29",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q30",
+          "valor": "F"
+        }
+      ]
+    },
+    "expresion": "Q29=V Y Q30=F",
+    "conclusion": "C34",
+    "explicacion": "Diferencia aireador encendido sin aire observable. Fuente: F03, apartado Dissolved oxygen, p. 5 (adaptación)",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R31",
+    "condicion": {
+      "hecho": "Q21",
+      "valor": "V"
+    },
+    "expresion": "Q21=V",
+    "conclusion": "C35",
+    "explicacion": "Registra alimento no consumido para revisión de manejo. Fuente: F02, Producción de Tilapia, p. 7; F03, tabla 6, p. 7",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R32",
+    "condicion": {
+      "hecho": "Q33",
+      "valor": "V"
+    },
+    "expresion": "Q33=V",
+    "conclusion": "C36",
+    "explicacion": "Registra acumulación visible de sólidos en filtro. Fuente: F03, tabla 6, p. 7",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R33",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "C02",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q16",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C02=V Y Q16=V",
+    "conclusion": "C27",
+    "explicacion": "Combina lectura de oxígeno que no supera la referencia con boqueo; compatibilidad, no diagnóstico. Fuente: F03, tabla 3, p. 4; F01, §2.4.3, p. 18 (inferencia propuesta)",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R34",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "C14",
+          "valor": "V"
+        },
+        {
+          "hecho": "Q06",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C14=V Y Q06=V",
+    "conclusion": "C28",
+    "explicacion": "La baja temperatura podría contribuir al apetito reducido; relación no demostrada como única causa. Fuente: F02, Producción de Tilapia, p. 7; F03, tabla 3, p. 4",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R35",
+    "condicion": {
+      "hecho": "C09",
+      "valor": "V"
+    },
+    "expresion": "C09=V",
+    "conclusion": "C29",
+    "explicacion": "Nitrito elevado motiva investigar insuficiencia de biofiltración como hipótesis. Fuente: F01, §2.4.4, p. 18; F03, tabla 3, p. 4",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R36",
+    "condicion": {
+      "todos": [
+        {
+          "hecho": "C10",
+          "valor": "V"
+        },
+        {
+          "hecho": "C21",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C10=V Y C21=V",
+    "conclusion": "C30",
+    "explicacion": "Coincidencia de nitrato bajo persistente y signos vegetales compatible con insuficiencia de nutrientes. Fuente: F01, §§2.4.1 y 2.4.4, pp. 16–18 (inferencia propuesta)",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R37",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C27",
+          "valor": "V"
+        },
+        {
+          "hecho": "C18",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C27=V O C18=V",
+    "conclusion": "A01",
+    "explicacion": "Verificar oxigenación ante indicios o falla visible de aireación. Fuente: F03, apartado Dissolved oxygen, p. 5; tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R38",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C16",
+          "valor": "V"
+        },
+        {
+          "hecho": "C17",
+          "valor": "V"
+        },
+        {
+          "hecho": "C32",
+          "valor": "V"
+        },
+        {
+          "hecho": "C33",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C16=V O C17=V O C32=V O C33=V",
+    "conclusion": "A02",
+    "explicacion": "Verificar sistema hidráulico cuando exista flujo anormal, obstrucción o bomba detenida. Fuente: F03, tablas 6–7, pp. 7–8; F02, p. 5",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R39",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C01",
+          "valor": "V"
+        },
+        {
+          "hecho": "C26",
+          "valor": "V"
+        },
+        {
+          "hecho": "C08",
+          "valor": "V"
+        },
+        {
+          "hecho": "C09",
+          "valor": "V"
+        },
+        {
+          "hecho": "C29",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C01=V O C26=V O C08=V O C09=V O C29=V",
+    "conclusion": "A03",
+    "explicacion": "Revisar proceso de nitrificación y biofiltro bajo condiciones desfavorables o compuestos elevados. Fuente: F01, §§2.3–2.4.4, pp. 14–18; F03, Ammonia, p. 3",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R40",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C08",
+          "valor": "V"
+        },
+        {
+          "hecho": "C09",
+          "valor": "V"
+        },
+        {
+          "hecho": "C35",
+          "valor": "V"
+        },
+        {
+          "hecho": "C36",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C08=V O C09=V O C35=V O C36=V",
+    "conclusion": "A04",
+    "explicacion": "La presencia de restos o compuestos nitrogenados elevados exige verificar acumulación de residuos. Fuente: F03, apartado Nitrite, p. 4; tabla 6, p. 7",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R41",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C04",
+          "valor": "V"
+        },
+        {
+          "hecho": "C05",
+          "valor": "V"
+        },
+        {
+          "hecho": "C06",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C04=V O C05=V O C06=V",
+    "conclusion": "A05",
+    "explicacion": "Revisar parámetros fuera de referencia sin proponer cambios químicos automáticos. Fuente: F01, §2.3, pp. 14–16; F03, tabla 3, p. 4",
+    "fuentes": [
+      "F01",
+      "F03"
+    ]
+  },
+  {
+    "id": "R42",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C11",
+          "valor": "V"
+        },
+        {
+          "hecho": "C12",
+          "valor": "V"
+        },
+        {
+          "hecho": "C13",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C11=V O C12=V O C13=V",
+    "conclusion": "A06",
+    "explicacion": "Signos de estrés o mortalidad justifican evaluación de calidad del agua. Fuente: F01, §2.4.3, p. 18",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R43",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C12",
+          "valor": "V"
+        },
+        {
+          "hecho": "C13",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C12=V O C13=V",
+    "conclusion": "A07",
+    "explicacion": "La mortalidad supera la capacidad diagnóstica del prototipo. Fuente: F01, §2.4.3, p. 18 (política educativa conservadora)",
+    "fuentes": [
+      "F01"
+    ]
+  },
+  {
+    "id": "R44",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C21",
+          "valor": "V"
+        },
+        {
+          "hecho": "C10",
+          "valor": "V"
+        },
+        {
+          "hecho": "C30",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C21=V O C10=V O C30=V",
+    "conclusion": "A08",
+    "explicacion": "Signos vegetales o nitrato bajo motivan investigar disponibilidad de nutrientes. Fuente: F01, §2.4, pp. 16–18; F02, p. 8",
+    "fuentes": [
+      "F01",
+      "F02"
+    ]
+  },
+  {
+    "id": "R45",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C23",
+          "valor": "V"
+        },
+        {
+          "hecho": "C22",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C23=V O C22=V",
+    "conclusion": "A09",
+    "explicacion": "Ante pulgones o varias plantas afectadas, inspeccionar signos de plagas, sin atribuir causa segura. Fuente: F02, resultados de lechuga, p. 8 (adaptación)",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R46",
+    "condicion": {
+      "hecho": "C20",
+      "valor": "V"
+    },
+    "expresion": "C20=V",
+    "conclusion": "A10",
+    "explicacion": "Verificar algas ante agua verdosa. Fuente: F03, apartado Algae, p. 5; tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R47",
+    "condicion": {
+      "hecho": "C19",
+      "valor": "V"
+    },
+    "expresion": "C19=V",
+    "conclusion": "A11",
+    "explicacion": "Verificar fugas y nivel de agua para comprender pérdida de volumen. Fuente: F03, tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R48",
+    "condicion": {
+      "hecho": "C24",
+      "valor": "V"
+    },
+    "expresion": "C24=V",
+    "conclusion": "A12",
+    "explicacion": "Verificar abastecimiento de la zona vegetal. Fuente: F02, diseño del sistema, pp. 2–4 (adaptación)",
+    "fuentes": [
+      "F02"
+    ]
+  },
+  {
+    "id": "R49",
+    "condicion": {
+      "alguno": [
+        {
+          "hecho": "C14",
+          "valor": "V"
+        },
+        {
+          "hecho": "C15",
+          "valor": "V"
+        },
+        {
+          "hecho": "C28",
+          "valor": "V"
+        },
+        {
+          "hecho": "C35",
+          "valor": "V"
+        }
+      ]
+    },
+    "expresion": "C14=V O C15=V O C28=V O C35=V",
+    "conclusion": "A13",
+    "explicacion": "Revisar alimentación y condiciones ambientales considerando observaciones experimentales. Fuente: F02, Producción de Tilapia, p. 7; F03, Feeding, p. 6",
+    "fuentes": [
+      "F02",
+      "F03"
+    ]
+  },
+  {
+    "id": "R50",
+    "condicion": {
+      "hecho": "C25",
+      "valor": "V"
+    },
+    "expresion": "C25=V",
+    "conclusion": "A14",
+    "explicacion": "Contextualizar cualquier anomalía nitrogenada según etapa de ciclado. Fuente: F03, Nitrogen Cycling/Nitrification, pp. 1–2",
+    "fuentes": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R51",
+    "condicion": {
+      "hecho": "C31",
+      "valor": "V"
+    },
+    "expresion": "C31=V",
+    "conclusion": "A15",
+    "explicacion": "Revisar suministro eléctrico y equipos afectados. Fuente: F03, tabla 7, p. 8",
+    "fuentes": [
+      "F03"
+    ]
+  }
+]
