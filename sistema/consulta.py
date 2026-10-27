@@ -128,14 +128,44 @@ def deducir_descartadas(base, hechos):
     return efectivos, deducidas
 
 
-def consultar(base, hechos, cierre=None, continuar=False):
-    """Deriva resultados, valida y decide si pregunta, pide confirmación o cierra la consulta."""
+def preguntas_de_la_meta(base, hechos, faltantes):
+    """Preguntas sin responder que hacen falta para probar la meta, en el orden del encadenamiento hacia atrás."""
+    por_id = {p["id"]: p for p in base["preguntas"]}
+    salida = []
+    for identificador in faltantes:
+        while identificador not in hechos and por_id[identificador].get("despues_de", "") not in hechos | {"": 0}:
+            identificador = por_id[identificador]["despues_de"]  # primero la pregunta previa
+        if identificador not in hechos and habilitada(base, hechos, identificador) and identificador not in salida:
+            salida.append(identificador)
+    return salida
+
+
+def resumir_meta(base, objetivo, estado, hechos, faltantes):
+    """Veredicto de una consulta que parte de una sospecha: se cumple, no se cumple o no se pudo comprobar."""
+    elemento = next(e for e in base["conclusiones"] + base["recomendaciones"] if e["id"] == objetivo)
+    textos = {p["id"]: p["texto"] for p in base["preguntas"]}
+    sin_saber = [textos[q] for q in faltantes if hechos.get(q) == "D"]
+    mensajes = {"V": "Con tus respuestas, esto sí se cumple.",
+                "F": "Con tus respuestas, esto no se cumple. Puedes revisar todo el sistema por si hay otra causa.",
+                "D": "Todavía no puedo confirmarlo ni descartarlo porque faltan datos."}
+    return {"id": objetivo, "titulo": elemento["titulo"], "descripcion": elemento["descripcion"], "estado": estado,
+            "mensaje": mensajes[estado], "sin_saber": sin_saber if estado == "D" else []}
+
+
+def consultar(base, hechos, cierre=None, continuar=False, objetivo=None):
+    """Deriva resultados, valida y decide si pregunta, pide confirmación o cierra la consulta.
+
+    Con objetivo (una sospecha del usuario) usa encadenamiento hacia atrás: pregunta solo lo necesario para
+    comprobarla y termina en la fase «meta» con su veredicto.
+    """
     cierre = cierre or {}
     descartadas = list(dict.fromkeys(cierre.get("descartadas", [])))
     final = cierre.get("final")
     if final not in (None, "V", "F", "D") or not isinstance(descartadas, list):
         raise ValueError("Cierre inválido")
     salidas = {e["id"] for e in base["conclusiones"] + base["recomendaciones"]}
+    if objetivo is not None and objetivo not in salidas:
+        raise ValueError("Sospecha desconocida")
     if set(descartadas) - salidas:
         raise ValueError("Conclusión descartada desconocida")
     original = hechos
@@ -154,8 +184,15 @@ def consultar(base, hechos, cierre=None, continuar=False):
     esperando_correccion = bool(violaciones) and not continuar
     principal = conclusion_principal(base, resultados, pasos, sustento)
     alternativa = None
+    meta = None
+    if objetivo:
+        estado, faltantes = EncadenamientoAtras(base, seguros, bloqueadas).demostrar(objetivo)
+        necesarias = preguntas_de_la_meta(base, hechos, faltantes) if estado == "D" else []
+        candidatas = [p for q in necesarias for p in base["preguntas"] if p["id"] == q]
+        if not candidatas:
+            meta = resumir_meta(base, objetivo, estado, original, faltantes)
     pregunta, distintiva = (candidatas[0], False) if candidatas and not esperando_correccion else (None, False)
-    if pregunta is None and not esperando_correccion and not principal and descartadas and len(descartadas) < MAXIMO_RONDAS:
+    if not objetivo and pregunta is None and not esperando_correccion and not principal and descartadas and len(descartadas) < MAXIMO_RONDAS:
         alternativa = alternativa_pendiente(base, hechos, seguros, memoria, bloqueadas)
         if alternativa and alternativa[3]:
             pregunta, distintiva = preguntas[alternativa[3]], True
@@ -164,6 +201,8 @@ def consultar(base, hechos, cierre=None, continuar=False):
         fase = "conflicto"
     elif pregunta is not None:
         fase = "pregunta"
+    elif objetivo:
+        fase = "meta"
     elif final in ("V", "D") or len(descartadas) >= MAXIMO_RONDAS or principal is None:
         fase = "cerrada"
     else:
@@ -181,6 +220,7 @@ def consultar(base, hechos, cierre=None, continuar=False):
             "distintiva": distintiva, "conflictos": violaciones, "avisos": avisos, "calidad": calidad,
             "lecturas": lecturas(base, hechos, seguros), "resultados": resultados, "traza": pasos,
             "principal": principal if fase in ("confirmacion", "cerrada") else None, "resumen": resumen,
+            "objetivo": objetivo, "meta": meta if fase == "meta" else None,
             "cierre": {"descartadas": descartadas, "ronda": len(descartadas) + 1, "maximo": MAXIMO_RONDAS, "final": final},
             "pendientes": pendientes, "progreso": {"respondidas": respondidas, "restantes": len(candidatas)},
             "reglas_atras": [p["regla"] for p in EncadenamientoAtras(base, seguros, bloqueadas).pasos],

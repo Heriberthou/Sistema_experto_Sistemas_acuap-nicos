@@ -10,7 +10,7 @@ const AREAS = [
   ["equipos", "Bomba y aireación", "Energía, circulación y salida de aire."],
   ["plantas", "Tus lechugas", "Hojas, raíces, crecimiento e insectos."],
 ];
-let base, preguntas = {}, conclusiones = {}, recomendaciones = {};
+let base, guia = {partidas: []}, preguntas = {}, conclusiones = {}, recomendaciones = {}, objetivo = null;
 let hechos = {}, historial = [], cierre = {descartadas: [], final: null}, continuar = false, resultado = null, ocupado = false, avance = 0;
 
 /** Desactiva los controles mientras se evalúa para evitar respuestas simultáneas. */
@@ -32,22 +32,24 @@ async function enviar(propuesta) {
   if (ocupado) return;
   establecerCarga(true); seleccionar("#error").hidden = true;
   try {
-    const nuevo = await solicitar("/api/consultar", {hechos: propuesta.hechos, cierre: propuesta.cierre, continuar: propuesta.continuar});
-    ({hechos, historial, cierre, continuar} = propuesta); resultado = nuevo;
+    const meta = propuesta.objetivo === undefined ? objetivo : propuesta.objetivo;
+    const nuevo = await solicitar("/api/consultar", {hechos: propuesta.hechos, cierre: propuesta.cierre, continuar: propuesta.continuar, objetivo: meta});
+    ({hechos, historial, cierre, continuar} = propuesta); objetivo = meta; resultado = nuevo;
     presentar();
   } catch (error) { mostrarError(error); } finally { establecerCarga(false); }
 }
 
 /** Empieza una consulta nueva sin conservar nada anterior. */
-function iniciarConsulta() {
+function iniciarConsulta(meta = null) {
   if (ocupado) return;
+  objetivo = meta;
   hechos = {}; historial = []; cierre = {descartadas: [], final: null}; continuar = false; resultado = null; avance = 0;
   seleccionar("#bienvenida").hidden = true; seleccionar("#consulta").hidden = false;
   seleccionar("#resultado").hidden = true; seleccionar("#zona-pregunta").hidden = false;
   for (const id of ["#historial", "#detalle"]) { seleccionar(id).hidden = true; seleccionar(id).open = false; }
   seleccionar("#tarjeta-pregunta").innerHTML = '<p class="texto-secundario">Preparando tu consulta…</p>';
   window.scrollTo({top: 0});
-  enviar({hechos: {}, historial: [], cierre, continuar: false});
+  enviar({hechos: {}, historial: [], cierre, continuar: false, objetivo: meta});
 }
 
 /** Registra una respuesta nueva o una corrección. */
@@ -104,12 +106,31 @@ function presentarPregunta() {
   const etiqueta = pregunta.es_medicion ? `${pregunta.parametro_nombre}` : grupo.nombre;
   const pasos = pregunta.es_medicion && pregunta.escalones > 1
     ? `<p class="paso-medicion">${Array.from({length: pregunta.escalones}, (_, i) => `<i class="${i < pregunta.escalon ? "hecho" : ""}"></i>`).join("")} Medición · paso ${pregunta.escalon} de ${pregunta.escalones}</p>` : "";
-  seleccionar("#tarjeta-pregunta").innerHTML = `<span class="etiqueta-pregunta">${icono(grupo.icono)} ${escapar(etiqueta)}${resultado.distintiva ? " · para distinguir otra posibilidad" : ""}</span>${pregunta.contexto ? `<p class="contexto">${escapar(pregunta.contexto)}</p>` : ""}<h2 id="texto-pregunta">${escapar(pregunta.texto)}</h2>${pasos}${botones()}<details class="ayuda"><summary>¿Cómo puedo comprobarlo?</summary><p>${escapar(pregunta.ayuda)}</p></details><div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><span class="texto-secundario">Atajos: S, N, D</span></div>`;
+  seleccionar("#tarjeta-pregunta").innerHTML = `<span class="etiqueta-pregunta">${icono(grupo.icono)} ${escapar(etiqueta)}${resultado.distintiva ? " · para distinguir otra posibilidad" : ""}</span>${objetivo ? `<p class="contexto">Estoy comprobando: ${escapar(titulos_meta())}</p>` : ""}${pregunta.contexto ? `<p class="contexto">${escapar(pregunta.contexto)}</p>` : ""}<h2 id="texto-pregunta">${escapar(pregunta.texto)}</h2>${pasos}${botones()}<details class="ayuda"><summary>¿Cómo puedo comprobarlo?</summary><p>${escapar(pregunta.ayuda)}</p></details><div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><span class="texto-secundario">Atajos: S, N, D</span></div>`;
   nota_deducidas();
   seleccionar("#atras").disabled = !puedeRetroceder();
   const especie = pregunta.grupo === "plantas" ? "lechuga" : "pez";
   seleccionar("#mascota-consulta").className = `mascota ${especie} pensando late`;
   seleccionar("#titulo-acompanante").textContent = resultado.distintiva ? "Una última duda." : "Vamos paso a paso.";
+}
+
+/** Título de la sospecha que se está comprobando. */
+function titulos_meta() {
+  const partida = guia.partidas.find(p => p.meta === objetivo);
+  return partida ? partida.texto : (conclusiones[objetivo] || recomendaciones[objetivo]).titulo;
+}
+
+/** Veredicto de una sospecha: se cumple, no se cumple o falta información; ofrece seguir con la revisión completa. */
+function presentarMeta() {
+  const meta = resultado.meta, acciones = resultado.resultados.filter(r => r.tipo === "Verificación");
+  const titulo = {V: "Sí, se cumple.", F: "No, no se cumple.", D: "Todavía no puedo confirmarlo."}[meta.estado];
+  const sinSaber = meta.sin_saber.length ? `<p class="texto-secundario">Dijiste «Desconozco» a:</p><ul class="pendiente-lista">${meta.sin_saber.map(t => `<li>${escapar(t)}</li>`).join("")}</ul>` : "";
+  seleccionar("#resultado").innerHTML = `<div class="cabecera-resultado">${mascota("pez", meta.estado === "V" ? "preocupado" : meta.estado === "F" ? "feliz" : "pensando")}<div><p class="antetitulo">Tu sospecha: ${escapar(titulos_meta())}</p><h1>${titulo}</h1><div class="veredicto-meta ${meta.estado === "V" ? "" : "no"}"><strong>${escapar(meta.titulo)}</strong><p>${escapar(meta.descripcion)}</p><p>${escapar(meta.mensaje)}</p></div>${sinSaber}</div></div>
+    ${acciones.length ? `<section class="seccion"><h2>${icono("lista")} Qué hacer, en este orden</h2><div class="acciones-lista">${acciones.map(tarjetaAccion).join("")}</div></section>` : ""}
+    <div class="acciones-resultado"><button id="revisar-todo" class="boton-principal" type="button">Revisar todo mi sistema →</button><button id="nueva-consulta" class="boton-suave" type="button">${icono("reiniciar")} Nueva consulta</button></div>
+    <p class="alcance">${escapar(resultado.nota)} Es una guía educativa: no confirma enfermedades ni prescribe tratamientos.</p>`;
+  seleccionar("#revisar-todo").addEventListener("click", () => enviar({hechos, historial, cierre, continuar, objetivo: null}));
+  seleccionar("#nueva-consulta").addEventListener("click", reiniciar);
 }
 
 /** Muestra las respuestas que no cuadran con botones para corregirlas allí mismo. */
@@ -201,7 +222,7 @@ function presentarDetalle() {
 
 /** Actualiza todos los paneles según la fase que devuelve el servidor. */
 function presentar() {
-  const fase = resultado.fase, cerrada = fase === "cerrada";
+  const fase = resultado.fase, cerrada = fase === "cerrada" || fase === "meta";
   seleccionar("#zona-pregunta").hidden = cerrada;
   seleccionar("#resultado").hidden = !cerrada;
   seleccionar("#detalle").hidden = !cerrada;
@@ -209,6 +230,7 @@ function presentar() {
   if (fase === "pregunta") presentarPregunta();
   else if (fase === "conflicto") presentarConflicto();
   else if (fase === "confirmacion") presentarConfirmacion();
+  else if (fase === "meta") presentarMeta();
   else presentarResultado();
   const {respondidas, restantes} = resultado.progreso, total = respondidas + restantes + (fase === "confirmacion" ? 0 : 0);
   avance = Math.max(avance, total ? respondidas / total : 0);
@@ -221,7 +243,7 @@ function presentar() {
 /** Borra toda la consulta y devuelve al inicio. */
 function reiniciar() {
   if (ocupado) return;
-  hechos = {}; historial = []; cierre = {descartadas: [], final: null}; continuar = false; resultado = null;
+  hechos = {}; historial = []; cierre = {descartadas: [], final: null}; continuar = false; resultado = null; objetivo = null;
   seleccionar("#consulta").hidden = true; seleccionar("#bienvenida").hidden = false; seleccionar("#error").hidden = true;
   for (const id of ["#resultado", "#contenido-detalle", "#lista-respuestas", "#tarjeta-pregunta", "#avisos"]) seleccionar(id).replaceChildren();
   window.scrollTo({top: 0});
@@ -246,9 +268,19 @@ function manejarClic(evento) {
     else if (resultado.fase === "confirmacion") confirmar(respuesta.dataset.respuesta);
     return;
   }
+  const tema = evento.target.closest("[data-tema-partida]");
+  if (tema) return pintarPartidas(tema.dataset.temaPartida);
+  const partida = evento.target.closest("[data-partida]");
+  if (partida) return iniciarConsulta(partida.dataset.partida);
   const cambio = evento.target.closest("[data-cambiar]");
   if (cambio) responder(cambio.dataset.cambiar, cambio.dataset.valor);
   else if (evento.target.closest("#atras")) retroceder();
+}
+
+/** Pinta las áreas y, al elegir una, las sospechas desde las que se puede empezar. */
+function pintarPartidas(tema = null) {
+  seleccionar("#temas-partida").innerHTML = AREAS.map(([id, titulo]) => `<button type="button" class="tema-partida" data-tema-partida="${id}" aria-pressed="${id === tema}">${titulo}</button>`).join("");
+  seleccionar("#lista-partidas").innerHTML = guia.partidas.filter(p => p.tema === tema).map(p => `<button type="button" class="partida" data-partida="${p.meta}">${escapar(p.texto)}</button>`).join("");
 }
 
 /** Carga el catálogo antes de habilitar la consulta. */
@@ -258,13 +290,14 @@ async function iniciar() {
   establecerCarga(true);
   try {
     base = await solicitar("/api/base");
+    guia = await solicitar("/api/guia"); pintarPartidas();
     preguntas = Object.fromEntries(base.preguntas.map(p => [p.id, p]));
     conclusiones = Object.fromEntries(base.conclusiones.map(c => [c.id, c]));
     recomendaciones = Object.fromEntries(base.recomendaciones.map(r => [r.id, r]));
     seleccionar("#error").hidden = true;
   } catch (error) { mostrarError(error); } finally { establecerCarga(false); }
 }
-seleccionar("#iniciar-revision").addEventListener("click", iniciarConsulta);
+seleccionar("#iniciar-revision").addEventListener("click", () => iniciarConsulta());
 seleccionar("#volver").addEventListener("click", reiniciar);
 seleccionar("#reintentar").addEventListener("click", () => resultado ? enviar({hechos, historial, cierre, continuar}) : iniciar());
 document.addEventListener("click", manejarClic);

@@ -123,6 +123,27 @@ class PruebasConsulta(pruebas.TestCase):
         avisos = {a["id"] for a in consultar(caso_prueba.base, {"Q09": "F", "Q28a": "F", "Q16": "V", "Q01a": "V", "Q01b": "V", "Q21": "V", "Q23": "V"})["avisos"]}
         caso_prueba.assertTrue({"K10", "K11", "K12"} <= avisos)
 
+    def test_consulta_desde_una_sospecha_encadena_hacia_atras(caso_prueba):
+        """Con una sospecha (meta) solo se pregunta lo necesario y se termina con un veredicto en la fase «meta»."""
+        def correr(objetivo, respuestas):
+            """Contesta según el diccionario (F por omisión) hasta que termina la comprobación."""
+            hechos, vistas = {}, []
+            for _ in range(30):
+                resultado = consultar(caso_prueba.base, hechos, None, False, objetivo)
+                if resultado["fase"] != "pregunta":
+                    return vistas, resultado
+                vistas.append(resultado["pregunta"]["id"]); hechos[vistas[-1]] = respuestas.get(vistas[-1], "F")
+        vistas, resultado = correr("A06", {"Q18": "V", "Q06": "V"})
+        caso_prueba.assertEqual((vistas, resultado["fase"], resultado["meta"]["estado"]), (["Q18", "Q06"], "meta", "V"))
+        vistas, resultado = correr("A06", {"Q18": "F"})
+        caso_prueba.assertEqual((vistas, resultado["meta"]["estado"]), (["Q18"], "F"))
+        vistas, resultado = correr("C32", {"Q09": "F", "Q28a": "V", "Q28b": "V"})
+        caso_prueba.assertEqual((vistas, resultado["meta"]["estado"]), (["Q09", "Q28a", "Q28b"], "V"))
+        vistas, resultado = correr("C04", {"Q04a": "D"})
+        caso_prueba.assertEqual((resultado["meta"]["estado"], len(resultado["meta"]["sin_saber"])), ("D", 1))
+        with caso_prueba.assertRaises(ValueError):
+            consultar(caso_prueba.base, {}, None, False, "Z99")
+
     def test_otras_deducciones_por_restricciones(caso_prueba):
         """Q18 = No omite Q06-Q08; Q13 = No omite Q14; Q10 = No omite Q11."""
         for hechos, omitidas in (({"Q18": "F"}, {"Q06", "Q07", "Q08"}), ({"Q13": "F"}, {"Q14"}), ({"Q10": "F"}, {"Q11"})):

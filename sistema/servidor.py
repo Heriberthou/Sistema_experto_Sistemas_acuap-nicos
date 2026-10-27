@@ -12,6 +12,7 @@ from .casos import evaluar_todos
 
 BASE = cargar_conocimientos()
 CASOS = json.loads((RAIZ_PROYECTO / "conocimientos/casos_prueba.json").read_text(encoding="utf-8"))
+GUIA = json.loads((RAIZ_PROYECTO / "conocimientos/guia_consulta.json").read_text(encoding="utf-8"))
 PUBLICOS = {"/": ("inicio.html", "text/html"), "/inicio.html": ("inicio.html", "text/html"),
             "/estilos.css": ("estilos.css", "text/css"), "/aplicacion.js": ("aplicacion.js", "text/javascript"),
             "/laboratorio.html": ("laboratorio.html", "text/html"),
@@ -45,6 +46,8 @@ class ManejadorHTTP(ManejadorBase):
             servidor.responder(200, (RAIZ_PROYECTO / "interfaz" / nombre).read_bytes(), tipo)
         elif ruta == "/api/base":
             servidor.responder(200, BASE)
+        elif ruta == "/api/guia":
+            servidor.responder(200, GUIA)
         elif ruta == "/api/casos":
             servidor.responder(200, CASOS)
         elif ruta == "/api/casos/ejecutar":
@@ -69,7 +72,7 @@ class ManejadorHTTP(ManejadorBase):
                 raise ValueError("La petición debe ser un objeto JSON")
             hechos = datos.get("hechos", {})
             if ruta == "/api/consultar":
-                resultado = consultar(BASE, hechos, datos.get("cierre"), datos.get("continuar") is True)
+                resultado = consultar(BASE, hechos, datos.get("cierre"), datos.get("continuar") is True, datos.get("objetivo"))
             elif ruta == "/api/comparar":
                 resultado = comparar(BASE, hechos, datos.get("objetivo", "A01"))
             else:

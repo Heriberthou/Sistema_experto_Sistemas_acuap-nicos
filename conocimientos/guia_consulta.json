@@ -109,5 +109,87 @@
         "C33"
       ]
     }
+  ],
+  "partidas": [
+    {
+      "tema": "peces",
+      "texto": "Peces muertos",
+      "meta": "A06"
+    },
+    {
+      "tema": "peces",
+      "texto": "Peces boqueando en la superficie",
+      "meta": "C12"
+    },
+    {
+      "tema": "peces",
+      "texto": "Peces que comen menos",
+      "meta": "C10"
+    },
+    {
+      "tema": "peces",
+      "texto": "Peces nuevos que murieron",
+      "meta": "C24"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Lechugas marchitas",
+      "meta": "C27"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Raíces oscuras o con mal olor",
+      "meta": "C28"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Hojas amarillas",
+      "meta": "A07"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Puntas secas o quemadas",
+      "meta": "C26"
+    },
+    {
+      "tema": "agua",
+      "texto": "Oxígeno bajo",
+      "meta": "C01"
+    },
+    {
+      "tema": "agua",
+      "texto": "Amoníaco alto",
+      "meta": "C04"
+    },
+    {
+      "tema": "agua",
+      "texto": "Nitrito alto",
+      "meta": "C05"
+    },
+    {
+      "tema": "agua",
+      "texto": "Agua verde o algas",
+      "meta": "C15"
+    },
+    {
+      "tema": "equipos",
+      "texto": "Se fue la luz",
+      "meta": "C08"
+    },
+    {
+      "tema": "equipos",
+      "texto": "Llevo muchas horas sin luz",
+      "meta": "C32"
+    },
+    {
+      "tema": "equipos",
+      "texto": "El agua no circula",
+      "meta": "C11"
+    },
+    {
+      "tema": "equipos",
+      "texto": "El aireador no burbujea",
+      "meta": "C09"
+    }
   ]
 }

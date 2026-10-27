@@ -57,3 +57,7 @@ Cuando el usuario responde que **no hay suministro eléctrico**, el sistema no s
 | Más de 48 h | C33 | Daño probable: mortalidad, raíces oscuras, tuberías con residuos. |
 
 Sin energía también se infiere **falla de recirculación (C11)**, que activa la cadena de marchitez (C27). Los avisos K10–K12 señalan respuestas poco coherentes (por ejemplo, algas o raíces oscuras con un corte de menos de 2 h). Los umbrales de 2, 12 y 48 h son una propuesta del sistema: la fuente (OSU HLA-6729, tabla 7) solo indica que el oxígeno disminuye y recomienda respaldo y aireación manual.
+
+## Empezar desde una sospecha (encadenamiento hacia atrás)
+
+Además de la consulta completa (hacia adelante), la pantalla de inicio permite elegir un área y una **sospecha**, por ejemplo «Peces muertos» o «Se fue la luz». El sistema toma esa sospecha como meta, la comprueba hacia atrás y solo pregunta lo necesario. Termina con un veredicto (**sí se cumple**, **no se cumple** o **faltan datos**), las acciones recomendadas y el botón «Revisar todo mi sistema» para continuar con la consulta completa. Las sospechas disponibles están en `conocimientos/guia_consulta.json` (`partidas`) y se sirven en `GET /api/guia`; `POST /api/consultar` acepta el campo opcional `objetivo`.
