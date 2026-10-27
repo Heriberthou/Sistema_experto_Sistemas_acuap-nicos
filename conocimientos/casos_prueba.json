@@ -1,0 +1,946 @@
+[
+ {
+  "id": "T1",
+  "nombre": "Oxígeno bajo y boqueo",
+  "hechos": {
+   "Q01a": "V",
+   "Q01b": "F",
+   "Q07": "V"
+  },
+  "esperados": [
+   "A01",
+   "A05",
+   "C01",
+   "C10",
+   "C12"
+  ],
+  "reglas_esperadas": [
+   "R01",
+   "R10",
+   "R12",
+   "R16",
+   "R20"
+  ],
+  "objetivo": "A01",
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T2",
+  "nombre": "Bomba encendida sin flujo",
+  "hechos": {
+   "Q09": "V",
+   "Q10": "V",
+   "Q11": "F"
+  },
+  "esperados": [
+   "A02",
+   "C06",
+   "C11"
+  ],
+  "reglas_esperadas": [
+   "R06",
+   "R11",
+   "R17"
+  ],
+  "objetivo": "A02",
+  "calidad": "Confiable"
+ },
+ {
+  "id": "T3",
+  "nombre": "Nitrito fuera del ciclado, ambos mecanismos",
+  "hechos": {
+   "Q04a": "F",
+   "Q05a": "V",
+   "Q17": "F"
+  },
+  "esperados": [
+   "A03",
+   "C05",
+   "C13"
+  ],
+  "reglas_esperadas": [
+   "R05",
+   "R13",
+   "R18"
+  ],
+  "objetivo": "A03",
+  "estado_atras": "V",
+  "reglas_atras": [
+   "R05",
+   "R18"
+  ],
+  "preguntas_atras": [
+   "Q04a",
+   "Q05a"
+  ]
+ },
+ {
+  "id": "T4",
+  "nombre": "Información insuficiente",
+  "hechos": {},
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A01",
+  "todo_d": true,
+  "calidad": "Insuficiente",
+  "estado_atras": "D",
+  "faltantes_atras": [
+   "Q13",
+   "Q14",
+   "Q01a"
+  ]
+ },
+ {
+  "id": "T5",
+  "nombre": "Ninguna regla aplicable",
+  "hechos": {
+   "Q01a": "F",
+   "Q02a": "F",
+   "Q02c": "F",
+   "Q03a": "F",
+   "Q03b": "F",
+   "Q04a": "F",
+   "Q05a": "F",
+   "Q06": "F",
+   "Q07": "F",
+   "Q08": "F",
+   "Q09": "V",
+   "Q10": "V",
+   "Q11": "V",
+   "Q12": "F",
+   "Q13": "V",
+   "Q14": "V",
+   "Q15": "F",
+   "Q16": "F",
+   "Q17": "F"
+  },
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A03",
+  "estado_atras": "F",
+  "preguntas_atras": [
+   "Q04a",
+   "Q05a"
+  ]
+ },
+ {
+  "id": "T6",
+  "nombre": "Contradicción eléctrica K1",
+  "hechos": {
+   "Q09": "F",
+   "Q10": "V",
+   "Q11": "F",
+   "Q12": "V"
+  },
+  "esperados": [
+   "A02",
+   "C11"
+  ],
+  "reglas_esperadas": [
+   "R11",
+   "R17"
+  ],
+  "objetivo": "A02",
+  "conflictos": [
+   "K1"
+  ],
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T7",
+  "nombre": "Reinicio de T1 a T2",
+  "hechos": {
+   "Q09": "V",
+   "Q10": "V",
+   "Q11": "F"
+  },
+  "esperados": [
+   "A02",
+   "C06",
+   "C11"
+  ],
+  "reglas_esperadas": [
+   "R06",
+   "R11",
+   "R17"
+  ],
+  "objetivo": "A02",
+  "reiniciar_despues_de": "T1"
+ },
+ {
+  "id": "T8",
+  "nombre": "Nitrito durante el ciclado",
+  "hechos": {
+   "Q05a": "V",
+   "Q17": "V"
+  },
+  "esperados": [
+   "A03",
+   "A10",
+   "C05",
+   "C14"
+  ],
+  "reglas_esperadas": [
+   "R05",
+   "R14",
+   "R18",
+   "R25"
+  ],
+  "objetivo": "A10",
+  "estado_atras": "V",
+  "preguntas_atras": [
+   "Q04a",
+   "Q05a",
+   "Q17"
+  ]
+ },
+ {
+  "id": "T9",
+  "nombre": "Mortalidad y prioridades",
+  "hechos": {
+   "Q06": "V",
+   "Q01a": "V",
+   "Q01b": "F",
+   "Q07": "V",
+   "Q13": "V",
+   "Q14": "V"
+  },
+  "esperados": [
+   "A05",
+   "A06",
+   "A11",
+   "C01",
+   "C10",
+   "C12",
+   "C16"
+  ],
+  "reglas_esperadas": [
+   "R01",
+   "R10",
+   "R12",
+   "R20",
+   "R21",
+   "R26",
+   "R35"
+  ],
+  "objetivo": "A11",
+  "orden": [
+   "A06",
+   "A11",
+   "A05"
+  ]
+ },
+ {
+  "id": "T10",
+  "nombre": "Ciclado desconocido",
+  "hechos": {
+   "Q05a": "V",
+   "Q17": "D"
+  },
+  "esperados": [
+   "A03",
+   "C05"
+  ],
+  "reglas_esperadas": [
+   "R05",
+   "R18"
+  ],
+  "objetivo": "A03"
+ },
+ {
+  "id": "T11",
+  "nombre": "Respuesta inválida",
+  "hechos": {
+   "Q03a": "quizá"
+  },
+  "objetivo": "A04",
+  "error_esperado": true
+ },
+ {
+  "id": "T12",
+  "nombre": "Agua, energía, algas y plantas",
+  "hechos": {
+   "Q02a": "F",
+   "Q02c": "V",
+   "Q03a": "V",
+   "Q04a": "V",
+   "Q04b": "F",
+   "Q09": "F",
+   "Q13": "F",
+   "Q15": "V",
+   "Q16": "V"
+  },
+  "esperados": [
+   "A01",
+   "A03",
+   "A04",
+   "A07",
+   "A08",
+   "A09",
+   "A13",
+   "C02",
+   "C03",
+   "C04",
+   "C08",
+   "C09",
+   "C15"
+  ],
+  "reglas_esperadas": [
+   "R02",
+   "R03",
+   "R04",
+   "R08",
+   "R09",
+   "R15",
+   "R16",
+   "R18",
+   "R19",
+   "R22",
+   "R23",
+   "R24",
+   "R43"
+  ],
+  "objetivo": "A09"
+ },
+ {
+  "id": "T13",
+  "nombre": "Bomba detenida y aireador sin aire",
+  "hechos": {
+   "Q09": "V",
+   "Q10": "F",
+   "Q13": "V",
+   "Q14": "F"
+  },
+  "esperados": [
+   "A01",
+   "A02",
+   "C07",
+   "C09",
+   "C11"
+  ],
+  "reglas_esperadas": [
+   "R07",
+   "R09",
+   "R11",
+   "R16",
+   "R17"
+  ],
+  "objetivo": "A02"
+ },
+ {
+  "id": "T14",
+  "nombre": "Oxígeno bajo con aireación activa",
+  "hechos": {
+   "Q01a": "V",
+   "Q01b": "F",
+   "Q02a": "F",
+   "Q02c": "V",
+   "Q13": "V",
+   "Q14": "V"
+  },
+  "esperados": [
+   "A11",
+   "A13",
+   "C01",
+   "C02",
+   "C16"
+  ],
+  "reglas_esperadas": [
+   "R01",
+   "R02",
+   "R26",
+   "R35",
+   "R43"
+  ],
+  "objetivo": "A11",
+  "orden": [
+   "A11",
+   "A13"
+  ]
+ },
+ {
+  "id": "T15",
+  "nombre": "Boqueo con oxígeno en rango",
+  "hechos": {
+   "Q07": "V",
+   "Q01a": "F"
+  },
+  "esperados": [
+   "A05",
+   "A12",
+   "C10",
+   "C17"
+  ],
+  "reglas_esperadas": [
+   "R10",
+   "R20",
+   "R27",
+   "R36"
+  ],
+  "objetivo": "A12",
+  "orden": [
+   "A12",
+   "A05"
+  ]
+ },
+ {
+  "id": "T16",
+  "nombre": "TAN de 4 ppm o más",
+  "hechos": {
+   "Q04a": "V",
+   "Q04b": "V",
+   "Q04c": "V",
+   "Q05a": "F",
+   "Q17": "F"
+  },
+  "esperados": [
+   "A03",
+   "A15",
+   "A18",
+   "C04",
+   "C18",
+   "C19"
+  ],
+  "reglas_esperadas": [
+   "R04",
+   "R18",
+   "R28",
+   "R29",
+   "R37",
+   "R38"
+  ],
+  "objetivo": "A18",
+  "orden": [
+   "A18",
+   "A15",
+   "A03"
+  ]
+ },
+ {
+  "id": "T16b",
+  "nombre": "Contraste de T16: TAN de 0.25 a 1 ppm",
+  "hechos": {
+   "Q04a": "V",
+   "Q04b": "F",
+   "Q05a": "F",
+   "Q17": "F"
+  },
+  "esperados": [
+   "A03",
+   "C04"
+  ],
+  "reglas_esperadas": [
+   "R04",
+   "R18"
+  ],
+  "objetivo": "A03"
+ },
+ {
+  "id": "T17",
+  "nombre": "Biofiltro frenado por pH bajo",
+  "hechos": {
+   "Q05a": "V",
+   "Q17": "F",
+   "Q03a": "V"
+  },
+  "esperados": [
+   "A03",
+   "A04",
+   "A19",
+   "C03",
+   "C05",
+   "C13",
+   "C20"
+  ],
+  "reglas_esperadas": [
+   "R03",
+   "R05",
+   "R13",
+   "R18",
+   "R19",
+   "R30",
+   "R39"
+  ],
+  "objetivo": "A19",
+  "orden": [
+   "A19",
+   "A03",
+   "A04"
+  ]
+ },
+ {
+  "id": "T18",
+  "nombre": "Evasión de mediciones (K7)",
+  "hechos": {
+   "Q07": "V",
+   "Q01a": "D",
+   "Q04a": "D",
+   "Q05a": "D"
+  },
+  "esperados": [
+   "A05",
+   "C10"
+  ],
+  "reglas_esperadas": [
+   "R10",
+   "R20"
+  ],
+  "objetivo": "A05",
+  "avisos": [
+   "K7a"
+  ],
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T19",
+  "nombre": "Aireación con corte eléctrico (K4)",
+  "hechos": {
+   "Q09": "F",
+   "Q13": "V"
+  },
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A09",
+  "conflictos": [
+   "K4"
+  ],
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T20",
+  "nombre": "Respuestas en bloque (K8)",
+  "hechos": {
+   "Q06": "V",
+   "Q07": "V",
+   "Q08": "V",
+   "Q09": "V",
+   "Q10": "V",
+   "Q11": "V",
+   "Q12": "V",
+   "Q13": "V",
+   "Q14": "V",
+   "Q15": "V",
+   "Q16": "V",
+   "Q17": "V",
+   "Q18": "V",
+   "Q19": "V"
+  },
+  "esperados": [
+   "A06"
+  ],
+  "objetivo": "A06",
+  "avisos": [
+   "K8"
+  ],
+  "calidad": "No fiable"
+ },
+ {
+  "id": "T21",
+  "nombre": "Frío, apetito, plantas y mortalidad con peces nuevos",
+  "hechos": {
+   "Q02a": "V",
+   "Q02b": "F",
+   "Q03a": "F",
+   "Q03b": "V",
+   "Q03c": "F",
+   "Q06": "V",
+   "Q08": "V",
+   "Q15": "V",
+   "Q19": "V",
+   "Q20a": "V"
+  },
+  "esperados": [
+   "A05",
+   "A06",
+   "A07",
+   "A14",
+   "A16",
+   "A17",
+   "A20",
+   "A21",
+   "C02",
+   "C10",
+   "C21",
+   "C22",
+   "C23",
+   "C24"
+  ],
+  "reglas_esperadas": [
+   "R02",
+   "R10",
+   "R20",
+   "R21",
+   "R22",
+   "R31",
+   "R32",
+   "R33",
+   "R34",
+   "R40",
+   "R41",
+   "R42",
+   "R44",
+   "R45"
+  ],
+  "objetivo": "A21",
+  "orden": [
+   "A06",
+   "A21",
+   "A05",
+   "A14",
+   "A20",
+   "A16",
+   "A17",
+   "A07"
+  ]
+ },
+ {
+  "id": "T22a",
+  "nombre": "Escalera hacia atrás: Q04a y Q04b = V",
+  "hechos": {
+   "Q04a": "V",
+   "Q04b": "V"
+  },
+  "objetivo": "A15",
+  "solo_atras": true,
+  "estado_atras": "V",
+  "reglas_atras": [
+   "R28",
+   "R37"
+  ],
+  "preguntas_atras": [
+   "Q04a",
+   "Q04b"
+  ]
+ },
+ {
+  "id": "T22b",
+  "nombre": "Escalera hacia atrás: Q04a = F",
+  "hechos": {
+   "Q04a": "F"
+  },
+  "objetivo": "A15",
+  "solo_atras": true,
+  "estado_atras": "F",
+  "preguntas_atras": [
+   "Q04a"
+  ]
+ },
+ {
+  "id": "T22c",
+  "nombre": "Escalera hacia atrás: Q04a = D",
+  "hechos": {
+   "Q04a": "D"
+  },
+  "objetivo": "A15",
+  "solo_atras": true,
+  "estado_atras": "D",
+  "faltantes_atras": [
+   "Q04a"
+  ],
+  "preguntas_atras": [
+   "Q04a"
+  ]
+ },
+ {
+  "id": "T23",
+  "nombre": "Escalera incoherente (K9)",
+  "hechos": {
+   "Q04a": "F",
+   "Q04c": "V"
+  },
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A15",
+  "conflictos": [
+   "K9"
+  ],
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T24a",
+  "nombre": "Hojas nuevas amarillas con pH alto",
+  "hechos": {
+   "Q15": "V",
+   "Q27": "V",
+   "Q21": "F",
+   "Q03a": "F",
+   "Q03b": "V",
+   "Q03c": "F",
+   "Q20a": "F"
+  },
+  "esperados": [
+   "A07",
+   "A17",
+   "A26",
+   "C22",
+   "C25"
+  ],
+  "reglas_esperadas": [
+   "R22",
+   "R32",
+   "R41",
+   "R46",
+   "R55"
+  ],
+  "objetivo": "A26",
+  "orden": [
+   "A17",
+   "A26",
+   "A07"
+  ]
+ },
+ {
+  "id": "T24b",
+  "nombre": "Contraste: crecimiento lento con pH alto",
+  "hechos": {
+   "Q21": "V",
+   "Q24": "V",
+   "Q22": "F",
+   "Q23": "F",
+   "Q25": "F",
+   "Q26": "F",
+   "Q15": "F",
+   "Q03a": "F",
+   "Q03b": "V",
+   "Q03c": "F"
+  },
+  "esperados": [
+   "A17",
+   "C22"
+  ],
+  "reglas_esperadas": [
+   "R32",
+   "R41"
+  ],
+  "objetivo": "A17",
+  "orden": [
+   "A17"
+  ]
+ },
+ {
+  "id": "T25",
+  "nombre": "Amarillamiento con nitrato bajo",
+  "hechos": {
+   "Q15": "V",
+   "Q27": "F",
+   "Q20a": "V",
+   "Q21": "F",
+   "Q03a": "F",
+   "Q03b": "F",
+   "Q03c": "F"
+  },
+  "esperados": [
+   "A07",
+   "A16",
+   "C23"
+  ],
+  "reglas_esperadas": [
+   "R22",
+   "R33",
+   "R42"
+  ],
+  "objetivo": "A16",
+  "orden": [
+   "A16",
+   "A07"
+  ]
+ },
+ {
+  "id": "T26",
+  "nombre": "Puntas secas con temperatura alta",
+  "hechos": {
+   "Q21": "V",
+   "Q22": "V",
+   "Q23": "F",
+   "Q24": "F",
+   "Q25": "F",
+   "Q26": "F",
+   "Q02a": "F",
+   "Q02c": "V"
+  },
+  "esperados": [
+   "A13",
+   "A23",
+   "C02",
+   "C26"
+  ],
+  "reglas_esperadas": [
+   "R02",
+   "R43",
+   "R47",
+   "R52"
+  ],
+  "objetivo": "A23",
+  "orden": [
+   "A13",
+   "A23"
+  ]
+ },
+ {
+  "id": "T27",
+  "nombre": "Marchitez con bomba sin flujo",
+  "hechos": {
+   "Q21": "V",
+   "Q23": "V",
+   "Q22": "F",
+   "Q24": "F",
+   "Q25": "F",
+   "Q26": "F",
+   "Q09": "V",
+   "Q10": "V",
+   "Q11": "F"
+  },
+  "esperados": [
+   "A02",
+   "A22",
+   "C06",
+   "C11",
+   "C27"
+  ],
+  "reglas_esperadas": [
+   "R06",
+   "R11",
+   "R17",
+   "R48",
+   "R51",
+   "R58"
+  ],
+  "objetivo": "A22",
+  "orden": [
+   "A02",
+   "A22"
+  ]
+ },
+ {
+  "id": "T28",
+  "nombre": "Raíces oscuras con oxígeno bajo y nitrato bajo",
+  "hechos": {
+   "Q21": "V",
+   "Q26": "V",
+   "Q22": "F",
+   "Q23": "F",
+   "Q24": "F",
+   "Q25": "F",
+   "Q01a": "V",
+   "Q01b": "F",
+   "Q13": "V",
+   "Q14": "V",
+   "Q20a": "V"
+  },
+  "esperados": [
+   "A11",
+   "A16",
+   "A24",
+   "A25",
+   "C01",
+   "C16",
+   "C23",
+   "C28"
+  ],
+  "reglas_esperadas": [
+   "R01",
+   "R26",
+   "R33",
+   "R35",
+   "R42",
+   "R49",
+   "R53",
+   "R54"
+  ],
+  "objetivo": "A24",
+  "orden": [
+   "A11",
+   "A16",
+   "A24",
+   "A25"
+  ]
+ },
+ {
+  "id": "T29",
+  "nombre": "Insectos visibles",
+  "hechos": {
+   "Q15": "V",
+   "Q21": "V",
+   "Q25": "V",
+   "Q22": "F",
+   "Q23": "F",
+   "Q24": "F",
+   "Q26": "F"
+  },
+  "esperados": [
+   "A07",
+   "A27"
+  ],
+  "reglas_esperadas": [
+   "R22",
+   "R56"
+  ],
+  "objetivo": "A27",
+  "orden": [
+   "A27",
+   "A07"
+  ]
+ },
+ {
+  "id": "T30",
+  "nombre": "Amarillamiento sin causa medible",
+  "hechos": {
+   "Q15": "V",
+   "Q21": "F",
+   "Q03a": "F",
+   "Q03b": "F",
+   "Q03c": "F",
+   "Q20a": "F"
+  },
+  "esperados": [
+   "A07",
+   "A28",
+   "C29"
+  ],
+  "reglas_esperadas": [
+   "R22",
+   "R50",
+   "R57"
+  ],
+  "objetivo": "A28",
+  "orden": [
+   "A28",
+   "A07"
+  ]
+ },
+ {
+  "id": "T31",
+  "nombre": "Síntoma de planta sin compuerta (K9)",
+  "hechos": {
+   "Q21": "F",
+   "Q23": "V"
+  },
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A22",
+  "conflictos": [
+   "K9"
+  ],
+  "calidad": "Parcial"
+ },
+ {
+  "id": "T32",
+  "nombre": "Otro síntoma indicado pero no precisado (K7b)",
+  "hechos": {
+   "Q21": "V",
+   "Q15": "F",
+   "Q22": "F",
+   "Q23": "F",
+   "Q24": "F",
+   "Q25": "F",
+   "Q26": "F"
+  },
+  "esperados": [],
+  "reglas_esperadas": [],
+  "objetivo": "A07",
+  "avisos": [
+   "K7b"
+  ],
+  "calidad": "Parcial"
+ }
+]

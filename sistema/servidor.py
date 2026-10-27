@@ -1,89 +1,95 @@
-"""Servidor local sin dependencias externas; publica exclusivamente la carpeta interfaz/ y la API."""
-import argparse
+"""Servidor de desarrollo local: publica solo la interfaz y las rutas declaradas."""
+import argparse as argumentos
 import json
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlsplit
+from http.server import BaseHTTPRequestHandler as ManejadorBase
+from http.server import ThreadingHTTPServer as ServidorConcurrente
+from urllib.parse import urlsplit as dividir_ruta
 
-from .inferencia import comparar, ejecutar
-from .consulta import consultar
 from .conocimientos import RAIZ_PROYECTO, cargar_conocimientos
+from .motor import ejecutar, comparar
+from .consulta import consultar
+from .casos import evaluar_todos
 
-BASE_CONOCIMIENTOS = cargar_conocimientos()
-EJEMPLOS = json.loads((RAIZ_PROYECTO / "conocimientos" / "ejemplos.json").read_text(encoding="utf-8"))
-POLITICA = json.loads((RAIZ_PROYECTO / "conocimientos" / "consulta.json").read_text(encoding="utf-8"))
-ARCHIVOS_PUBLICOS = {"/": ("inicio.html", "text/html"), "/inicio.html": ("inicio.html", "text/html"),
-          "/estilos.css": ("estilos.css", "text/css"), "/aplicacion.js": ("aplicacion.js", "text/javascript"),
-          "/academico.html": ("academico.html", "text/html"),
-          "/academico.css": ("academico.css", "text/css"), "/academico.js": ("academico.js", "text/javascript")}
+BASE = cargar_conocimientos()
+CASOS = json.loads((RAIZ_PROYECTO / "conocimientos/casos_prueba.json").read_text(encoding="utf-8"))
+PUBLICOS = {"/": ("inicio.html", "text/html"), "/inicio.html": ("inicio.html", "text/html"),
+            "/estilos.css": ("estilos.css", "text/css"), "/aplicacion.js": ("aplicacion.js", "text/javascript"),
+            "/laboratorio.html": ("laboratorio.html", "text/html"),
+            "/laboratorio.js": ("laboratorio.js", "text/javascript"),
+            "/utilidades.js": ("utilidades.js", "text/javascript"),
+            "/favicon.svg": ("imagenes/icono.svg", "image/svg+xml")}
+for nombre in ("pez.png", "lechuga.png", "expresiones_pez.png", "expresiones_lechuga.png"):
+    PUBLICOS[f"/imagenes/{nombre}"] = (f"imagenes/{nombre}", "image/png")
 
 
-class ManejadorHTTP(BaseHTTPRequestHandler):
-    def responder(self, estado_http, contenido_peticion, tipo_contenido="application/json"):
-        """Envía una respuesta HTTP con tipo y longitud del contenido."""
-        contenido = contenido_peticion if isinstance(contenido_peticion, bytes) else json.dumps(contenido_peticion, ensure_ascii=False).encode("utf-8")
-        self.send_response(estado_http)
-        self.send_header("Content-Type", f"{tipo_contenido}; charset=utf-8")
-        self.send_header("Content-Length", str(len(contenido)))
-        self.send_header("Cache-Control", "no-store")
-        self.send_header("X-Content-Type-Options", "nosniff")
-        self.send_header("Content-Security-Policy", "default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self'; frame-ancestors 'none'")
-        self.end_headers()
-        self.wfile.write(contenido)
+class ManejadorHTTP(ManejadorBase):
+    """Traduce HTTP a funciones del sistema; no conserva sesiones ni respuestas."""
 
-    def do_GET(self):
-        """Entrega únicamente archivos públicos y catálogos autorizados."""
-        ruta = urlsplit(self.path).path
-        if ruta in ARCHIVOS_PUBLICOS:
-            nombre_archivo, mime = ARCHIVOS_PUBLICOS[ruta]
-            self.responder(200, (RAIZ_PROYECTO / "interfaz" / nombre_archivo).read_bytes(), mime)
-        elif ruta == "/api/conocimientos":
-            self.responder(200, BASE_CONOCIMIENTOS)
-        elif ruta == "/api/ejemplos":
-            self.responder(200, EJEMPLOS)
-        elif ruta == "/api/temas":
-            self.responder(200, POLITICA['temas'])
+    def responder(servidor, estado, contenido, tipo="application/json"):
+        """Envía JSON o bytes junto con cabeceras que evitan cargar código externo."""
+        cuerpo = contenido if isinstance(contenido, bytes) else json.dumps(contenido, ensure_ascii=False, allow_nan=False).encode("utf-8")
+        servidor.send_response(estado)
+        servidor.send_header("Content-Type", tipo if tipo.startswith("image/") and "svg" not in tipo else f"{tipo}; charset=utf-8")
+        servidor.send_header("Content-Length", str(len(cuerpo)))
+        servidor.send_header("Cache-Control", "no-store")
+        servidor.send_header("X-Content-Type-Options", "nosniff")
+        servidor.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'")
+        servidor.end_headers()
+        servidor.wfile.write(cuerpo)
+
+    def do_GET(servidor):
+        """Contrato HTTP obligatorio: sirve archivos permitidos y catálogos públicos."""
+        ruta = dividir_ruta(servidor.path).path
+        if ruta in PUBLICOS:
+            nombre, tipo = PUBLICOS[ruta]
+            servidor.responder(200, (RAIZ_PROYECTO / "interfaz" / nombre).read_bytes(), tipo)
+        elif ruta == "/api/base":
+            servidor.responder(200, BASE)
+        elif ruta == "/api/casos":
+            servidor.responder(200, CASOS)
+        elif ruta == "/api/casos/ejecutar":
+            servidor.responder(200, evaluar_todos(BASE, CASOS))
         else:
-            self.responder(404, {"error": "Ruta no encontrada"})
+            servidor.responder(404, {"error": "Ruta no encontrada"})
 
-    def do_POST(self):
-        """Valida una consulta JSON y delega el razonamiento en el motor."""
-        ruta = urlsplit(self.path).path
-        if ruta not in ("/api/inferir", "/api/comparar", "/api/consultar"):
-            self.responder(404, {"error": "Ruta no encontrada"})
+    def do_POST(servidor):
+        """Contrato HTTP obligatorio: valida JSON y ejecuta la operación solicitada."""
+        ruta = dividir_ruta(servidor.path).path
+        if ruta not in ("/api/consultar", "/api/inferir", "/api/comparar"):
+            servidor.responder(404, {"error": "Ruta no encontrada"})
             return
         try:
-            longitud = int(self.headers.get("Content-Length", "0"))
+            longitud = int(servidor.headers.get("Content-Length", "0"))
             if not 0 < longitud <= 32768:
-                raise ValueError("Tamaño de petición inválido (máximo 32 KiB)")
-            if self.headers.get_content_type() != "application/json":
-                raise ValueError("Se requiere Content-Type: application/json")
-            contenido_peticion = json.loads(self.rfile.read(longitud))
-            if not isinstance(contenido_peticion, dict):
+                raise ValueError("La petición debe contener entre 1 y 32768 bytes")
+            if servidor.headers.get_content_type() != "application/json":
+                raise ValueError("Se requiere contenido JSON")
+            datos = json.loads(servidor.rfile.read(longitud))
+            if not isinstance(datos, dict):
                 raise ValueError("La petición debe ser un objeto JSON")
-            hechos, objetivo = contenido_peticion.get("hechos", {}), contenido_peticion.get("objetivo", "C27")
+            hechos = datos.get("hechos", {})
             if ruta == "/api/consultar":
-                resultado = consultar(BASE_CONOCIMIENTOS, POLITICA, hechos, contenido_peticion.get('tema', 'explorar'))
+                resultado = consultar(BASE, hechos, datos.get("cierre"), datos.get("continuar") is True)
             elif ruta == "/api/comparar":
-                resultado = comparar(BASE_CONOCIMIENTOS, hechos, objetivo)
+                resultado = comparar(BASE, hechos, datos.get("objetivo", "A01"))
             else:
-                resultado = ejecutar(BASE_CONOCIMIENTOS, hechos, contenido_peticion.get("modo", "adelante"), objetivo)
-            self.responder(200, resultado)
-        except (ValueError, UnicodeDecodeError, TypeError) as error:
-            self.responder(400, {"error": str(error)})
+                resultado = ejecutar(BASE, hechos, datos.get("modo", "adelante"), datos.get("objetivo", "A01"))
+            servidor.responder(200, resultado)
+        except (ValueError, TypeError, OverflowError, KeyError, AttributeError) as error:
+            servidor.responder(400, {"error": str(error)})
 
-    def log_message(self, format, *argumentos):
-        """Evita registrar las respuestas aportadas por el usuario."""
-        # No registrar respuestas ni datos de las consultas.
+    def log_message(servidor, formato, *argumentos_adicionales):
+        """Contrato heredado: se omite el registro para no almacenar consultas."""
         pass
 
 
-def principal():
-    """Inicia el servidor local y lo cierra de forma controlada."""
-    analizador = argparse.ArgumentParser(description="Prototipo local de sistema experto acuapónico")
+def iniciar():
+    """Lee el puerto y mantiene el servidor en el equipo local hasta Ctrl+C."""
+    analizador = argumentos.ArgumentParser(description="Sistema experto acuapónico educativo")
     analizador.add_argument("--puerto", type=int, default=8000)
-    argumentos = analizador.parse_args()
-    servidor = ThreadingHTTPServer(("127.0.0.1", argumentos.puerto), ManejadorHTTP)
-    print(f"Sistema experto disponible en http://127.0.0.1:{argumentos.puerto}", flush=True)
+    opciones = analizador.parse_args()
+    servidor = ServidorConcurrente(("127.0.0.1", opciones.puerto), ManejadorHTTP)
+    print(f"Abre http://127.0.0.1:{opciones.puerto}", flush=True)
     try:
         servidor.serve_forever()
     except KeyboardInterrupt:
@@ -93,4 +99,4 @@ def principal():
 
 
 if __name__ == "__main__":
-    principal()
+    iniciar()

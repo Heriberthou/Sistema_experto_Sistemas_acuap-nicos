@@ -1,24 +1,40 @@
 <!doctype html>
-<html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Una consulta guiada para comprender qué ocurre en tu sistema acuapónico."><title>Acuaponía · Consulta guiada</title><link rel="stylesheet" href="/estilos.css"><script src="/aplicacion.js" defer></script></head>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta guiada para revisar un sistema acuapónico de tilapia y lechuga.">
+  <title>Acuavida · Tu sistema, paso a paso</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/estilos.css"><script type="module" src="/aplicacion.js"></script>
+</head>
 <body>
-<header><a class="brand" href="/" aria-label="Acuaponía, inicio"><span class="brand-mark">≈</span>acuaponía</a><span class="header-note">Tilapia y lechuga</span></header>
-<main>
-<div id="error" class="error" role="alert" hidden><p id="error-texto"></p><button id="retry">Volver a intentar</button></div>
-<section id="welcome">
-  <p class="eyebrow">OBSERVA. RESPONDE. COMPRENDE.</p>
-  <h1>¿Qué notas en<br>tu sistema?</h1>
-  <p class="intro">Cuéntanos qué ocurre. Te haremos algunas preguntas<br class="wide"> para ayudarte a saber qué revisar.</p>
-  <div id="temas" class="temas"><p>Cargando…</p></div>
-  <p class="quiet">Las preguntas cambian según tus respuestas.<br>Si no tienes un dato, puedes responder «Desconozco».</p>
-</section>
-<section id="consultation" hidden>
-  <div class="consult-top"><button id="reiniciarConsulta" class="texto-button">← Volver al inicio</button><span id="tema-titulo"></span></div>
-  <div id="pregunta-tarjeta" class="pregunta-tarjeta" aria-live="polite"></div>
-  <div id="outcome" hidden aria-live="polite"></div>
-  <details id="history" class="history" hidden><summary>Revisar mis respuestas</summary><p class="small">Usa la misma muestra o período de observación. Puedes corregir una respuesta y volveremos a analizarla.</p><div id="answers-list"></div></details>
-  <details id="technical" class="technical" hidden><summary>Detalle del razonamiento</summary><div id="technical-content"></div></details>
-</section>
-<footer><p>Guía educativa para escenarios simulados. No sustituye una valoración especializada.</p><a href="/academico.html">Material académico</a></footer>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="cabecera"><a class="marca" href="/" aria-label="Acuavida, inicio"><span class="simbolo-marca" aria-hidden="true">≈</span><span>acuavida<small>ACUAPONÍA EN EQUILIBRIO</small></span></a>
+  <div class="acciones-cabecera"><span class="etiqueta-cabecera"><i></i> Tilapia + lechuga</span><button id="boton-tema" class="boton-tema" type="button" aria-label="Cambiar tema"></button></div></header>
+<main id="contenido">
+  <div id="error" class="aviso error" role="alert" hidden><svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17.5v.1"/></svg><div><p id="mensaje-error"></p><button id="reintentar" class="boton-texto" type="button">Reintentar</button></div></div>
+  <section id="bienvenida">
+    <div class="presentacion"><div class="texto-presentacion"><p class="antetitulo">Un poco de atención hace la diferencia</p><h1>Descubre qué necesita<br>tu <em>ecosistema.</em></h1><p class="introduccion">Responde Sí, No o Desconozco. Yo decido qué preguntar según lo que me cuentes y te digo qué revisar primero, con el porqué y la fuente.</p><button id="iniciar-revision" class="boton-principal" type="button" disabled>Empezar mi consulta <span aria-hidden="true">→</span></button><p class="nota-breve">Sin registros. No tienes que teclear números. A tu ritmo.</p></div>
+      <div class="escena" aria-hidden="true"><div class="circulo-agua"></div><span class="burbuja una"></span><span class="burbuja dos"></span><span class="burbuja tres"></span><div class="etiqueta-escena">Cada observación cuenta</div><img class="lechuga-portada" src="/imagenes/lechuga.png" alt=""><img class="pez-portada" src="/imagenes/pez.png" alt=""></div>
+    </div>
+    <h2 class="antetitulo">Qué reviso contigo</h2>
+    <div id="areas" class="cuatro-areas"></div>
+    <div class="guia-corta"><span class="numero-paso">1</span><p>Responde lo que sabes</p><span class="linea"></span><span class="numero-paso">2</span><p>Confirmo contigo lo que entendí</p><span class="linea"></span><span class="numero-paso">3</span><p>Recibes qué hacer, en orden</p></div>
+  </section>
+  <section id="consulta" hidden>
+    <div class="barra-consulta"><button id="volver" class="boton-texto" type="button">← Salir</button><div class="progreso" id="progreso"><span id="texto-progreso">Pregunta 1</span><div class="barra"><span id="relleno-progreso"></span></div></div></div>
+    <div class="rejilla-consulta">
+      <div class="columna-principal">
+        <div id="avisos"></div>
+        <div id="zona-pregunta" class="zona-pregunta"><aside class="acompanante"><div id="mascota-consulta" class="mascota pez pensando late" aria-hidden="true"></div><h2 id="titulo-acompanante">Vamos paso a paso.</h2><p>Si no conoces una respuesta,<br>está bien decir «Desconozco».</p><span class="insignia">UNA PREGUNTA A LA VEZ</span></aside><section id="tarjeta-pregunta" class="tarjeta" aria-live="polite"></section></div>
+        <section id="resultado" hidden aria-live="polite"></section>
+        <details id="historial" class="desplegable" hidden><summary>Revisar o corregir mis respuestas</summary><p class="texto-secundario">Si cambias una respuesta, vuelvo a analizar todo.</p><div id="lista-respuestas"></div></details>
+        <details id="detalle" class="desplegable" hidden><summary>Ver cómo razonó el sistema</summary><div id="contenido-detalle"></div></details>
+      </div>
+      <aside id="panel-sistema" class="panel-sistema" aria-label="Resumen de tu sistema"></aside>
+    </div>
+  </section>
+  <footer class="pie"><p><strong>Una guía para aprender.</strong> No establece diagnósticos ni sustituye una valoración especializada.</p><a href="/laboratorio.html">Laboratorio académico ↗</a></footer>
 </main>
-</body></html>
+</body>
+</html>

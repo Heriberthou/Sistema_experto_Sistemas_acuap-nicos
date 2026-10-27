@@ -1,0 +1,2679 @@
+{
+  "version": 4,
+  "documento": "Documentacion_Sistema_Experto_v3",
+  "preguntas": [
+    {
+      "id": "Q01a",
+      "simbolo": "oxigeno_menor_5",
+      "texto": "¿El oxígeno disuelto medido es menor a 5 mg/L?",
+      "ayuda": "Mide con tu medidor de oxígeno disuelto, mejor al amanecer, cuando suele estar más bajo. Si no tienes medidor, responde «Desconozco».",
+      "grupo": "agua",
+      "parametro": "oxigeno"
+    },
+    {
+      "id": "Q01b",
+      "simbolo": "oxigeno_menor_2",
+      "texto": "¿Es menor a 2 mg/L?",
+      "ayuda": "Revisa la misma lectura del medidor. Si no la tienes a la mano, responde «Desconozco».",
+      "grupo": "agua",
+      "parametro": "oxigeno",
+      "padre": "Q01a",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q02a",
+      "simbolo": "temperatura_menor_25",
+      "texto": "¿La temperatura del agua medida es menor a 25 °C?",
+      "ayuda": "Usa un termómetro dentro del agua del tanque, no la temperatura del ambiente.",
+      "grupo": "agua",
+      "parametro": "temperatura"
+    },
+    {
+      "id": "Q02b",
+      "simbolo": "temperatura_menor_17",
+      "texto": "¿Es menor a 17 °C?",
+      "ayuda": "Revisa la misma lectura del termómetro.",
+      "grupo": "agua",
+      "parametro": "temperatura",
+      "padre": "Q02a",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q02c",
+      "simbolo": "temperatura_mayor_30",
+      "texto": "¿Es mayor a 30 °C?",
+      "ayuda": "Revisa la misma lectura del termómetro.",
+      "grupo": "agua",
+      "parametro": "temperatura",
+      "padre": "Q02a",
+      "valor_padre": "F"
+    },
+    {
+      "id": "Q03a",
+      "simbolo": "ph_menor_6",
+      "texto": "¿El pH medido es menor a 6?",
+      "ayuda": "Usa tu kit o medidor de pH con una muestra del tanque. Si la lectura es exactamente 6, responde «No».",
+      "grupo": "agua",
+      "parametro": "ph"
+    },
+    {
+      "id": "Q03b",
+      "simbolo": "ph_mayor_7_5",
+      "texto": "¿El pH es mayor a 7.5?",
+      "ayuda": "Revisa la misma lectura de pH. Si es exactamente 7.5, responde «No».",
+      "grupo": "agua",
+      "parametro": "ph",
+      "padre": "Q03a",
+      "valor_padre": "F"
+    },
+    {
+      "id": "Q03c",
+      "simbolo": "ph_mayor_8_5",
+      "texto": "¿El pH es mayor a 8.5?",
+      "ayuda": "Revisa la misma lectura de pH. Si es exactamente 8.5, responde «No».",
+      "grupo": "agua",
+      "parametro": "ph",
+      "padre": "Q03b",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q04a",
+      "simbolo": "tan_mayor_0_25",
+      "texto": "¿El nitrógeno amoniacal total (TAN) medido es mayor a 0.25 ppm?",
+      "ayuda": "Usa un kit de amoníaco/TAN. Si tu kit mide amoníaco, nitrógeno amoniacal o amonio, comprueba qué unidad indica la tabla de colores; si dudas, responde «Desconozco». Con exactamente 0.25 ppm responde «No».",
+      "grupo": "agua",
+      "parametro": "tan"
+    },
+    {
+      "id": "Q04b",
+      "simbolo": "tan_mayor_1",
+      "texto": "¿Es mayor a 1 ppm?",
+      "ayuda": "Revisa la misma lectura de TAN. Con exactamente 1 ppm responde «No».",
+      "grupo": "agua",
+      "parametro": "tan",
+      "padre": "Q04a",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q04c",
+      "simbolo": "tan_mayor_igual_4",
+      "texto": "¿Es de 4 ppm o más?",
+      "ayuda": "Revisa la misma lectura de TAN.",
+      "grupo": "agua",
+      "parametro": "tan",
+      "padre": "Q04b",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q05a",
+      "simbolo": "nitrito_mayor_igual_1",
+      "texto": "¿El nitrito (NO₂⁻) medido es de 1 mg/L o más?",
+      "ayuda": "Usa un kit de nitrito (NO₂⁻). Responde «Sí» si la lectura es de 1 mg/L o mayor.",
+      "grupo": "agua",
+      "parametro": "nitrito"
+    },
+    {
+      "id": "Q06",
+      "simbolo": "peces_muertos",
+      "texto": "¿Se encontró al menos un pez muerto recientemente?",
+      "ayuda": "Cuenta los peces que aparecieron muertos en los últimos días. Con uno basta para responder «Sí».",
+      "grupo": "peces"
+    },
+    {
+      "id": "Q07",
+      "simbolo": "peces_boqueando",
+      "texto": "¿Se observan peces boqueando repetidamente en la superficie?",
+      "ayuda": "Observa en la superficie, sobre todo por la mañana. Boquear es abrir y cerrar la boca en la superficie varias veces.",
+      "grupo": "peces"
+    },
+    {
+      "id": "Q08",
+      "simbolo": "apetito_reducido",
+      "texto": "¿Los peces han disminuido su consumo habitual de alimento?",
+      "ayuda": "Compara con lo que comían normalmente: si queda alimento sin consumir pasados unos minutos, responde «Sí».",
+      "grupo": "peces"
+    },
+    {
+      "id": "Q09",
+      "simbolo": "electricidad_disponible",
+      "texto": "¿Existe suministro eléctrico en el sistema?",
+      "ayuda": "Comprueba que haya luz o corriente en el sistema y que el interruptor o térmico no esté disparado.",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q10",
+      "simbolo": "bomba_encendida",
+      "texto": "¿La bomba de recirculación está encendida?",
+      "ayuda": "Mira o escucha la bomba de recirculación: debe vibrar y mover agua.",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q11",
+      "simbolo": "agua_circula",
+      "texto": "¿Se observa circulación de agua por la salida habitual?",
+      "ayuda": "Mira la salida habitual del agua (cama de cultivo o retorno al tanque): debe verse correr agua.",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q12",
+      "simbolo": "obstruccion_visible",
+      "texto": "¿Se observa una obstrucción en el prefiltro o en las tuberías?",
+      "ayuda": "Revisa el prefiltro, las tuberías y las válvulas: hojas, lodo o raíces pueden taparlos.",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q13",
+      "simbolo": "aireador_encendido",
+      "texto": "¿El aireador está encendido?",
+      "ayuda": "Si tu sistema no tiene aireador, responde «No».",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q14",
+      "simbolo": "aire_visible",
+      "texto": "¿Se observa salida de aire en el punto de aireación?",
+      "ayuda": "Mira el difusor (piedra de aire) en el tanque: deben salir burbujas continuas.",
+      "grupo": "equipos"
+    },
+    {
+      "id": "Q15",
+      "simbolo": "plantas_amarillas",
+      "texto": "¿Las lechugas presentan amarillamiento anormal de hojas?",
+      "ayuda": "Hojas pálidas o amarillas que no corresponden a hojas viejas del borde que se secan de forma natural.",
+      "grupo": "plantas"
+    },
+    {
+      "id": "Q16",
+      "simbolo": "agua_verdosa",
+      "texto": "¿El agua del tanque presenta una coloración verde anormal?",
+      "ayuda": "Compara el agua con un vaso transparente: si se ve verde o turbia, responde «Sí».",
+      "grupo": "agua"
+    },
+    {
+      "id": "Q17",
+      "simbolo": "ciclado_inicial",
+      "texto": "¿El sistema se encuentra en su etapa inicial de ciclado?",
+      "ayuda": "Es la etapa inicial en la que las bacterias todavía se están estableciendo (suele durar varias semanas desde que se llenó el sistema).",
+      "grupo": "contexto"
+    },
+    {
+      "id": "Q18",
+      "simbolo": "hay_peces",
+      "texto": "¿Hay peces en el sistema?",
+      "ayuda": "Responde «No» si estás ciclando el sistema sin peces.",
+      "grupo": "peces"
+    },
+    {
+      "id": "Q19",
+      "simbolo": "peces_nuevos",
+      "texto": "¿Se introdujeron peces nuevos en los últimos 7 días?",
+      "ayuda": "Cuenta cualquier ingreso de peces nuevos durante la última semana.",
+      "grupo": "peces"
+    },
+    {
+      "id": "Q20a",
+      "simbolo": "nitrato_menor_10",
+      "texto": "¿El nitrato (NO₃⁻) medido es menor a 10 mg/L?",
+      "ayuda": "Usa un kit de nitrato (NO₃⁻). Responde «Sí» solo si la lectura es menor a 10 mg/L.",
+      "grupo": "agua",
+      "parametro": "nitrato"
+    },
+    {
+      "id": "Q21",
+      "simbolo": "otros_sintomas_plantas",
+      "texto": "¿Observa en las lechugas algún síntoma distinto del amarillamiento (puntas secas, marchitez, crecimiento lento, insectos o raíces dañadas)?",
+      "ayuda": "Piensa en puntas secas, hojas caídas, plantas pequeñas, bichos o raíces dañadas. Si no hay ninguno, responde «No».",
+      "grupo": "plantas",
+      "despues_de": "Q15"
+    },
+    {
+      "id": "Q22",
+      "simbolo": "puntas_secas",
+      "texto": "¿Las hojas tienen puntas o bordes secos, quemados o marrones?",
+      "ayuda": "Mira el borde y la punta de las hojas, sobre todo las del centro.",
+      "grupo": "plantas",
+      "padre": "Q21",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q23",
+      "simbolo": "marchitez",
+      "texto": "¿Las lechugas se ven marchitas o caídas?",
+      "ayuda": "Fíjate en las hojas caídas o sin firmeza, sobre todo en las horas de calor.",
+      "grupo": "plantas",
+      "padre": "Q21",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q24",
+      "simbolo": "crecimiento_lento",
+      "texto": "¿Las lechugas crecen más lento o se ven más pequeñas de lo esperado?",
+      "ayuda": "Compara con otras lechugas de la misma edad o con lo que esperabas.",
+      "grupo": "plantas",
+      "padre": "Q21",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q25",
+      "simbolo": "insectos_visibles",
+      "texto": "¿Se ven insectos (por ejemplo, pulgones) en las hojas, sobre todo en el envés?",
+      "ayuda": "Voltea las hojas y revisa el envés: los pulgones suelen agruparse ahí.",
+      "grupo": "plantas",
+      "padre": "Q21",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q26",
+      "simbolo": "raices_danadas",
+      "texto": "¿Las raíces se ven oscuras, viscosas o huelen mal?",
+      "ayuda": "Saca con cuidado una planta y mira sus raíces: sanas son claras y casi sin olor.",
+      "grupo": "plantas",
+      "padre": "Q21",
+      "valor_padre": "V"
+    },
+    {
+      "id": "Q27",
+      "simbolo": "amarillo_hojas_nuevas",
+      "texto": "¿El amarillamiento aparece sobre todo en las hojas nuevas (las del centro)?",
+      "ayuda": "Las hojas nuevas son las pequeñas del centro; las viejas están en el borde.",
+      "grupo": "plantas",
+      "padre": "Q15",
+      "valor_padre": "V"
+    }
+  ],
+  "parametros": [
+    {
+      "id": "oxigeno",
+      "nombre": "Oxígeno disuelto",
+      "unidad": "mg/L",
+      "escalera": [
+        "Q01a",
+        "Q01b"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q01a": "F"
+          },
+          "texto": "5 mg/L o más",
+          "nivel": "ok"
+        },
+        {
+          "cuando": {
+            "Q01a": "V",
+            "Q01b": "F"
+          },
+          "texto": "de 2 a menos de 5 mg/L",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q01a": "V",
+            "Q01b": "V"
+          },
+          "texto": "menos de 2 mg/L",
+          "nivel": "critico"
+        }
+      ]
+    },
+    {
+      "id": "temperatura",
+      "nombre": "Temperatura",
+      "unidad": "°C",
+      "escalera": [
+        "Q02a",
+        "Q02b",
+        "Q02c"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q02a": "V",
+            "Q02b": "V"
+          },
+          "texto": "menos de 17 °C",
+          "nivel": "critico"
+        },
+        {
+          "cuando": {
+            "Q02a": "V",
+            "Q02b": "F"
+          },
+          "texto": "de 17 a menos de 25 °C",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q02a": "F",
+            "Q02c": "F"
+          },
+          "texto": "de 25 a 30 °C",
+          "nivel": "ok"
+        },
+        {
+          "cuando": {
+            "Q02a": "F",
+            "Q02c": "V"
+          },
+          "texto": "más de 30 °C",
+          "nivel": "atencion"
+        }
+      ]
+    },
+    {
+      "id": "ph",
+      "nombre": "pH",
+      "unidad": "",
+      "escalera": [
+        "Q03a",
+        "Q03b",
+        "Q03c"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q03a": "V"
+          },
+          "texto": "menos de 6",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q03a": "F",
+            "Q03b": "F"
+          },
+          "texto": "de 6 a 7.5",
+          "nivel": "ok"
+        },
+        {
+          "cuando": {
+            "Q03b": "V",
+            "Q03c": "F"
+          },
+          "texto": "más de 7.5 y hasta 8.5",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q03c": "V"
+          },
+          "texto": "más de 8.5",
+          "nivel": "critico"
+        }
+      ]
+    },
+    {
+      "id": "tan",
+      "nombre": "Amoníaco (TAN)",
+      "unidad": "ppm",
+      "escalera": [
+        "Q04a",
+        "Q04b",
+        "Q04c"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q04a": "F"
+          },
+          "texto": "0.25 ppm o menos",
+          "nivel": "ok"
+        },
+        {
+          "cuando": {
+            "Q04a": "V",
+            "Q04b": "F"
+          },
+          "texto": "más de 0.25 y hasta 1 ppm",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q04b": "V",
+            "Q04c": "F"
+          },
+          "texto": "más de 1 y menos de 4 ppm",
+          "nivel": "critico"
+        },
+        {
+          "cuando": {
+            "Q04c": "V"
+          },
+          "texto": "4 ppm o más",
+          "nivel": "critico"
+        }
+      ]
+    },
+    {
+      "id": "nitrito",
+      "nombre": "Nitrito",
+      "unidad": "mg/L",
+      "escalera": [
+        "Q05a"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q05a": "V"
+          },
+          "texto": "1 mg/L o más",
+          "nivel": "critico"
+        },
+        {
+          "cuando": {
+            "Q05a": "F"
+          },
+          "texto": "menos de 1 mg/L",
+          "nivel": "ok"
+        }
+      ]
+    },
+    {
+      "id": "nitrato",
+      "nombre": "Nitrato",
+      "unidad": "mg/L",
+      "escalera": [
+        "Q20a"
+      ],
+      "intervalos": [
+        {
+          "cuando": {
+            "Q20a": "V"
+          },
+          "texto": "menos de 10 mg/L",
+          "nivel": "atencion"
+        },
+        {
+          "cuando": {
+            "Q20a": "F"
+          },
+          "texto": "10 mg/L o más",
+          "nivel": "ok"
+        }
+      ]
+    }
+  ],
+  "conclusiones": [
+    {
+      "id": "C01",
+      "simbolo": "oxigeno_bajo",
+      "tipo": "Condición",
+      "descripcion": "Oxígeno disuelto inferior a 5 mg/L.",
+      "titulo": "Oxígeno bajo",
+      "grupo": "agua"
+    },
+    {
+      "id": "C02",
+      "simbolo": "temperatura_fuera_rango",
+      "tipo": "Condición",
+      "descripcion": "Temperatura fuera de 25-30 °C.",
+      "titulo": "Temperatura fuera de rango",
+      "grupo": "agua"
+    },
+    {
+      "id": "C03",
+      "simbolo": "ph_fuera_rango",
+      "tipo": "Condición",
+      "descripcion": "pH fuera de 6-8.5.",
+      "titulo": "pH fuera de rango",
+      "grupo": "agua"
+    },
+    {
+      "id": "C04",
+      "simbolo": "tan_elevado",
+      "tipo": "Condición",
+      "descripcion": "TAN por encima de 0.25 ppm.",
+      "titulo": "Amoníaco (TAN) elevado",
+      "grupo": "agua"
+    },
+    {
+      "id": "C05",
+      "simbolo": "nitrito_elevado",
+      "tipo": "Condición",
+      "descripcion": "Nitrito igual o superior a 1 mg/L.",
+      "titulo": "Nitrito elevado",
+      "grupo": "agua"
+    },
+    {
+      "id": "C06",
+      "simbolo": "bomba_sin_flujo",
+      "tipo": "Condición",
+      "descripcion": "Bomba encendida sin circulación observable.",
+      "titulo": "Bomba sin flujo",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C07",
+      "simbolo": "bomba_detenida_con_energia",
+      "tipo": "Condición",
+      "descripcion": "Bomba apagada aunque hay suministro eléctrico.",
+      "titulo": "Bomba detenida con energía",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C08",
+      "simbolo": "sin_energia",
+      "tipo": "Condición",
+      "descripcion": "Falta de suministro eléctrico informada.",
+      "titulo": "Sin energía eléctrica",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C09",
+      "simbolo": "falla_aireacion",
+      "tipo": "Condición",
+      "descripcion": "Aireador apagado, o encendido sin salida de aire observable.",
+      "titulo": "Falla de aireación",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C10",
+      "simbolo": "signos_estres_peces",
+      "tipo": "Condición",
+      "descripcion": "Boqueo o disminución del apetito.",
+      "titulo": "Signos de estrés en los peces",
+      "grupo": "peces"
+    },
+    {
+      "id": "C11",
+      "simbolo": "posible_falla_recirculacion",
+      "tipo": "Condición",
+      "descripcion": "Bomba sin flujo, bomba detenida u obstrucción visible.",
+      "titulo": "Posible falla de recirculación",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C12",
+      "simbolo": "compatible_oxigenacion",
+      "tipo": "Hipótesis",
+      "descripcion": "Evidencia compatible con un problema de oxigenación; no es diagnóstico causal.",
+      "titulo": "Posible problema de oxigenación",
+      "grupo": "agua"
+    },
+    {
+      "id": "C13",
+      "simbolo": "biofiltracion_insuficiente",
+      "tipo": "Hipótesis",
+      "descripcion": "Posible insuficiencia de biofiltración por nitrito elevado fuera del ciclado inicial.",
+      "titulo": "Biofiltración posiblemente insuficiente",
+      "grupo": "agua"
+    },
+    {
+      "id": "C14",
+      "simbolo": "nitrogenados_en_ciclado",
+      "tipo": "Contexto",
+      "descripcion": "Compuestos nitrogenados elevados durante el ciclado inicial.",
+      "titulo": "Nitrogenados durante el ciclado",
+      "grupo": "agua"
+    },
+    {
+      "id": "C15",
+      "simbolo": "algas_posibles",
+      "tipo": "Hipótesis",
+      "descripcion": "Aspecto del agua compatible con proliferación de algas.",
+      "titulo": "Posibles algas",
+      "grupo": "agua"
+    },
+    {
+      "id": "C16",
+      "simbolo": "oxigeno_bajo_con_aireacion",
+      "tipo": "Hipótesis",
+      "descripcion": "Oxígeno bajo con aireador encendido y aire visible: la causa probable está en la capacidad o el consumo de oxígeno, no en el equipo.",
+      "titulo": "Oxígeno bajo con aireación activa",
+      "grupo": "agua"
+    },
+    {
+      "id": "C17",
+      "simbolo": "boqueo_sin_oxigeno_bajo",
+      "tipo": "Hipótesis",
+      "descripcion": "Boqueo con oxígeno de 5 mg/L o más: se sospecha de compuestos nitrogenados; no es diagnóstico.",
+      "titulo": "Boqueo con oxígeno normal",
+      "grupo": "peces"
+    },
+    {
+      "id": "C18",
+      "simbolo": "tan_correctivo",
+      "tipo": "Condición",
+      "descripcion": "TAN por encima de 1 ppm.",
+      "titulo": "Amoníaco por encima de 1 ppm",
+      "grupo": "agua"
+    },
+    {
+      "id": "C19",
+      "simbolo": "tan_critico",
+      "tipo": "Condición",
+      "descripcion": "TAN igual o superior a 4 ppm.",
+      "titulo": "Amoníaco crítico (4 ppm o más)",
+      "grupo": "agua"
+    },
+    {
+      "id": "C20",
+      "simbolo": "biofiltro_frenado",
+      "tipo": "Hipótesis",
+      "descripcion": "Nitrito elevado fuera del ciclado con oxígeno inferior a 2 mg/L, pH inferior a 6 o temperatura inferior a 17 °C.",
+      "titulo": "Biofiltro frenado",
+      "grupo": "agua"
+    },
+    {
+      "id": "C21",
+      "simbolo": "apetito_compatible_con_frio",
+      "tipo": "Hipótesis",
+      "descripcion": "Apetito reducido con temperatura inferior a 25 °C.",
+      "titulo": "Apetito bajo por agua fría",
+      "grupo": "peces"
+    },
+    {
+      "id": "C22",
+      "simbolo": "ph_alto_con_amarillamiento",
+      "tipo": "Hipótesis",
+      "descripcion": "Amarillamiento con pH superior a 7.5; un pH alto limita la disponibilidad de nutrientes.",
+      "titulo": "pH alto con amarillamiento",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C23",
+      "simbolo": "nitrato_bajo_con_amarillamiento",
+      "tipo": "Hipótesis",
+      "descripcion": "Amarillamiento con nitrato inferior a 10 mg/L.",
+      "titulo": "Nitrato bajo con amarillamiento",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C24",
+      "simbolo": "mortalidad_con_peces_nuevos",
+      "tipo": "Contexto",
+      "descripcion": "Mortalidad con peces introducidos en los últimos 7 días.",
+      "titulo": "Mortalidad con peces nuevos",
+      "grupo": "peces"
+    },
+    {
+      "id": "C25",
+      "simbolo": "ph_alto_hojas_nuevas",
+      "tipo": "Hipótesis",
+      "descripcion": "Amarillamiento en hojas nuevas con pH superior a 7.5: patrón compatible con hierro poco disponible; no es diagnóstico.",
+      "titulo": "Hierro poco disponible en hojas nuevas",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C26",
+      "simbolo": "calor_con_tejido_seco",
+      "tipo": "Hipótesis",
+      "descripcion": "Puntas secas o marchitez con temperatura superior a 30 °C: el calor limita la absorción de calcio y aumenta la pérdida de agua; no es diagnóstico.",
+      "titulo": "Calor con puntas secas",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C27",
+      "simbolo": "marchitez_sin_circulacion",
+      "tipo": "Hipótesis",
+      "descripcion": "Marchitez con posible falla de recirculación: las raíces pueden no recibir agua ni nutrientes.",
+      "titulo": "Marchitez por falta de circulación",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C28",
+      "simbolo": "raices_con_poco_oxigeno",
+      "tipo": "Hipótesis",
+      "descripcion": "Raíces oscuras, viscosas o de mal olor con oxígeno bajo o falla de aireación: compatible con falta de oxígeno en la zona de raíces; no es diagnóstico.",
+      "titulo": "Raíces con poco oxígeno",
+      "grupo": "plantas"
+    },
+    {
+      "id": "C29",
+      "simbolo": "amarillamiento_sin_causa_medible",
+      "tipo": "Contexto",
+      "descripcion": "Amarillamiento con pH de 7.5 o menos, nitrato de 10 mg/L o más y sin insectos visibles: ninguna causa medible lo explica y se requiere observación adicional.",
+      "titulo": "Amarillamiento sin causa medible",
+      "grupo": "plantas"
+    }
+  ],
+  "recomendaciones": [
+    {
+      "id": "A01",
+      "descripcion": "Restablecer la aireación: comprobar que el aireador esté encendido y burbujee; si no, revisar energía, soplador, mangueras y difusores. Mientras tanto, verter agua del sumidero al tanque desde altura cada 1-2 h.",
+      "confirma": "Q14 = V y Q01a = F",
+      "prioridad": 6,
+      "tipo": "Verificación",
+      "titulo": "Restablecer la aireación",
+      "grupo": "equipos",
+      "verificacion": "Sale aire del difusor y el oxígeno sube a 5 mg/L o más",
+      "pasos": [
+        "Comprueba que el aireador esté encendido y que el interruptor y el tablero tengan energía.",
+        "Revisa mangueras (dobladas, flojas) y difusores (tapados por sarro o lama): límpialos o cámbialos.",
+        "Si el soplador no arranca, repáralo o sustitúyelo; mientras, vierte agua del sumidero al tanque desde altura cada 1-2 h.",
+        "Mide el oxígeno después de cada cambio."
+      ]
+    },
+    {
+      "id": "A02",
+      "descripcion": "Restablecer la circulación: limpiar prefiltro y tuberías, abrir la válvula de purga si existe y, si la bomba no mueve agua tras limpiar, reemplazarla. Mantener la aireación mientras tanto.",
+      "confirma": "Q11 = V y Q12 = F",
+      "prioridad": 8,
+      "tipo": "Verificación",
+      "titulo": "Restablecer la circulación",
+      "grupo": "equipos",
+      "verificacion": "El agua circula de nuevo por la salida habitual",
+      "pasos": [
+        "Confirma que la bomba tenga energía y su interruptor esté encendido.",
+        "Limpia el prefiltro y el rotor de la bomba; retira sólidos o lama.",
+        "Revisa tuberías y uniones: busca tapones, dobleces o aire atrapado.",
+        "Si la bomba suena pero no mueve agua o no arranca, reemplázala.",
+        "Comprueba que el agua vuelva a llegar a camas y raíces."
+      ]
+    },
+    {
+      "id": "A03",
+      "descripcion": "Reducir la ración, retirar alimento sobrante y sólidos, y volver a medir TAN y nitrito en 24 h con mediciones compatibles.",
+      "confirma": "Q04a = F y Q05a = F",
+      "prioridad": 12,
+      "tipo": "Verificación",
+      "titulo": "Revisar amoníaco y nitrito",
+      "grupo": "agua",
+      "verificacion": "Amoníaco y nitrito medidos otra vez a las 24 h",
+      "pasos": [
+        "Mide TAN y nitrito con el kit.",
+        "Reduce la ración y retira el alimento que no se coma.",
+        "Si TAN o nitrito suben, cambia parte del agua (A15) y revisa el biofiltro.",
+        "Repite la medición cada 24 h hasta que bajen."
+      ]
+    },
+    {
+      "id": "A04",
+      "descripcion": "Medir la alcalinidad (KH) y el pH del agua de reposición. No corregir el pH con ácidos o bases sin asesoría; ningún cambio debe superar 0.2 unidades por día.",
+      "confirma": "Q03a = F, Q03c = F y pH estable",
+      "prioridad": 14,
+      "tipo": "Verificación",
+      "titulo": "Revisar la alcalinidad y el pH",
+      "grupo": "agua",
+      "verificacion": "El pH se mantiene estable",
+      "pasos": [
+        "Mide la alcalinidad (KH) y el pH del agua de reposición.",
+        "Corrige solo con asesoría, con cambios de pH de 0.2 unidades por día como máximo.",
+        "Evita ajustes bruscos de pH: dañan peces y bacterias.",
+        "Vuelve a medir pH y KH antes del siguiente ajuste."
+      ]
+    },
+    {
+      "id": "A05",
+      "descripcion": "Completar hoy las mediciones que siguen en D (oxígeno, TAN, nitrito, pH, temperatura) y retirar el alimento no consumido.",
+      "confirma": "Q01a, Q02a, Q03a, Q04a y Q05a distintos de D",
+      "prioridad": 13,
+      "tipo": "Verificación",
+      "titulo": "Completar mediciones y retirar el alimento sobrante",
+      "grupo": "agua",
+      "verificacion": "Ya tienes oxígeno, amoníaco, nitrito, pH y temperatura",
+      "pasos": [
+        "Completa las mediciones que faltan (oxígeno, temperatura, pH, TAN, nitrito, nitrato).",
+        "Retira el alimento sobrante del tanque.",
+        "Anota los valores con fecha y hora para comparar después."
+      ]
+    },
+    {
+      "id": "A06",
+      "descripcion": "Retirar los peces muertos, anotar cuántos y a qué hora, suspender el alimento hasta conocer oxígeno, TAN y nitrito, y solicitar valoración especializada.",
+      "confirma": "Registro hecho y mediciones tomadas",
+      "prioridad": 1,
+      "tipo": "Verificación",
+      "titulo": "Atender la mortalidad",
+      "grupo": "peces",
+      "verificacion": "Registro hecho y mediciones tomadas",
+      "pasos": [
+        "Retira los peces muertos y anota cuántos y a qué hora.",
+        "Mide oxígeno, temperatura, TAN y nitrito de inmediato.",
+        "Suspende o reduce el alimento mientras se aclara la causa.",
+        "Solicita valoración especializada si la mortalidad continúa o no se explica con las mediciones."
+      ]
+    },
+    {
+      "id": "A07",
+      "descripcion": "Registrar qué hojas amarillean (nuevas, viejas o todas) y medir pH y nitrato (Q20a) antes de corregir nada: el amarillamiento es solo una señal; no corregir nutrientes sin identificar la causa.",
+      "confirma": "Causa identificada",
+      "prioridad": 28,
+      "tipo": "Verificación",
+      "titulo": "Revisar las lechugas con calma",
+      "grupo": "plantas",
+      "verificacion": "Identificas la causa o el síntoma desaparece",
+      "pasos": [
+        "Fotografía las hojas afectadas y anota cuáles amarillean (nuevas o viejas).",
+        "Mide pH, nitrato y temperatura.",
+        "Observa varios días antes de cambiar algo; no apliques suplementos sin consultar."
+      ]
+    },
+    {
+      "id": "A08",
+      "descripcion": "Cubrir con sombra (30-60 %) toda superficie de agua, medir el oxígeno al amanecer y limpiar los filtros obstruidos por algas.",
+      "confirma": "Q16 = F y Q01a = F (medido al amanecer)",
+      "prioridad": 18,
+      "tipo": "Verificación",
+      "titulo": "Dar sombra y limpiar filtros",
+      "grupo": "agua",
+      "verificacion": "El oxígeno al amanecer es de 5 mg/L o más y el agua deja de verse verde",
+      "pasos": [
+        "Coloca malla de sombra (30-60 %) sobre el tanque y los filtros.",
+        "Limpia prefiltro y filtros; retira lama y sólidos.",
+        "Reduce la luz directa al agua para frenar las algas.",
+        "Revisa en 1-2 días si el agua se aclara."
+      ]
+    },
+    {
+      "id": "A09",
+      "descripcion": "Revisar interruptor o térmico sin tocar conexiones con las manos húmedas. Sin energía: verter agua del sumidero al tanque cada 1-2 h y suspender el alimento. Al volver la energía, comprobar que bomba y soplador reiniciaron.",
+      "confirma": "Q09 = V, Q10 = V y Q14 = V",
+      "prioridad": 3,
+      "tipo": "Verificación",
+      "titulo": "Revisar la energía eléctrica",
+      "grupo": "equipos",
+      "verificacion": "Hay energía y la bomba y el aireador vuelven a funcionar",
+      "pasos": [
+        "Revisa el interruptor térmico: si está abajo, rearmarlo con las manos secas.",
+        "Confirma si hay corte general (pregunta a la compañía eléctrica o a los vecinos).",
+        "Mientras no haya energía: vierte agua del sumidero al tanque desde altura cada 1-2 h, suspende el alimento y evita abrir el sistema.",
+        "Al volver la energía, comprueba que bomba y aireador arranquen."
+      ]
+    },
+    {
+      "id": "A10",
+      "descripcion": "Durante el ciclado no corregir por TAN o nitrito altos: medir a diario. Actuar solo si el TAN se acerca a 4 ppm (suspender el alimento) o aparecen signos de estrés en peces.",
+      "confirma": "Q04c = F y sin signos de estrés",
+      "prioridad": 17,
+      "tipo": "Verificación",
+      "titulo": "Interpretar el ciclado inicial",
+      "grupo": "agua",
+      "verificacion": "Mides a diario y el amoníaco no se acerca a 4 ppm",
+      "pasos": [
+        "Mide TAN, nitrito y nitrato todos los días.",
+        "Alimenta poco durante el ciclado.",
+        "No cambies agua en exceso ni agregues más peces.",
+        "Es normal ver nitrito alto: espera a que baje."
+      ]
+    },
+    {
+      "id": "A11",
+      "descripcion": "Con la aireación activa y oxígeno bajo: retirar alimento sobrante y reducir la ración, comprobar que los difusores burbujeen con fuerza y medir tras cada cambio; si persiste < 5 mg/L, valorar retirar algunos peces.",
+      "confirma": "Q01a = F",
+      "prioridad": 7,
+      "tipo": "Verificación",
+      "titulo": "Mejorar el oxígeno con la aireación activa",
+      "grupo": "agua",
+      "verificacion": "El oxígeno medido vuelve a 5 mg/L o más",
+      "pasos": [
+        "Reduce la ración y retira el alimento sobrante: menos alimento, menos consumo de oxígeno.",
+        "Refuerza la aireación: agrega otro aireador o difusor, o aumenta la salida de aire del soplador.",
+        "Limpia difusores y mangueras para que burbujeen con fuerza.",
+        "Posible sobrepoblación: si hay demasiados peces para el volumen, pasa algunos a otro estanque.",
+        "Da sombra y evita agua caliente, que retiene menos oxígeno.",
+        "Mide el oxígeno tras cada cambio; si sigue por debajo de 5 mg/L, retira más peces."
+      ]
+    },
+    {
+      "id": "A12",
+      "descripcion": "Medir hoy TAN y nitrito con kit compatible: el nitrito puede causar boqueo aunque el oxígeno sea normal.",
+      "confirma": "Q04a y Q05a distintos de D",
+      "prioridad": 9,
+      "tipo": "Verificación",
+      "titulo": "Medir amoníaco y nitrito",
+      "grupo": "agua",
+      "verificacion": "Tienes lecturas de amoníaco y nitrito",
+      "pasos": [
+        "Mide TAN y nitrito con el kit.",
+        "Registra los valores y repite la medición en 24 h."
+      ]
+    },
+    {
+      "id": "A13",
+      "descripcion": "Dar sombra (30-60 %) a tanque y filtros y reforzar la aireación: el agua caliente retiene menos oxígeno y vuelve más tóxico el amoníaco.",
+      "confirma": "Q02c = F y Q01a = F",
+      "prioridad": 10,
+      "tipo": "Verificación",
+      "titulo": "Dar sombra y reforzar la aireación",
+      "grupo": "agua",
+      "verificacion": "El oxígeno sube a 5 mg/L o más y el agua baja de 30 °C",
+      "pasos": [
+        "Da sombra (30-60 %) al tanque y a los filtros.",
+        "Refuerza la aireación: otro difusor o más salida de aire.",
+        "Reduce la ración durante el calor.",
+        "Mide temperatura y oxígeno a distintas horas, sobre todo al amanecer."
+      ]
+    },
+    {
+      "id": "A14",
+      "descripcion": "Cubrir y aislar tanque y filtros y mantener el tanque elevado del suelo frío: el frío reduce el apetito y la actividad bacteriana.",
+      "confirma": "Q02a = F",
+      "prioridad": 15,
+      "tipo": "Verificación",
+      "titulo": "Aislar del frío",
+      "grupo": "agua",
+      "verificacion": "La temperatura sube a 25 °C o más",
+      "pasos": [
+        "Cubre y aísla el tanque y los filtros del frío y del viento.",
+        "Reduce la ración si los peces comen menos.",
+        "Evita cambios bruscos de temperatura al reponer agua.",
+        "Mide la temperatura a primera hora."
+      ]
+    },
+    {
+      "id": "A15",
+      "descripcion": "Con TAN > 1 ppm: suspender el alimento, retirar sobrante y sólidos y cambiar de 1/3 a 1/2 del agua con agua declorada a la misma temperatura; medir el TAN a las 24 h.",
+      "confirma": "Q04a = F",
+      "prioridad": 5,
+      "tipo": "Verificación",
+      "titulo": "Cambiar parte del agua (TAN alto)",
+      "grupo": "agua",
+      "verificacion": "El amoníaco medido a las 24 h baja de 1 ppm",
+      "pasos": [
+        "Cambia de 1/3 a 1/2 del agua con agua declorada a temperatura similar.",
+        "Reduce la ración y retira el alimento sobrante.",
+        "Mide TAN de nuevo a las 24 h.",
+        "Si sigue alto, repite el cambio y revisa el biofiltro."
+      ]
+    },
+    {
+      "id": "A16",
+      "descripcion": "Con nitrato < 10 mg/L y plantas amarillas: aumentar ligeramente la ración si los peces la consumen completa, o retirar algunas plantas.",
+      "confirma": "Q20a = F y hojas nuevas verdes",
+      "prioridad": 19,
+      "tipo": "Verificación",
+      "titulo": "Ajustar la ración (nitrato bajo)",
+      "grupo": "plantas",
+      "verificacion": "Las hojas nuevas salen verdes",
+      "pasos": [
+        "Aumenta ligeramente la ración si los peces la consumen.",
+        "Retira algunas plantas si hay demasiadas para los nutrientes disponibles.",
+        "Mide nitrato cada 2-3 días."
+      ]
+    },
+    {
+      "id": "A17",
+      "descripcion": "Con pH > 7.5 y plantas amarillas: repetir la medición; un pH alto limita hierro y otros nutrientes. Consultar antes de ajustarlo.",
+      "confirma": "Q03b = F y hojas nuevas verdes",
+      "prioridad": 20,
+      "tipo": "Verificación",
+      "titulo": "Repetir la medición de pH",
+      "grupo": "plantas",
+      "verificacion": "Las hojas nuevas salen verdes con el pH repetido",
+      "pasos": [
+        "Repite la medición de pH con un kit confiable.",
+        "Mide también la alcalinidad (KH) del agua de reposición.",
+        "Si el pH sigue sobre 7.5, aplica A26 de forma gradual."
+      ]
+    },
+    {
+      "id": "A18",
+      "descripcion": "Con TAN ≥ 4 ppm las bacterias nitrificantes mueren: repetir el cambio parcial de agua y medir el TAN dos veces al día hasta bajar de 4 ppm. Si no baja, puede ser necesario restablecer el biofiltro.",
+      "confirma": "Q04c = F",
+      "prioridad": 4,
+      "tipo": "Verificación",
+      "titulo": "Repetir el cambio de agua (TAN crítico)",
+      "grupo": "agua",
+      "verificacion": "El amoníaco medido baja de 4 ppm",
+      "pasos": [
+        "Repite el cambio de 1/3 a 1/2 del agua con agua declorada.",
+        "Suspende el alimento hasta que el TAN baje de 4 ppm.",
+        "Mide TAN y nitrito cada 12-24 h.",
+        "Revisa oxígeno, pH y temperatura: pueden estar frenando el biofiltro."
+      ]
+    },
+    {
+      "id": "A19",
+      "descripcion": "Corregir primero la condición que frena la nitrificación (oxígeno < 2 mg/L, pH < 6 o temperatura < 17 °C) y volver a medir el nitrito a las 48 h.",
+      "confirma": "Q05a = F",
+      "prioridad": 11,
+      "tipo": "Verificación",
+      "titulo": "Corregir lo que frena el biofiltro",
+      "grupo": "agua",
+      "verificacion": "El nitrito medido baja de 1 mg/L en 48 h",
+      "pasos": [
+        "Identifica qué frena el biofiltro: oxígeno bajo, pH fuera de 6-8.5, frío o falta de flujo.",
+        "Corrígelo con la recomendación correspondiente.",
+        "Reduce la ración mientras las bacterias se recuperan.",
+        "Mide TAN y nitrito a diario."
+      ]
+    },
+    {
+      "id": "A20",
+      "descripcion": "Reducir la ración a cerca del 1 % de la biomasa y retirar lo no consumido: con agua fría los peces comen menos.",
+      "confirma": "Sin alimento sobrante",
+      "prioridad": 16,
+      "tipo": "Verificación",
+      "titulo": "Reducir la ración",
+      "grupo": "peces",
+      "verificacion": "No queda alimento sobrante",
+      "pasos": [
+        "Reduce la ración (aprox. 1 % de la biomasa) y retira lo no consumido.",
+        "Mantén el agua cubierta y aislada.",
+        "Observa el apetito durante 2-3 días y mide la temperatura."
+      ]
+    },
+    {
+      "id": "A21",
+      "descripcion": "Si oxígeno, TAN, nitrito, pH y temperatura están en rango, la mortalidad es compatible con la adaptación de peces recién introducidos (15-20 %); si no, aplicar las demás acciones.",
+      "confirma": "Q01a, Q02a, Q02c, Q03a, Q03c, Q04a y Q05a = F, y sin nuevas muertes",
+      "prioridad": 2,
+      "tipo": "Verificación",
+      "titulo": "Interpretar la mortalidad",
+      "grupo": "peces",
+      "verificacion": "Sin nuevas muertes y mediciones en rango",
+      "pasos": [
+        "Registra cuántos peces murieron y cuánto tiempo llevaban en el sistema.",
+        "Mide oxígeno, TAN y nitrito para descartar otras causas.",
+        "Retira los peces muertos de inmediato.",
+        "Si pasan los primeros días y la mortalidad no baja, solicita valoración especializada."
+      ]
+    },
+    {
+      "id": "A22",
+      "descripcion": "Comprobar que el nivel del agua en la cama cubra las raíces y que el flujo de entrada y salida sea continuo; si no lo es, restablecer la circulación (A02) y mover a la sombra las plantas más caídas.",
+      "confirma": "Las plantas recuperan firmeza en 24 h",
+      "prioridad": 21,
+      "tipo": "Verificación",
+      "titulo": "Comprobar que el agua llegue a las raíces",
+      "grupo": "plantas",
+      "verificacion": "Las plantas recuperan firmeza en 24 h",
+      "pasos": [
+        "Comprueba que el agua cubra las raíces y circule por la cama.",
+        "Revisa bomba y tuberías (A02) si el flujo es bajo.",
+        "Ajusta el nivel de agua de la cama."
+      ]
+    },
+    {
+      "id": "A23",
+      "descripcion": "Dar sombra (30-60 %) a las camas en las horas de más calor y bajar la temperatura del agua: el calor limita la absorción de calcio. Revisar a los 3-5 días si las hojas nuevas salen sin puntas secas.",
+      "confirma": "Q22 = F en la siguiente revisión",
+      "prioridad": 22,
+      "tipo": "Verificación",
+      "titulo": "Dar sombra a las camas",
+      "grupo": "plantas",
+      "verificacion": "Q22 = F en la siguiente revisión",
+      "pasos": [
+        "Coloca malla de sombra (30-60 %) sobre las camas de cultivo.",
+        "Mide la temperatura del agua que llega a las raíces.",
+        "Observa si las puntas secas dejan de avanzar."
+      ]
+    },
+    {
+      "id": "A24",
+      "descripcion": "Mejorar el oxígeno en la zona de raíces: comprobar que el aireador burbujee y que el agua circule por las camas, no sobrecargar la cama y medir el oxígeno tras cada cambio; si sigue por debajo de 5 mg/L, aplicar A11.",
+      "confirma": "Q01a = F tras los cambios",
+      "prioridad": 23,
+      "tipo": "Verificación",
+      "titulo": "Mejorar el oxígeno en las raíces",
+      "grupo": "plantas",
+      "verificacion": "Q01a = F tras los cambios",
+      "pasos": [
+        "Comprueba que el aireador y los difusores burbujeen con fuerza.",
+        "Agrega otro difusor o refuerza la salida de aire si hace falta.",
+        "Retira algunas plantas si la cama está sobrecargada.",
+        "Mide el oxígeno en la zona de raíces."
+      ]
+    },
+    {
+      "id": "A25",
+      "descripcion": "Inspeccionar las raíces de una planta afectada (las sanas son claras y sin olor); separar las plantas con raíces oscuras o viscosas para que no se extienda el problema y anotar si empeora en 48 h.",
+      "confirma": "Raíces nuevas claras a los 7 días",
+      "prioridad": 24,
+      "tipo": "Verificación",
+      "titulo": "Inspeccionar las raíces",
+      "grupo": "plantas",
+      "verificacion": "Raíces nuevas claras a los 7 días",
+      "pasos": [
+        "Inspecciona las raíces de una planta afectada: color, olor y viscosidad.",
+        "Separa las plantas con raíces oscuras o viscosas.",
+        "Si el problema se extiende, aplica A24."
+      ]
+    },
+    {
+      "id": "A26",
+      "descripcion": "Con pH > 7.5 y amarillamiento en hojas nuevas: bajar el pH solo de forma gradual (no más de 0.2 unidades por día) y consultar antes de aplicar cualquier suplemento de hierro.",
+      "confirma": "Hojas nuevas verdes tras 2-3 semanas con pH estable",
+      "prioridad": 25,
+      "tipo": "Verificación",
+      "titulo": "Bajar el pH de forma gradual",
+      "grupo": "plantas",
+      "verificacion": "Hojas nuevas verdes tras 2-3 semanas con pH estable",
+      "pasos": [
+        "Baja el pH de forma gradual, máximo 0.2 unidades por día.",
+        "Mide el pH antes y después de cada ajuste.",
+        "Mide KH para entender por qué el pH sube.",
+        "Evita ácidos fuertes en el tanque sin asesoría."
+      ]
+    },
+    {
+      "id": "A27",
+      "descripcion": "Retirar a mano los insectos o enjuagar las hojas con agua; no aplicar insecticidas en el sistema porque llegan al agua y pueden dañar a los peces. Revisar de nuevo en 48 h.",
+      "confirma": "Q25 = F en la siguiente revisión",
+      "prioridad": 26,
+      "tipo": "Verificación",
+      "titulo": "Quitar los insectos sin dañar a los peces",
+      "grupo": "plantas",
+      "verificacion": "Q25 = F en la siguiente revisión",
+      "pasos": [
+        "Retira los insectos a mano o enjuaga las hojas con agua.",
+        "No uses insecticida: puede caer al agua y dañar a los peces.",
+        "Revisa las hojas cada 1-2 días."
+      ]
+    },
+    {
+      "id": "A28",
+      "descripcion": "No cambiar nada de forma brusca: fotografiar las hojas afectadas, repetir pH y nitrato en 48-72 h y consultar a una persona con experiencia en cultivo si el síntoma persiste.",
+      "confirma": "Causa identificada o síntoma desaparecido",
+      "prioridad": 27,
+      "tipo": "Verificación",
+      "titulo": "Observar y medir de nuevo",
+      "grupo": "plantas",
+      "verificacion": "Causa identificada o síntoma desaparecido",
+      "pasos": [
+        "Fotografía y anota lo que ves, con fecha y hora.",
+        "Vuelve a medir en 24 h.",
+        "Si el problema persiste, consulta a una persona con experiencia."
+      ]
+    }
+  ],
+  "reglas": [
+    {
+      "id": "R01",
+      "si": {
+        "q": "Q01a",
+        "es": "V"
+      },
+      "expresion": "Q01a = V",
+      "entonces": "C01",
+      "explicacion": "Oxígeno disuelto inferior a la referencia adoptada (5 mg/L).",
+      "cita": "F03, tabla 2, p. 3 (adaptada de Hager et al.)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R02",
+      "si": {
+        "o": [
+          {
+            "q": "Q02a",
+            "es": "V"
+          },
+          {
+            "q": "Q02c",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "Q02a = V O Q02c = V",
+      "entonces": "C02",
+      "explicacion": "Temperatura fuera del intervalo adoptado para tilapia (25-30 °C).",
+      "cita": "F03, tabla 3, p. 4 (datos adaptados)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R03",
+      "si": {
+        "o": [
+          {
+            "q": "Q03a",
+            "es": "V"
+          },
+          {
+            "q": "Q03c",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "Q03a = V O Q03c = V",
+      "entonces": "C03",
+      "explicacion": "pH fuera del intervalo de tolerancia bacteriana (6-8.5).",
+      "cita": "F01, cuadro 2.1, p. 16",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R04",
+      "si": {
+        "q": "Q04a",
+        "es": "V"
+      },
+      "expresion": "Q04a = V",
+      "entonces": "C04",
+      "explicacion": "TAN por encima de la referencia operativa de 0.25 ppm; la unidad analítica debe coincidir.",
+      "cita": "F03, apartado Ammonia, p. 3",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R05",
+      "si": {
+        "q": "Q05a",
+        "es": "V"
+      },
+      "expresion": "Q05a = V",
+      "entonces": "C05",
+      "explicacion": "Nitrito que no cumple la referencia inferior a 1 mg/L para tilapia.",
+      "cita": "F03, tabla 3, p. 4 (datos adaptados)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R06",
+      "si": {
+        "y": [
+          {
+            "q": "Q10",
+            "es": "V"
+          },
+          {
+            "q": "Q11",
+            "es": "F"
+          }
+        ]
+      },
+      "expresion": "Q10 = V Y Q11 = F",
+      "entonces": "C06",
+      "explicacion": "Distingue bomba encendida sin flujo observable.",
+      "cita": "F03, tablas 6-7, pp. 7-8 (adaptación)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R07",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "V"
+          },
+          {
+            "q": "Q10",
+            "es": "F"
+          }
+        ]
+      },
+      "expresion": "Q09 = V Y Q10 = F",
+      "entonces": "C07",
+      "explicacion": "Distingue bomba detenida con energía disponible.",
+      "cita": "F03, tabla 7, p. 8 (adaptación)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R08",
+      "si": {
+        "q": "Q09",
+        "es": "F"
+      },
+      "expresion": "Q09 = F",
+      "entonces": "C08",
+      "explicacion": "Registra falta de suministro eléctrico informada por el usuario.",
+      "cita": "F03, tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R09",
+      "si": {
+        "o": [
+          {
+            "q": "Q13",
+            "es": "F"
+          },
+          {
+            "y": [
+              {
+                "q": "Q13",
+                "es": "V"
+              },
+              {
+                "q": "Q14",
+                "es": "F"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "Q13 = F O (Q13 = V Y Q14 = F)",
+      "entonces": "C09",
+      "explicacion": "Aireador apagado, o encendido sin aire observable.",
+      "cita": "F03, apartado Dissolved oxygen, p. 5 (adaptación operativa)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R10",
+      "si": {
+        "o": [
+          {
+            "q": "Q07",
+            "es": "V"
+          },
+          {
+            "q": "Q08",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "Q07 = V O Q08 = V",
+      "entonces": "C10",
+      "explicacion": "Agrupa signos de estrés sin atribuir una causa única.",
+      "cita": "F01, §2.4.3, p. 18; F02, Producción de Tilapia, p. 7",
+      "fuentes": [
+        "F01",
+        "F02"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R11",
+      "si": {
+        "o": [
+          {
+            "c": "C06"
+          },
+          {
+            "c": "C07"
+          },
+          {
+            "q": "Q12",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C06 O C07 O Q12 = V",
+      "entonces": "C11",
+      "explicacion": "Bomba sin flujo, detenida u obstrucción visible: posible falla de recirculación.",
+      "cita": "F03, tablas 6-7, pp. 7-8; F02, p. 5 (adaptación)",
+      "fuentes": [
+        "F02",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R12",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "c": "C01"
+              },
+              {
+                "c": "C09"
+              }
+            ]
+          },
+          {
+            "q": "Q07",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "(C01 O C09) Y Q07 = V",
+      "entonces": "C12",
+      "explicacion": "Oxígeno bajo o falla de aireación junto con boqueo: compatible con un problema de oxigenación; no es diagnóstico.",
+      "cita": "F03, tabla 3, p. 4; F01, §2.4.3, p. 18 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R13",
+      "si": {
+        "y": [
+          {
+            "c": "C05"
+          },
+          {
+            "no": {
+              "q": "Q17",
+              "es": "V"
+            }
+          }
+        ]
+      },
+      "expresion": "C05 Y NO (Q17 = V)",
+      "entonces": "C13",
+      "explicacion": "Nitrito elevado fuera del ciclado inicial: hipótesis de biofiltración insuficiente.",
+      "cita": "F01, §2.4.4, p. 18; F03, tabla 3, p. 4 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R14",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "c": "C04"
+              },
+              {
+                "c": "C05"
+              }
+            ]
+          },
+          {
+            "q": "Q17",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "(C04 O C05) Y Q17 = V",
+      "entonces": "C14",
+      "explicacion": "Compuestos nitrogenados elevados durante el ciclado inicial pueden ser esperables.",
+      "cita": "F03, Nitrogen Cycling/Nitrification, pp. 1-2",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R15",
+      "si": {
+        "q": "Q16",
+        "es": "V"
+      },
+      "expresion": "Q16 = V",
+      "entonces": "C15",
+      "explicacion": "Color verdoso compatible con algas; requiere comprobarlo.",
+      "cita": "F03, apartado Algae, p. 5; tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R16",
+      "si": {
+        "o": [
+          {
+            "c": "C09"
+          },
+          {
+            "y": [
+              {
+                "c": "C01"
+              },
+              {
+                "q": "Q13",
+                "es": "D"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "C09 O (C01 Y Q13 = D)",
+      "entonces": "A01",
+      "explicacion": "Verificar o restablecer la aireación solo si falla o si su estado se desconoce; si el aireador funciona se aplica R26.",
+      "cita": "F03, apartado Dissolved oxygen, p. 5; tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R17",
+      "si": {
+        "c": "C11"
+      },
+      "expresion": "C11",
+      "entonces": "A02",
+      "explicacion": "Inspeccionar el circuito hidráulico ante posible falla de recirculación.",
+      "cita": "F03, tablas 6-7, pp. 7-8; F02, p. 5",
+      "fuentes": [
+        "F02",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R18",
+      "si": {
+        "o": [
+          {
+            "c": "C04"
+          },
+          {
+            "c": "C05"
+          },
+          {
+            "c": "C13"
+          }
+        ]
+      },
+      "expresion": "C04 O C05 O C13",
+      "entonces": "A03",
+      "explicacion": "Revisar biofiltro y compuestos nitrogenados con mediciones compatibles.",
+      "cita": "F01, §§2.3-2.4.4, pp. 14-18; F03, Ammonia, p. 3",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R19",
+      "si": {
+        "c": "C03"
+      },
+      "expresion": "C03",
+      "entonces": "A04",
+      "explicacion": "Revisar KH y pH del agua de reposición sin proponer cambios químicos.",
+      "cita": "F01, §2.3, pp. 14-16; F03, p. 5",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R20",
+      "si": {
+        "o": [
+          {
+            "c": "C10"
+          },
+          {
+            "q": "Q06",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C10 O Q06 = V",
+      "entonces": "A05",
+      "explicacion": "Signos de estrés o mortalidad justifican revisar la calidad del agua.",
+      "cita": "F01, §2.4.3, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R21",
+      "si": {
+        "q": "Q06",
+        "es": "V"
+      },
+      "expresion": "Q06 = V",
+      "entonces": "A06",
+      "explicacion": "La mortalidad supera la capacidad diagnóstica del prototipo (política educativa conservadora).",
+      "cita": "F01, §2.4.3, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R22",
+      "si": {
+        "q": "Q15",
+        "es": "V"
+      },
+      "expresion": "Q15 = V",
+      "entonces": "A07",
+      "explicacion": "El amarillamiento es solo una señal que motiva revisar el cultivo; no se diagnostica.",
+      "cita": "F01, §2.4.3, p. 18; F02, resultados de lechuga, p. 8",
+      "fuentes": [
+        "F01",
+        "F02"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R23",
+      "si": {
+        "c": "C15"
+      },
+      "expresion": "C15",
+      "entonces": "A08",
+      "explicacion": "Comprobar posible proliferación de algas.",
+      "cita": "F03, apartado Algae, p. 5; tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R24",
+      "si": {
+        "c": "C08"
+      },
+      "expresion": "C08",
+      "entonces": "A09",
+      "explicacion": "Revisar el suministro eléctrico y los equipos dependientes.",
+      "cita": "F03, tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R25",
+      "si": {
+        "c": "C14"
+      },
+      "expresion": "C14",
+      "entonces": "A10",
+      "explicacion": "Interpretar las mediciones considerando el ciclado inicial.",
+      "cita": "F03, Nitrogen Cycling/Nitrification, pp. 1-2",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R26",
+      "si": {
+        "y": [
+          {
+            "c": "C01"
+          },
+          {
+            "q": "Q13",
+            "es": "V"
+          },
+          {
+            "q": "Q14",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C01 Y Q13 = V Y Q14 = V",
+      "entonces": "C16",
+      "explicacion": "Oxígeno bajo con aireación que parece funcionar: la causa está en la capacidad o el consumo.",
+      "cita": "F01, p. 23; F03, p. 5 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R27",
+      "si": {
+        "y": [
+          {
+            "q": "Q07",
+            "es": "V"
+          },
+          {
+            "q": "Q01a",
+            "es": "F"
+          }
+        ]
+      },
+      "expresion": "Q07 = V Y Q01a = F",
+      "entonces": "C17",
+      "explicacion": "Boqueo con oxígeno en rango: se sospecha de compuestos nitrogenados; el nitrito causa boqueo aun con oxígeno alto.",
+      "cita": "F01, p. 26 (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R28",
+      "si": {
+        "q": "Q04b",
+        "es": "V"
+      },
+      "expresion": "Q04b = V",
+      "entonces": "C18",
+      "explicacion": "TAN por encima de 1 ppm: requiere acción correctiva.",
+      "cita": "F03, tabla 7, p. 8",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R29",
+      "si": {
+        "q": "Q04c",
+        "es": "V"
+      },
+      "expresion": "Q04c = V",
+      "entonces": "C19",
+      "explicacion": "Con 4 ppm de amoníaco las bacterias nitrificantes mueren.",
+      "cita": "F03, p. 3; F01, p. 26",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R30",
+      "si": {
+        "y": [
+          {
+            "c": "C13"
+          },
+          {
+            "o": [
+              {
+                "q": "Q01b",
+                "es": "V"
+              },
+              {
+                "q": "Q03a",
+                "es": "V"
+              },
+              {
+                "q": "Q02b",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "C13 Y (Q01b = V O Q03a = V O Q02b = V)",
+      "entonces": "C20",
+      "explicacion": "Nitrito alto con una condición que frena la nitrificación.",
+      "cita": "F01, pp. 15, 24 (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R31",
+      "si": {
+        "y": [
+          {
+            "q": "Q02a",
+            "es": "V"
+          },
+          {
+            "q": "Q08",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "Q02a = V Y Q08 = V",
+      "entonces": "C21",
+      "explicacion": "Apetito reducido compatible con agua fría; en el estudio la ración bajó de 2 % a 1 %.",
+      "cita": "F02, p. 7 (inferencia propuesta)",
+      "fuentes": [
+        "F02"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R32",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "q": "Q15",
+                "es": "V"
+              },
+              {
+                "q": "Q24",
+                "es": "V"
+              }
+            ]
+          },
+          {
+            "q": "Q03b",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "(Q15 = V O Q24 = V) Y Q03b = V",
+      "entonces": "C22",
+      "explicacion": "Un pH alto limita hierro, fósforo y manganeso; el crecimiento pobre y las hojas amarillas son la señal de deficiencia que describe la FAO.",
+      "cita": "F01, §2.4.3, p. 18 y pp. 23-24 (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R33",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "q": "Q15",
+                "es": "V"
+              },
+              {
+                "q": "Q24",
+                "es": "V"
+              },
+              {
+                "q": "Q26",
+                "es": "V"
+              }
+            ]
+          },
+          {
+            "q": "Q20a",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "(Q15 = V O Q24 = V O Q26 = V) Y Q20a = V",
+      "entonces": "C23",
+      "explicacion": "Nitrato bajo durante semanas indica nutrientes insuficientes; amarillamiento, crecimiento pobre y poco desarrollo de la raíz son sus señales.",
+      "cita": "F01, §2.4.3-2.4.4, p. 18; F02, p. 10 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F02"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R34",
+      "si": {
+        "y": [
+          {
+            "q": "Q06",
+            "es": "V"
+          },
+          {
+            "q": "Q19",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "Q06 = V Y Q19 = V",
+      "entonces": "C24",
+      "explicacion": "Los peces recién introducidos pueden morir entre 15 % y 20 % al adaptarse.",
+      "cita": "F03, p. 6",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R35",
+      "si": {
+        "c": "C16"
+      },
+      "expresion": "C16",
+      "entonces": "A11",
+      "explicacion": "Acción ante oxígeno bajo con aireación activa.",
+      "cita": "F01, p. 23; F03, p. 5 y tabla 6, p. 7",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R36",
+      "si": {
+        "c": "C17"
+      },
+      "expresion": "C17",
+      "entonces": "A12",
+      "explicacion": "Medir TAN y nitrito ante boqueo sin oxígeno bajo.",
+      "cita": "F01, pp. 26, 33",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R37",
+      "si": {
+        "c": "C18"
+      },
+      "expresion": "C18",
+      "entonces": "A15",
+      "explicacion": "Suspender alimento y cambiar parte del agua.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 30",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R38",
+      "si": {
+        "c": "C19"
+      },
+      "expresion": "C19",
+      "entonces": "A18",
+      "explicacion": "Repetir el cambio parcial y medir dos veces al día.",
+      "cita": "F03, p. 3 (adaptación)",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R39",
+      "si": {
+        "c": "C20"
+      },
+      "expresion": "C20",
+      "entonces": "A19",
+      "explicacion": "Corregir primero la causa que frena la nitrificación.",
+      "cita": "F01, pp. 15, 24",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R40",
+      "si": {
+        "c": "C21"
+      },
+      "expresion": "C21",
+      "entonces": "A20",
+      "explicacion": "Ajustar la ración al apetito.",
+      "cita": "F02, p. 7",
+      "fuentes": [
+        "F02"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R41",
+      "si": {
+        "c": "C22"
+      },
+      "expresion": "C22",
+      "entonces": "A17",
+      "explicacion": "Repetir la medición de pH antes de atribuir el amarillamiento a otra causa.",
+      "cita": "F01, pp. 23-24",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R42",
+      "si": {
+        "c": "C23"
+      },
+      "expresion": "C23",
+      "entonces": "A16",
+      "explicacion": "Aumentar ligeramente la ración o reducir plantas.",
+      "cita": "F01, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R43",
+      "si": {
+        "q": "Q02c",
+        "es": "V"
+      },
+      "expresion": "Q02c = V",
+      "entonces": "A13",
+      "explicacion": "Calor: sombra y mayor aireación.",
+      "cita": "F01, pp. 23, 25; F03, p. 5",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R44",
+      "si": {
+        "q": "Q02a",
+        "es": "V"
+      },
+      "expresion": "Q02a = V",
+      "entonces": "A14",
+      "explicacion": "Frío: aislar tanque y filtros.",
+      "cita": "F03, p. 5; F01, p. 15",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R45",
+      "si": {
+        "c": "C24"
+      },
+      "expresion": "C24",
+      "entonces": "A21",
+      "explicacion": "Interpretar la mortalidad según el contexto de adaptación.",
+      "cita": "F03, p. 6",
+      "fuentes": [
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R46",
+      "si": {
+        "y": [
+          {
+            "c": "C22"
+          },
+          {
+            "q": "Q27",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C22 Y Q27 = V",
+      "entonces": "C25",
+      "explicacion": "El hierro es poco móvil dentro de la planta, por lo que su falta se nota primero en hojas nuevas.",
+      "cita": "F01, pp. 23-24 (pH 7.5 y deficiencia de hierro); la distinción por edad de la hoja es una inferencia propuesta que no figura en las fuentes revisadas",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R47",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "q": "Q22",
+                "es": "V"
+              },
+              {
+                "q": "Q23",
+                "es": "V"
+              }
+            ]
+          },
+          {
+            "q": "Q02c",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "(Q22 = V O Q23 = V) Y Q02c = V",
+      "entonces": "C26",
+      "explicacion": "La temperatura alta restringe la absorción de calcio por las plantas.",
+      "cita": "F01, §3.2.3, p. 24 (relación con puntas secas: inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R48",
+      "si": {
+        "y": [
+          {
+            "q": "Q23",
+            "es": "V"
+          },
+          {
+            "c": "C11"
+          }
+        ]
+      },
+      "expresion": "Q23 = V Y C11",
+      "entonces": "C27",
+      "explicacion": "Sin circulación, las raíces no reciben agua ni nutrientes.",
+      "cita": "F01, p. 22 (bombas de agua y aire circulando constantemente) (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R49",
+      "si": {
+        "y": [
+          {
+            "q": "Q26",
+            "es": "V"
+          },
+          {
+            "o": [
+              {
+                "c": "C01"
+              },
+              {
+                "c": "C09"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "Q26 = V Y (C01 O C09)",
+      "entonces": "C28",
+      "explicacion": "Las plantas, igual que peces y bacterias, demandan oxígeno disuelto; el poco desarrollo de la raíz es señal de desequilibrio.",
+      "cita": "F01, pp. 22-23 y §2.4.3, p. 18 (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R50",
+      "si": {
+        "y": [
+          {
+            "q": "Q15",
+            "es": "V"
+          },
+          {
+            "q": "Q03b",
+            "es": "F"
+          },
+          {
+            "q": "Q20a",
+            "es": "F"
+          },
+          {
+            "q": "Q25",
+            "es": "F"
+          }
+        ]
+      },
+      "expresion": "Q15 = V Y Q03b = F Y Q20a = F Y Q25 = F",
+      "entonces": "C29",
+      "explicacion": "Descartadas las causas medibles que las fuentes asocian con el amarillamiento (pH alto y nitrato bajo) y los insectos visibles, no se atribuye el síntoma a nada concreto.",
+      "cita": "F01, §2.4.3, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R51",
+      "si": {
+        "q": "Q23",
+        "es": "V"
+      },
+      "expresion": "Q23 = V",
+      "entonces": "A22",
+      "explicacion": "Con marchitez se comprueba primero que el agua llegue a las raíces.",
+      "cita": "F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R52",
+      "si": {
+        "c": "C26"
+      },
+      "expresion": "C26",
+      "entonces": "A23",
+      "explicacion": "Dar sombra reduce el calor del agua y de las camas.",
+      "cita": "F01, §3.2.3, p. 24; F03, tabla 3, p. 4",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R53",
+      "si": {
+        "c": "C28"
+      },
+      "expresion": "C28",
+      "entonces": "A24",
+      "explicacion": "Restablecer oxígeno y circulación en las camas.",
+      "cita": "F01, pp. 22-23",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R54",
+      "si": {
+        "q": "Q26",
+        "es": "V"
+      },
+      "expresion": "Q26 = V",
+      "entonces": "A25",
+      "explicacion": "Una planta con raíces poco desarrolladas o dañadas obliga a investigar la causa.",
+      "cita": "F01, §2.4.3, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R55",
+      "si": {
+        "c": "C25"
+      },
+      "expresion": "C25",
+      "entonces": "A26",
+      "explicacion": "Corregir el pH de forma gradual (0.2 unidades por día).",
+      "cita": "F01, pp. 23-24; F03, p. 6",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R56",
+      "si": {
+        "q": "Q25",
+        "es": "V"
+      },
+      "expresion": "Q25 = V",
+      "entonces": "A27",
+      "explicacion": "Es una verificación de la planta; el manejo de plagas no figura en las fuentes revisadas y se propone evitar insecticidas por el riesgo para los peces.",
+      "cita": "F01, §2.4.3, p. 18 (precaución propuesta)",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R57",
+      "si": {
+        "c": "C29"
+      },
+      "expresion": "C29",
+      "entonces": "A28",
+      "explicacion": "Un síntoma sin causa medible exige observar y medir de nuevo antes de actuar.",
+      "cita": "F01, §2.4.3, p. 18",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    },
+    {
+      "id": "R58",
+      "si": {
+        "c": "C27"
+      },
+      "expresion": "C27",
+      "entonces": "A02",
+      "explicacion": "Restablecer la circulación es la causa corregible de la marchitez; es una segunda justificación de A02.",
+      "cita": "F01, p. 22",
+      "fuentes": [
+        "F01"
+      ],
+      "inferencia": false
+    }
+  ],
+  "fuentes": [
+    {
+      "id": "F01",
+      "referencia": "Somerville, C., Cohen, M., Pantanella, E., Stankus, A. y Lovatelli, A. (2022). Producción de alimentos en acuaponía a pequeña escala: cultivo integral de peces y plantas. FAO.",
+      "corto": "FAO · Somerville et al. (2022)",
+      "uso": "Fundamentos, procesos biológicos y valores de referencia generales",
+      "url": "https://doi.org/10.4060/i4021es"
+    },
+    {
+      "id": "F02",
+      "referencia": "Sánchez-Morales, D. J., Rubiños-Panta, J. E., Crespo-Pichardo, G., Mendoza-Pérez, C., Pérez-Ávila, M. de L., Peralta-Inga, M. y Rubiños-Hernández, C. E. (2024). Evaluación del Sistema Acuapónico de Pequeña Escala para la Producción de Tilapia y Lechuga. Terra Latinoamericana, 42, 1-11.",
+      "corto": "Terra Latinoamericana (2024)",
+      "uso": "Estudio experimental con las mismas especies: observaciones en peces y lechuga",
+      "url": "https://www.terralatinoamericana.org.mx/index.php/terra/article/view/2020"
+    },
+    {
+      "id": "F03",
+      "referencia": "Deer, C., Dunn, B., Hu, B. y Dusci, J. (2021). Nitrification and Maintenance in Media Bed Aquaponics (HLA-6729). Oklahoma State University Extension.",
+      "corto": "OSU Extension HLA-6729 (2021)",
+      "uso": "Verificaciones de equipos, algas y parámetros de calidad del agua",
+      "url": ""
+    }
+  ],
+  "restricciones": [
+    {
+      "id": "K1",
+      "tipo": "contradiccion",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "q": "Q10",
+            "es": "V"
+          }
+        ]
+      },
+      "anula": [
+        "Q09",
+        "Q10"
+      ],
+      "mensaje": "Una bomba no puede estar encendida si no hay suministro eléctrico."
+    },
+    {
+      "id": "K2",
+      "tipo": "contradiccion",
+      "si": {
+        "y": [
+          {
+            "q": "Q13",
+            "es": "F"
+          },
+          {
+            "q": "Q14",
+            "es": "V"
+          }
+        ]
+      },
+      "anula": [
+        "Q13",
+        "Q14"
+      ],
+      "mensaje": "No puede haber salida de aire con el aireador apagado."
+    },
+    {
+      "id": "K3",
+      "tipo": "contradiccion",
+      "si": {
+        "y": [
+          {
+            "q": "Q10",
+            "es": "F"
+          },
+          {
+            "q": "Q11",
+            "es": "V"
+          }
+        ]
+      },
+      "anula": [
+        "Q10",
+        "Q11"
+      ],
+      "mensaje": "Con la bomba apagada no debería verse circulación de agua. Si tu diseño circula por gravedad, responde «Desconozco» en alguna de las dos."
+    },
+    {
+      "id": "K4",
+      "tipo": "contradiccion",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "o": [
+              {
+                "q": "Q13",
+                "es": "V"
+              },
+              {
+                "q": "Q14",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "anula": [
+        "Q09",
+        "Q13",
+        "Q14"
+      ],
+      "mensaje": "Sin suministro eléctrico el aireador no debería funcionar."
+    },
+    {
+      "id": "K5",
+      "tipo": "contradiccion",
+      "si": {
+        "y": [
+          {
+            "q": "Q18",
+            "es": "F"
+          },
+          {
+            "o": [
+              {
+                "q": "Q06",
+                "es": "V"
+              },
+              {
+                "q": "Q07",
+                "es": "V"
+              },
+              {
+                "q": "Q08",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "anula": [
+        "Q18",
+        "Q06",
+        "Q07",
+        "Q08"
+      ],
+      "mensaje": "No se pueden observar signos en los peces si no hay peces en el sistema."
+    },
+    {
+      "id": "K6",
+      "tipo": "aviso",
+      "si": {
+        "y": [
+          {
+            "q": "Q18",
+            "es": "V"
+          },
+          {
+            "q": "Q06",
+            "es": "F"
+          },
+          {
+            "q": "Q07",
+            "es": "F"
+          },
+          {
+            "o": [
+              {
+                "q": "Q04c",
+                "es": "V"
+              },
+              {
+                "q": "Q01b",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Indicaste valores extremos sin ningún signo en los peces. Conviene repetir la medición por si hubo un error de lectura."
+    },
+    {
+      "id": "K7a",
+      "tipo": "evasion",
+      "si": {
+        "y": [
+          {
+            "o": [
+              {
+                "q": "Q06",
+                "es": "V"
+              },
+              {
+                "q": "Q07",
+                "es": "V"
+              }
+            ]
+          },
+          {
+            "q": "Q01a",
+            "es": "D"
+          },
+          {
+            "q": "Q04a",
+            "es": "D"
+          },
+          {
+            "q": "Q05a",
+            "es": "D"
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Hay signos en los peces, pero faltan las mediciones clave (oxígeno, amoníaco y nitrito). Mídelas para poder orientarte."
+    },
+    {
+      "id": "K7b",
+      "tipo": "evasion",
+      "si": {
+        "y": [
+          {
+            "q": "Q21",
+            "es": "V"
+          },
+          {
+            "q": "Q15",
+            "es": "F"
+          },
+          {
+            "q": "Q22",
+            "es": "F"
+          },
+          {
+            "q": "Q23",
+            "es": "F"
+          },
+          {
+            "q": "Q24",
+            "es": "F"
+          },
+          {
+            "q": "Q25",
+            "es": "F"
+          },
+          {
+            "q": "Q26",
+            "es": "F"
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Dijiste que hay otro síntoma en las lechugas, pero no marcaste ninguno. Precisa cuál observas."
+    },
+    {
+      "id": "K8",
+      "tipo": "bloque",
+      "si": null,
+      "anula": [],
+      "mensaje": "Respondiste casi todo lo mismo. Las respuestas parecen apresuradas; conviene repetir la consulta con calma."
+    },
+    {
+      "id": "K9",
+      "tipo": "escalera",
+      "si": null,
+      "pares": [
+        [
+          "Q01b",
+          "Q01a",
+          "F"
+        ],
+        [
+          "Q02b",
+          "Q02a",
+          "F"
+        ],
+        [
+          "Q02c",
+          "Q02a",
+          "V"
+        ],
+        [
+          "Q02b",
+          "Q02c",
+          "V"
+        ],
+        [
+          "Q03b",
+          "Q03a",
+          "V"
+        ],
+        [
+          "Q03c",
+          "Q03a",
+          "V"
+        ],
+        [
+          "Q03c",
+          "Q03b",
+          "F"
+        ],
+        [
+          "Q04b",
+          "Q04a",
+          "F"
+        ],
+        [
+          "Q04c",
+          "Q04b",
+          "F"
+        ],
+        [
+          "Q04c",
+          "Q04a",
+          "F"
+        ],
+        [
+          "Q22",
+          "Q21",
+          "F"
+        ],
+        [
+          "Q23",
+          "Q21",
+          "F"
+        ],
+        [
+          "Q24",
+          "Q21",
+          "F"
+        ],
+        [
+          "Q25",
+          "Q21",
+          "F"
+        ],
+        [
+          "Q26",
+          "Q21",
+          "F"
+        ],
+        [
+          "Q27",
+          "Q15",
+          "F"
+        ]
+      ],
+      "anula": [],
+      "mensaje": "Las respuestas de una misma medición o compuerta no son compatibles entre sí: un valor no puede estar en dos intervalos a la vez."
+    }
+  ]
+}

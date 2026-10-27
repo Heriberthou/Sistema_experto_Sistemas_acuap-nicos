@@ -1,0 +1,104 @@
+{
+  "nota": "Política de navegación añadida para el cliente; no modifica las reglas del documento.",
+  "temas": [
+    {
+      "id": "general",
+      "titulo": "Revisión de tu sistema",
+      "descripcion": "El sistema selecciona las preguntas según tus respuestas.",
+      "metas": [
+        "A06",
+        "A05",
+        "A09",
+        "A02",
+        "A07",
+        "A08",
+        "A01",
+        "A03",
+        "A04"
+      ]
+    },
+    {
+      "id": "peces",
+      "titulo": "Mis peces",
+      "descripcion": "Respiración, apetito o comportamiento.",
+      "imagen": "pez.png",
+      "metas": [
+        "A06",
+        "A05",
+        "A01"
+      ]
+    },
+    {
+      "id": "plantas",
+      "titulo": "Mis lechugas",
+      "descripcion": "Hojas amarillas o cambios en el agua.",
+      "imagen": "lechuga.png",
+      "metas": [
+        "A07",
+        "A08"
+      ]
+    },
+    {
+      "id": "agua",
+      "titulo": "Calidad del agua",
+      "descripcion": "Revisa las mediciones de tu sistema.",
+      "imagen": "pez.png",
+      "metas": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C15"
+      ]
+    },
+    {
+      "id": "equipos",
+      "titulo": "Bomba y aireación",
+      "descripcion": "Circulación, energía y salida de aire.",
+      "imagen": "lechuga.png",
+      "metas": [
+        "A09",
+        "A02",
+        "A01"
+      ]
+    }
+  ],
+  "seguimientos": [
+    {
+      "cuando": "C10",
+      "metas": [
+        "C12",
+        "A03",
+        "A04"
+      ]
+    },
+    {
+      "cuando": "A06",
+      "metas": [
+        "A01",
+        "A03",
+        "A04"
+      ]
+    },
+    {
+      "cuando": "C01",
+      "metas": [
+        "C12"
+      ]
+    },
+    {
+      "cuando": "C04",
+      "metas": [
+        "C14"
+      ]
+    },
+    {
+      "cuando": "C05",
+      "metas": [
+        "C13",
+        "C14"
+      ]
+    }
+  ]
+}

@@ -1,167 +1,258 @@
-"use strict";
-const $ = selector => document.querySelector(selector);
-const esc = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const etiquetas = {V:"Sí",F:"No",D:"Desconozco"};
-// Redacción breve de presentación; el significado y la regla originales se
-// conservan en la base de conocimientos y en el detalle del razonamiento.
-const resumenes = {C20:"Posible presencia de algas",C27:"Posible problema de oxigenación",C28:"La temperatura podría influir en el apetito de los peces",C29:"Posible funcionamiento insuficiente del biofiltro",C30:"Posible desequilibrio de nutrientes para las lechugas"};
-let temas = [], preguntas = {}, hechos = {}, tema = null, resultado = null, ocupado = false;
-const iconos = {
-  peces:'<path d="M7 16c5-9 12-9 19 0-7 9-14 9-19 0Z"/><path d="m7 16-5-5v10l5-5"/><circle cx="21" cy="15" r="1"/>',
-  planta:'<path d="M16 28V14M16 20C5 20 4 12 4 7c9 0 12 5 12 13ZM16 14C16 5 23 3 29 3c0 8-5 13-13 11Z"/>',
-  agua:'<path d="M16 3C12 10 6 15 6 21a10 10 0 0 0 20 0C26 15 20 10 16 3Z"/><path d="M11 21a5 5 0 0 0 5 5"/>',
-  buscar:'<circle cx="13" cy="13" r="9"/><path d="m20 20 9 9M13 9v8M9 13h8"/>'
-};
-/** Solicita datos al servidor y convierte la respuesta JSON. */
-async function solicitarAPI(ruta,contenidoPeticion) {
-  const respuesta = await fetch(ruta,contenidoPeticion === undefined ? {} : {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(contenidoPeticion)});
-  const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.error || "No se pudo completar la consulta.");
-  return datos;
+/** Consulta del cliente: presenta las respuestas del servidor Python.
+ * No se calculan diagnósticos, umbrales ni inferencias en JavaScript; solo se muestran y se envían respuestas.
+ */
+import {escapar, solicitar, formatearValor, icono, GRUPOS, SUSTENTO, urgencia, sinTitulo, pintarTraza, descargarInforme, iniciarTema} from "/utilidades.js";
+
+const seleccionar = selector => document.querySelector(selector);
+const AREAS = [
+  ["agua", "Calidad del agua", "Oxígeno, temperatura, pH, amoníaco, nitrito y nitrato."],
+  ["peces", "Tus peces", "Boqueo, apetito y mortalidad."],
+  ["equipos", "Bomba y aireación", "Energía, circulación y salida de aire."],
+  ["plantas", "Tus lechugas", "Hojas, raíces, crecimiento e insectos."],
+];
+let base, preguntas = {}, conclusiones = {}, recomendaciones = {};
+let hechos = {}, historial = [], cierre = {descartadas: [], final: null}, continuar = false, resultado = null, ocupado = false, avance = 0;
+
+/** Desactiva los controles mientras se evalúa para evitar respuestas simultáneas. */
+function establecerCarga(valor) {
+  ocupado = valor;
+  document.querySelectorAll("button, input, select").forEach(control => { control.disabled = valor; });
+  seleccionar("#consulta").setAttribute("aria-busy", String(valor));
+  if (!valor) seleccionar("#atras")?.toggleAttribute("disabled", !puedeRetroceder());
 }
-/** Deshabilita controles mientras se actualiza una consulta. */
-function marcarOcupado(value) {
-  ocupado=value;
-  document.querySelectorAll("button,select").forEach(el => {el.disabled=value;});
-  $("#consultation").setAttribute("aria-busy",String(value));
-}
-/** Presenta un error sin borrar las respuestas introducidas. */
+
+/** Muestra un error sin borrar la pregunta ni las respuestas ya aceptadas. */
 function mostrarError(error) {
-  $("#error-texto").textContent=`No pudimos actualizar la consulta. Tus respuestas siguen aquí. ${error.message}`;
-  $("#error").hidden=false;
+  seleccionar("#mensaje-error").textContent = error.message;
+  seleccionar("#error").hidden = false;
 }
-/** Solicita nuevamente el razonamiento con los hechos vigentes. */
-async function actualizar() {
-  if(ocupado) return;
-  marcarOcupado(true); $("#error").hidden=true;
+
+/** Envía una propuesta completa; solo sustituye el estado si el servidor la acepta. */
+async function enviar(propuesta) {
+  if (ocupado) return;
+  establecerCarga(true); seleccionar("#error").hidden = true;
   try {
-    resultado=await solicitarAPI("/api/consultar",{hechos,tema:tema.id});
-    mostrar();
-  } catch(error) {
-    resultado=null;
-    $("#pregunta-tarjeta").hidden=false;
-    $("#pregunta-tarjeta").innerHTML='<h2>Conexión pendiente</h2><p class="small">Vuelve a intentar para continuar con tus respuestas.</p>';
-    $("#outcome").hidden=true; $("#technical").hidden=true;
-    mostrarHistorial(); mostrarError(error);
-  } finally {marcarOcupado(false);}
+    const nuevo = await solicitar("/api/consultar", {hechos: propuesta.hechos, cierre: propuesta.cierre, continuar: propuesta.continuar});
+    ({hechos, historial, cierre, continuar} = propuesta); resultado = nuevo;
+    presentar();
+  } catch (error) { mostrarError(error); } finally { establecerCarga(false); }
 }
-/** Abre una consulta con los hechos iniciales del tema elegido. */
-function iniciarConsulta(perfil) {
-  if(ocupado) return;
-  tema=perfil; hechos={...perfil.hechos}; resultado=null;
-  $("#welcome").hidden=true; $("#consultation").hidden=false;
-  $("#tema-titulo").textContent=tema.titulo;
-  $("#history").open=false; $("#technical").open=false;
-  $("#pregunta-tarjeta").innerHTML='<p class="loading">Preparando tu consulta…</p>';
-  actualizar();
+
+/** Empieza una consulta nueva sin conservar nada anterior. */
+function iniciarConsulta() {
+  if (ocupado) return;
+  hechos = {}; historial = []; cierre = {descartadas: [], final: null}; continuar = false; resultado = null; avance = 0;
+  seleccionar("#bienvenida").hidden = true; seleccionar("#consulta").hidden = false;
+  seleccionar("#resultado").hidden = true; seleccionar("#zona-pregunta").hidden = false;
+  for (const id of ["#historial", "#detalle"]) { seleccionar(id).hidden = true; seleccionar(id).open = false; }
+  seleccionar("#tarjeta-pregunta").innerHTML = '<p class="texto-secundario">Preparando tu consulta…</p>';
+  window.scrollTo({top: 0});
+  enviar({hechos: {}, historial: [], cierre, continuar: false});
 }
-/** Reinicia la vista y descarta los hechos de la consulta anterior. */
-function reiniciarConsulta() {
-  if(ocupado) return;
-  tema=null; hechos={}; resultado=null;
-  $("#consultation").hidden=true; $("#welcome").hidden=false; $("#error").hidden=true;
-  $("#pregunta-tarjeta").replaceChildren(); $("#outcome").replaceChildren();
-  $("#answers-list").replaceChildren(); $("#technical-content").replaceChildren();
-  window.scrollTo({top:0});
+
+/** Registra una respuesta nueva o una corrección. */
+function responder(identificador, valor) {
+  const nuevoHistorial = identificador in hechos ? historial : [...historial, identificador];
+  const enConflicto = resultado?.conflictos.some(conflicto => conflicto.hechos.includes(identificador));
+  enviar({hechos: {...hechos, [identificador]: valor}, historial: nuevoHistorial, cierre: {...cierre, final: null}, continuar: enConflicto ? false : continuar});
 }
-/** Permite revisar y corregir respuestas previamente registradas. */
-function mostrarHistorial() {
-  $("#history").hidden=!Object.keys(hechos).length;
-  $("#answers-list").innerHTML=Object.entries(hechos).map(([id,value])=>`<div class="answer-row"><label for="answer-${id}">${esc(preguntas[id].texto)}</label><select id="answer-${id}" data-fact="${id}">${Object.entries(etiquetas).map(([v,label])=>`<option value="${v}" ${v===value?'selected':''}>${label}</option>`).join('')}</select></div>`).join('');
-  document.querySelectorAll('[data-fact]').forEach(select=>select.addEventListener('change',async ()=>{
-    if(ocupado)return;
-    hechos[select.dataset.fact]=select.value; await actualizar();
-    if(resultado && !resultado.terminada) $('#pregunta-tarjeta').scrollIntoView({block:'start'});
-  }));
+
+/** Responde a la confirmación final: Sí cierra, No descarta la conclusión, No sé la deja como indicio. */
+function confirmar(valor) {
+  const principal = resultado.principal;
+  const nuevo = valor === "F" ? {descartadas: [...cierre.descartadas, principal.id], final: null} : {...cierre, final: valor};
+  enviar({hechos, historial, cierre: nuevo, continuar});
 }
-/** Muestra una pregunta pendiente y sus opciones de respuesta. */
-function mostrarPregunta() {
-  const tarjeta=$("#pregunta-tarjeta");
-  if(resultado.conflictos.length) {
-    tarjeta.innerHTML=`<span class="step-label">UNA COMPROBACIÓN ANTES DE SEGUIR</span><h2>Estas respuestas no coinciden</h2><p class="small">Comprueba que se refieran a la misma muestra o período.</p>${[...new Set(resultado.conflictos.flatMap(c=>c.hechos))].map(id=>`<div class="conflict-pregunta">${esc(preguntas[id].texto)}<strong>Respondiste: ${etiquetas[hechos[id]]}</strong></div>`).join('')}<button class="secondary" id="review-conflict">Corregir mis respuestas</button>`;
-    $('#review-conflict').addEventListener('click',()=>{$('#history').open=true; $('#history').scrollIntoView({block:'start'}); $('#answers-list select').focus();});
+
+function puedeRetroceder() { return historial.length > 0 || cierre.descartadas.length > 0 || cierre.final !== null; }
+
+/** Deshace el último paso: la confirmación, una conclusión descartada o la última respuesta. */
+function retroceder() {
+  if (ocupado || !puedeRetroceder()) return;
+  if (cierre.final !== null) return enviar({hechos, historial, cierre: {...cierre, final: null}, continuar});
+  if (resultado.fase === "confirmacion" && cierre.descartadas.length) return enviar({hechos, historial, cierre: {...cierre, descartadas: cierre.descartadas.slice(0, -1)}, continuar});
+  const ultimo = historial[historial.length - 1], {[ultimo]: _quitada, ...resto} = hechos;
+  enviar({hechos: resto, historial: historial.slice(0, -1), cierre: {...cierre, final: null}, continuar: false});
+}
+
+/** Elige la mascota: lechuga para preguntas de plantas, pez para lo demás. */
+function mascota(especie, expresion, extra = "late") {
+  return `<div class="mascota ${especie} ${expresion} ${extra}" aria-hidden="true"></div>`;
+}
+
+function botones(valores = ["V", "F", "D"]) {
+  const rotulos = {V: ["Sí", "S"], F: ["No", "N"], D: ["No sé", "D"]};
+  return `<div class="respuestas">${valores.map(valor => `<button type="button" data-respuesta="${valor}" class="${valor === "D" ? "nsnc" : ""}">${rotulos[valor][0]}<kbd>${rotulos[valor][1]}</kbd></button>`).join("")}</div>`;
+}
+
+/** Pinta la pregunta activa; todas se contestan con Sí, No o Desconozco. */
+function presentarPregunta() {
+  const pregunta = resultado.pregunta, grupo = GRUPOS[pregunta.grupo];
+  const etiqueta = pregunta.es_medicion ? `${pregunta.parametro_nombre}` : grupo.nombre;
+  const pasos = pregunta.es_medicion && pregunta.escalones > 1
+    ? `<p class="paso-medicion">${Array.from({length: pregunta.escalones}, (_, i) => `<i class="${i < pregunta.escalon ? "hecho" : ""}"></i>`).join("")} Medición · paso ${pregunta.escalon} de ${pregunta.escalones}</p>` : "";
+  seleccionar("#tarjeta-pregunta").innerHTML = `<span class="etiqueta-pregunta">${icono(grupo.icono)} ${escapar(etiqueta)}${resultado.distintiva ? " · para distinguir otra posibilidad" : ""}</span>${pregunta.contexto ? `<p class="contexto">${escapar(pregunta.contexto)}</p>` : ""}<h2 id="texto-pregunta">${escapar(pregunta.texto)}</h2>${pasos}${botones()}<details class="ayuda"><summary>¿Cómo puedo comprobarlo?</summary><p>${escapar(pregunta.ayuda)}</p></details><div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><span class="texto-secundario">Atajos: S, N, D</span></div>`;
+  seleccionar("#atras").disabled = !puedeRetroceder();
+  const especie = pregunta.grupo === "plantas" ? "lechuga" : "pez";
+  seleccionar("#mascota-consulta").className = `mascota ${especie} pensando late`;
+  seleccionar("#titulo-acompanante").textContent = resultado.distintiva ? "Una última duda." : "Vamos paso a paso.";
+}
+
+/** Muestra las respuestas que no cuadran con botones para corregirlas allí mismo. */
+function presentarConflicto() {
+  const filas = resultado.conflictos.map(conflicto => `<p>${escapar(conflicto.mensaje)}</p>${conflicto.hechos.map(identificador => `<div class="hecho-conflicto"><span>${escapar(preguntas[identificador].texto)}</span><div class="segmento" role="group" aria-label="Cambiar respuesta">${["V", "F", "D"].map(valor => `<button type="button" class="${hechos[identificador] === valor ? "activo" : ""}" data-cambiar="${identificador}" data-valor="${valor}">${formatearValor(valor)}</button>`).join("")}</div></div>`).join("")}`).join("");
+  seleccionar("#tarjeta-pregunta").innerHTML = `<div class="conflicto"><span class="etiqueta-pregunta">${icono("alerta")} Algo no cuadra</span><h2>Espera, estas respuestas se contradicen.</h2>${filas}<div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><button id="continuar" type="button" class="boton-suave">Continuar sin esos datos</button></div></div>`;
+  seleccionar("#mascota-consulta").className = "mascota pez sorprendido late";
+  seleccionar("#titulo-acompanante").textContent = "Un momento…";
+  seleccionar("#continuar").addEventListener("click", () => enviar({hechos, historial, cierre, continuar: true}));
+}
+
+/** Pregunta final tipo Akinator: ¿la conclusión coincide con lo que observas? */
+function presentarConfirmacion() {
+  const principal = resultado.principal, elemento = resultado.resultados.find(r => r.id === principal.id);
+  const titulo = (conclusiones[principal.id] || recomendaciones[principal.id])?.titulo || principal.descripcion;
+  const rondas = Array.from({length: cierre.maximo ?? resultado.cierre.maximo}, (_, i) => `<i class="${i < resultado.cierre.ronda - 1 ? "pasada" : i === resultado.cierre.ronda - 1 ? "activa" : ""}"></i>`).join("");
+  const evidencias = (elemento?.respuestas || []).map(r => `<li>${escapar(r.pregunta)} <strong>${formatearValor(r.valor)}</strong></li>`).join("");
+  seleccionar("#tarjeta-pregunta").innerHTML = `<span class="etiqueta-pregunta">${icono("info")} Creo que ya lo tengo</span><div class="rondas" aria-label="Ronda ${resultado.cierre.ronda} de ${resultado.cierre.maximo}">${rondas}</div><div class="conclusion-principal"><span class="chip ${principal.sustento}" title="${escapar(SUSTENTO[principal.sustento])}">${principal.sustento}</span><h2>${escapar(titulo)}</h2><p>${escapar(principal.descripcion)}</p></div>${evidencias ? `<details class="ayuda"><summary>Lo que me llevó a pensar esto</summary><ul class="lista-evidencia">${evidencias}</ul></details>` : ""}<p class="pregunta-akinator">¿Esto coincide con lo que observas?</p>${botones()}<div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><span class="texto-secundario">Con «No» lo descarto y busco otra explicación.</span></div>`;
+  seleccionar("#mascota-consulta").className = "mascota pez pensando late";
+  seleccionar("#titulo-acompanante").textContent = "¿Voy bien?";
+}
+
+/** Panel lateral: lecturas asumidas, señales detectadas y calidad de la consulta. */
+function presentarPanel() {
+  const calidad = resultado.calidad, hay = Object.keys(hechos).length > 0;
+  const nombres = {conocido: "", pendiente: "Sin medir", desconozco: "Desconozco"};
+  const lecturas = resultado.lecturas.map(l => `<div class="lectura"><b>${escapar(l.nombre)}</b><span class="valor"><span class="punto ${l.nivel || (l.estado === "desconozco" ? "desconozco" : "")}"></span>${l.intervalo ? escapar(l.intervalo) : nombres[l.estado]}</span></div>`).join("");
+  const senales = resultado.resultados.filter(r => r.id[0] === "C" && r.tipo !== "Contexto").map(r => `<span class="senal">${escapar(r.titulo)}</span>`).join("");
+  seleccionar("#panel-sistema").innerHTML = `<h3>${icono("lista")} Tu sistema</h3>${lecturas}<h3 class="separado">Lo que voy detectando</h3>${senales ? `<div class="senales">${senales}</div>` : '<p class="texto-secundario">Todavía nada fuera de lo normal.</p>'}${hay ? `<h3 class="separado">Calidad de la consulta</h3><span class="insignia-calidad calidad-${calidad.nivel.replace(" ", "")}">${escapar(calidad.nivel)}</span><p class="nota-panel">${escapar(calidad.razones[0] || calidad.efecto)}</p>` : ""}`;
+}
+
+function presentarAvisos() {
+  const avisos = resultado.avisos.filter(a => a.id !== "K7a" || resultado.fase !== "pregunta");
+  seleccionar("#avisos").innerHTML = resultado.fase === "cerrada" ? "" : avisos.map(a => `<div class="aviso alerta" role="status">${icono("alerta")}<p><strong>${a.id === "K8" ? "Parece que respondiste todo igual." : "Ojo."}</strong> ${escapar(a.mensaje)}</p></div>`).join("");
+}
+
+/** Sustituye identificadores técnicos (Q25 = F) por la pregunta correspondiente. */
+function legible(texto) {
+  return texto.replace(/(Q\d+[a-c]?) = ([VF])/g, (_, id, valor) => preguntas[id] ? `«${preguntas[id].texto}» se responda ${valor === "V" ? "Sí" : "No"}` : `${id} = ${valor}`);
+}
+
+function tarjetaAccion(elemento, indice) {
+  const u = urgencia(elemento.prioridad);
+  const motivos = elemento.motivos.map(m => `<div class="motivo"><p><strong>${escapar(m.regla)}</strong> · ${escapar(m.explicacion)}</p><p class="texto-secundario">${m.fuentes.map(f => `<span class="chip">${escapar(f)}</span>`).join("")}${escapar(m.cita)}${m.inferencia ? ' <span class="chip inferencia">inferencia propuesta</span>' : ""}</p></div>`).join("");
+  const respuestas = elemento.respuestas.length ? `<p class="texto-secundario">Lo que me contaste:</p><ul class="lista-evidencia">${elemento.respuestas.map(r => `<li>${escapar(r.pregunta)} <strong>${formatearValor(r.valor)}</strong></li>`).join("")}</ul>` : "";
+  return `<article class="accion ${u.clase === "u1" ? "urgente" : ""}"><div class="orden">${indice + 1}</div><div><h3>${escapar(elemento.titulo)}<span class="urgencia ${u.clase}">${u.texto}</span></h3><p>${escapar(sinTitulo(elemento))}</p>${(elemento.pasos || []).length ? `<p class="subtitulo-pasos">Qué puedes hacer</p><ul class="pasos">${elemento.pasos.map(p => `<li>${escapar(p)}</li>`).join("")}</ul>` : ""}<p class="verificacion">${icono("ok")}<span><strong>Sabrás que funcionó si:</strong> ${escapar(legible(elemento.verificacion))}</span></p><details><summary>¿Por qué lo sugerimos?</summary>${respuestas}${motivos}</details></div></article>`;
+}
+
+/** Pantalla final: veredicto, calidad, acciones por prioridad, posibles causas y datos pendientes. */
+function presentarResultado() {
+  const resumen = resultado.resumen, acciones = resultado.resultados.filter(r => r.tipo === "Verificación");
+  const causas = resultado.resultados.filter(r => r.id[0] === "C" && r.tipo !== "Condición");
+  const condiciones = resultado.resultados.filter(r => r.id[0] === "C" && r.tipo === "Condición");
+  const urgente = acciones.some(a => a.prioridad <= 5);
+  const titulos = {
+    confirmada: resumen.valida ? "Esto es lo que te recomiendo." : "Tengo una respuesta, con reservas.", indicio: "Lo dejo como indicio.",
+    inconclusa: "No logré dar con la causa.", insuficiente: "Necesito más información.", sin_regla: "No encontré nada que revisar.",
+  };
+  const expresion = {confirmada: resumen.valida ? "guino" : "pensando", indicio: "pensando", inconclusa: "triste", insuficiente: "pensando", sin_regla: "feliz"}[resumen.resultado];
+  const especie = resultado.principal?.id && (conclusiones[resultado.principal.id]?.grupo === "plantas" || recomendaciones[resultado.principal.id]?.grupo === "plantas") ? "lechuga" : "pez";
+  const nivel = resultado.calidad.nivel;
+  const razones = [...resumen.razones].filter((r, i, todas) => todas.indexOf(r) === i);
+  const faltantes = resultado.pendientes.filter(id => hechos[id] === "D").slice(0, 6);
+  seleccionar("#resultado").innerHTML = `<div class="cabecera-resultado">${mascota(especie, urgente && resumen.resultado === "confirmada" ? "preocupado" : expresion)}<div><p class="antetitulo">Tu consulta</p><h1>${titulos[resumen.resultado]}</h1><p>${escapar(resumen.mensaje)}</p><div class="veredicto"><span class="insignia-calidad calidad-${nivel.replace(" ", "")}">${icono(nivel === "Confiable" ? "ok" : "info")} Calidad: ${escapar(nivel)}</span>${resumen.valida ? '<span class="chip Observada">Respuesta válida</span>' : ""}</div>${razones.length ? `<ul class="lista-evidencia">${razones.map(r => `<li>${escapar(r)}</li>`).join("")}</ul>` : ""}</div></div>
+    ${acciones.length ? `<section class="seccion"><h2>${icono("lista")} Qué hacer, en este orden</h2><div class="acciones-lista">${acciones.map(tarjetaAccion).join("")}</div></section>` : ""}
+    ${causas.length ? `<section class="seccion"><h2>${icono("info")} Posibles causas</h2><div class="causas">${causas.map(c => `<article class="causa"><span class="chip ${c.sustento}" title="${escapar(SUSTENTO[c.sustento])}">${c.sustento}</span><h3>${escapar(c.titulo)}</h3><p>${escapar(c.descripcion)}</p></article>`).join("")}</div></section>` : ""}
+    <section class="seccion"><h2>${icono("agua")} Lo que mediste</h2><div class="lecturas-resumen">${resultado.lecturas.map(l => `<div class="lectura-tarjeta"><small>${escapar(l.nombre)}</small><strong><span class="punto ${l.nivel || (l.estado === "desconozco" ? "desconozco" : "")}"></span>${l.intervalo ? escapar(l.intervalo) : l.estado === "desconozco" ? "Desconozco" : "Sin medir"}</strong></div>`).join("")}</div></section>
+    ${condiciones.length ? `<details class="desplegable"><summary>Condiciones que detecté</summary>${condiciones.map(c => `<p class="texto-secundario"><strong>${escapar(c.titulo)}.</strong> ${escapar(c.descripcion)}</p>`).join("")}</details>` : ""}
+    ${faltantes.length ? `<section class="seccion"><h2>${icono("alerta")} Datos que me faltaron</h2><p class="texto-secundario">Si los consigues, la respuesta puede cambiar:</p><ul class="pendiente-lista">${faltantes.map(id => `<li>${escapar(preguntas[id].texto)}</li>`).join("")}</ul></section>` : ""}
+    <div class="acciones-resultado"><button id="nueva-consulta" class="boton-principal" type="button">${icono("reiniciar")} Nueva consulta</button><button id="imprimir" class="boton-suave" type="button">${icono("imprimir")} Imprimir o guardar PDF</button><button id="guardar" class="boton-suave" type="button">${icono("descargar")} Descargar datos (JSON)</button></div>
+    <p class="alcance">${escapar(resultado.nota)} Es una guía educativa: no confirma enfermedades ni prescribe tratamientos.</p>`;
+  seleccionar("#nueva-consulta").addEventListener("click", reiniciar);
+  seleccionar("#imprimir").addEventListener("click", () => { document.querySelectorAll("details").forEach(d => { d.open = true; }); window.print(); });
+  seleccionar("#guardar").addEventListener("click", () => descargarInforme({fecha: new Date().toISOString(), hechos, calidad: resultado.calidad, resumen, principal: resultado.principal,
+    resultados: resultado.resultados.map(r => ({id: r.id, titulo: r.titulo, sustento: r.sustento, prioridad: r.prioridad, reglas: r.justificaciones})), traza: resultado.traza}));
+}
+
+/** Historial editable con tres opciones por respuesta. */
+function presentarHistorial() {
+  seleccionar("#historial").hidden = !historial.length;
+  seleccionar("#lista-respuestas").innerHTML = historial.map(identificador => `<div class="fila-respuesta"><span>${escapar(preguntas[identificador].texto)}</span><div class="segmento" role="group" aria-label="Respuesta">${["V", "F", "D"].map(valor => `<button type="button" class="${hechos[identificador] === valor ? "activo" : ""}" data-cambiar="${identificador}" data-valor="${valor}">${formatearValor(valor)}</button>`).join("")}</div></div>`).join("");
+}
+
+/** Detalle técnico plegado, separado de la recomendación práctica. */
+function presentarDetalle() {
+  const fuentes = base.fuentes.map(f => `<p class="texto-secundario"><span class="chip">${f.id}</span>${escapar(f.referencia)}</p>`).join("");
+  seleccionar("#contenido-detalle").innerHTML = `<p class="texto-secundario">Para cada consulta el servidor ejecuta encadenamiento hacia adelante (reúne todo lo que se deduce) y hacia atrás (comprueba una meta y pregunta solo lo necesario) sobre la misma base de ${base.reglas.length} reglas.</p>${pintarTraza(resultado.traza)}<h3>Fuentes</h3>${fuentes}`;
+}
+
+/** Actualiza todos los paneles según la fase que devuelve el servidor. */
+function presentar() {
+  const fase = resultado.fase, cerrada = fase === "cerrada";
+  seleccionar("#zona-pregunta").hidden = cerrada;
+  seleccionar("#resultado").hidden = !cerrada;
+  seleccionar("#detalle").hidden = !cerrada;
+  seleccionar("#progreso").hidden = cerrada;
+  if (fase === "pregunta") presentarPregunta();
+  else if (fase === "conflicto") presentarConflicto();
+  else if (fase === "confirmacion") presentarConfirmacion();
+  else presentarResultado();
+  const {respondidas, restantes} = resultado.progreso, total = respondidas + restantes + (fase === "confirmacion" ? 0 : 0);
+  avance = Math.max(avance, total ? respondidas / total : 0);
+  seleccionar("#relleno-progreso").style.width = `${Math.round((fase === "confirmacion" ? 0.96 : avance) * 100)}%`;
+  seleccionar("#texto-progreso").textContent = fase === "confirmacion" ? "Casi listo" : `Pregunta ${respondidas + 1} de unas ${respondidas + Math.max(restantes, 1)}`;
+  presentarPanel(); presentarAvisos(); presentarHistorial(); presentarDetalle();
+  if (!cerrada) seleccionar("#tarjeta-pregunta").scrollIntoView({block: "nearest", behavior: "smooth"}); else window.scrollTo({top: 0});
+}
+
+/** Borra toda la consulta y devuelve al inicio. */
+function reiniciar() {
+  if (ocupado) return;
+  hechos = {}; historial = []; cierre = {descartadas: [], final: null}; continuar = false; resultado = null;
+  seleccionar("#consulta").hidden = true; seleccionar("#bienvenida").hidden = false; seleccionar("#error").hidden = true;
+  for (const id of ["#resultado", "#contenido-detalle", "#lista-respuestas", "#tarjeta-pregunta", "#avisos"]) seleccionar(id).replaceChildren();
+  window.scrollTo({top: 0});
+}
+
+/** Atajos de teclado: S, N y D responden; ← o Retroceso deshacen. */
+function manejarTecla(evento) {
+  if (!resultado || ocupado || evento.ctrlKey || evento.metaKey || evento.altKey || ["INPUT", "SELECT", "TEXTAREA"].includes(evento.target.tagName)) return;
+  const tecla = evento.key.toLowerCase();
+  const botonesRespuesta = seleccionar("#tarjeta-pregunta [data-respuesta]") ? ["V", "F", "D"] : null;
+  if (botonesRespuesta && ["s", "1"].includes(tecla)) seleccionar('[data-respuesta="V"]').click();
+  else if (botonesRespuesta && ["n", "2"].includes(tecla)) seleccionar('[data-respuesta="F"]').click();
+  else if (botonesRespuesta && ["d", "3"].includes(tecla)) seleccionar('[data-respuesta="D"]').click();
+  else if (["arrowleft", "backspace"].includes(tecla) && !seleccionar("#consulta").hidden) { evento.preventDefault(); retroceder(); }
+}
+
+/** Delegación de eventos para respuestas, correcciones y botones de la tarjeta. */
+function manejarClic(evento) {
+  const respuesta = evento.target.closest("[data-respuesta]");
+  if (respuesta && resultado) {
+    if (resultado.fase === "pregunta") responder(resultado.pregunta.id, respuesta.dataset.respuesta);
+    else if (resultado.fase === "confirmacion") confirmar(respuesta.dataset.respuesta);
     return;
   }
-  const q=preguntas[resultado.pregunta_siguiente];
-  tarjeta.innerHTML=`<span class="step-label">${esc(q.categoria)}</span><h2>${esc(q.texto)}</h2><div class="answer-buttons"><button data-answer="V">Sí</button><button data-answer="F">No</button><button data-answer="D">Desconozco</button></div><details class="ayuda"><summary>¿Cómo puedo comprobarlo?</summary><div>${mostrarAyuda(q.ayuda)}</div></details>`;
-  document.querySelectorAll('[data-answer]').forEach(button=>button.addEventListener('click',()=>{
-    if(ocupado)return;
-    hechos[q.id]=button.dataset.answer; actualizar();
-  }));
+  const cambio = evento.target.closest("[data-cambiar]");
+  if (cambio) responder(cambio.dataset.cambiar, cambio.dataset.valor);
+  else if (evento.target.closest("#atras")) retroceder();
 }
-/** Recorre la traza para recuperar hechos que justifican un resultado. */
-function obtenerEvidencias(id,seen=new Set()) {
-  if(seen.has(id))return [];
-  const siguiente=new Set([...seen,id]);
-  return resultado.traza.filter(s=>s.conclusion===id).flatMap(s=>Object.entries(s.premisas).flatMap(([key,value])=>{
-    if(preguntas[key]) return value==='D'?[]:[`${preguntas[key].texto} — ${etiquetas[value]}`];
-    return value==='V'?obtenerEvidencias(key,siguiente):[];
-  }));
-}
-/** Genera una explicación breve a partir de hechos observados. */
-function explicarRazon(id) {
-  const elementos=[...new Set(obtenerEvidencias(id))];
-  return `<details class="explicacion"><summary>¿Por qué lo sugerimos?</summary><p>Se apoya en estas respuestas:</p><ul>${elementos.map(texto=>`<li>${esc(texto)}</li>`).join('')}</ul><p>Puedes consultar las reglas y fuentes en el detalle del razonamiento.</p></details>`;
-}
-/** Presenta una verificación y su explicación opcional. */
-function mostrarRecomendacion(item) {
-  return `<div class="mostrarRecomendacion"><span class="check" aria-hidden="true">✓</span><div>${esc(item.descripcion)}${explicarRazon(item.id)}</div></div>`;
-}
-/** Agrupa los problemas y las verificaciones de la consulta. */
-function mostrarResultado() {
-  const recomendadas=resultado.recomendaciones;
-  $('#outcome').innerHTML=`<div class="resultado-heading"><span class="resultado-simbolo" aria-hidden="true">${resultado.resultados.length?'✓':'?'}</span><h1>${esc(resultado.titulo)}</h1><p>${esc(resultado.resumen)}</p></div>
-  ${resultado.hipotesis.length?`<section class="findings"><h2>Posibles problemas</h2>${resultado.hipotesis.map(item=>`<div class="finding">${esc(resumenes[item.id]||item.descripcion)}${explicarRazon(item.id)}</div>`).join('')}</section>`:''}
-  ${recomendadas.length?`<section class="recomendaciones"><h2>Qué puedes revisar ahora</h2>${recomendadas.slice(0,3).map(mostrarRecomendacion).join('')}${recomendadas.length>3?`<details class="more"><summary>Ver otras verificaciones relacionadas</summary>${recomendadas.slice(3).map(mostrarRecomendacion).join('')}</details>`:''}</section>`:''}
-  ${resultado.condiciones.length?`<details class="history"><summary>Ver las condiciones observadas</summary>${resultado.condiciones.map(item=>`<p class="small">${esc(item.descripcion)}</p>`).join('')}</details>`:''}
-  ${resultado.sin_resolver.length?'<p class="uncertain">Quedaron aspectos sin aclarar por falta de información. Puedes revisar las respuestas «Desconozco» si consigues esos datos.</p>':''}
-  <p class="scope">${esc(resultado.nota_alcance)}</p><div class="resultado-actions"><button id="new-consult" class="primary">Revisar otro problema</button><button id="download" class="secondary">Guardar resultado</button></div>`;
-  $('#new-consult').addEventListener('click',reiniciarConsulta);
-  $('#download').addEventListener('click',()=>{
-    if(!resultado)return;
-    const url=URL.createObjectURL(new Blob([JSON.stringify(resultado,null,2)],{type:'application/json'}));
-    const enlace=document.createElement('a');enlace.href=url;enlace.download='consulta-acuaponia.json';enlace.click();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-  });
-}
-/** Presenta reglas activadas y comparación de razonamientos. */
-function mostrarDetallesTecnicos() {
-  const a=resultado.analisis;
-  $('#technical-content').innerHTML=`<div class="small"><p>El sistema combina ambos mecanismos automáticamente. Primero deriva resultados de los hechos y luego busca las premisas que faltan en las metas relacionadas con el caso.</p><p><strong>Reglas activadas hacia adelante:</strong> ${a.reglas_adelante.join(', ')||'Ninguna'}.</p><p><strong>Reglas activadas hacia atrás:</strong> ${a.reglas_atras.join(', ')||'Ninguna'}.</p><p><strong>Preguntas aún pertinentes:</strong> ${a.preguntas_sugeridas.join(', ')||'Ninguna'}.</p><table><thead><tr><th>Meta</th><th>Adelante: sustentada</th><th>Atrás</th></tr></thead><tbody>${a.comparaciones.map(c=>`<tr><td>${c.objetivo}</td><td>${c.sustentada_adelante?'Sí':'No derivada'}</td><td>${({V:'Sustentada',F:'No sustentable',D:'Indeterminada'})[c.estado_atras]}</td></tr>`).join('')}</tbody></table><p>«No derivada» no significa falsa. La comparación usa los mismos hechos y la misma base. No se calculan probabilidades.</p></div><h3>Cómo se obtuvieron los resultados</h3>${resultado.traza.map(step=>`<div class="traza-step"><strong>${step.regla} · ${step.conclusion}</strong><p>${esc(step.expresion)}</p><p>Premisas: ${Object.entries(step.premisas).map(([key,value])=>`${key}=${value}`).join(', ')}</p><p>${esc(step.explicacion)}</p></div>`).join('')||'<p class="small">Ninguna regla se activó con estas respuestas.</p>'}`;
-}
-/** Actualiza las secciones visibles según el estado de la consulta. */
-function mostrar() {
-  $('#pregunta-tarjeta').hidden=resultado.terminada;
-  $('#outcome').hidden=!resultado.terminada;
-  $('#technical').hidden=!resultado.terminada;
-  if(resultado.terminada)mostrarResultado(); else mostrarPregunta();
-  mostrarHistorial(); mostrarDetallesTecnicos();
-}
-/** Carga los catálogos y registra los controles de la interfaz. */
-async function inicializar() {
-  marcarOcupado(true);
-  try {
-    const [catalog,profiles]=await Promise.all([solicitarAPI('/api/conocimientos'),solicitarAPI('/api/temas')]);
-    preguntas=Object.fromEntries(catalog.preguntas.map(q=>[q.id,q]));temas=profiles;
-    $('#temas').innerHTML=temas.map(p=>`<button class="tema" data-tema="${esc(p.id)}"><span class="icon" aria-hidden="true"><svg viewBox="0 0 32 32">${iconos[p.icono]||iconos.buscar}</svg></span><span><strong>${esc(p.titulo)}</strong><small>${esc(p.descripcion)}</small></span><span class="arrow" aria-hidden="true">→</span></button>`).join('');
-    document.querySelectorAll('[data-tema]').forEach(button=>button.addEventListener('click',()=>iniciarConsulta(temas.find(p=>p.id===button.dataset.tema))));
-    $('#error').hidden=true;
-  }catch(error){$('#temas').textContent='La consulta estará disponible al recuperar la conexión.';mostrarError(error);}finally{marcarOcupado(false);}
-}
-$('#reiniciarConsulta').addEventListener('click',reiniciarConsulta);
-$('#retry').addEventListener('click',()=>tema?actualizar():inicializar());
-inicializar();
 
-/** Presenta los campos disponibles de una ayuda, escapando el texto recibido. */
-function mostrarAyuda(ayuda) {
-  if (!ayuda) return "<p>No hay información adicional para esta pregunta.</p>";
-  if (typeof ayuda === "string") return `<p>${esc(ayuda)}</p>`;
-  const escapar = typeof escaparHTML === "function" ? escaparHTML : esc;
-  const elementos = [];
-  if (ayuda.descripcion) elementos.push(`<p>${escapar(ayuda.descripcion)}</p>`);
-  if (ayuda.unidad) elementos.push(`<p><strong>Unidad:</strong> ${escapar(ayuda.unidad)}</p>`);
-  if (ayuda.ejemplo_si) elementos.push(`<p><strong>Ejemplo de Sí:</strong> ${escapar(ayuda.ejemplo_si)}</p>`);
-  if (ayuda.ejemplo_no) elementos.push(`<p><strong>Ejemplo de No:</strong> ${escapar(ayuda.ejemplo_no)}</p>`);
-  if (ayuda.advertencia) elementos.push(`<p><strong>Importante:</strong> ${escapar(ayuda.advertencia)}</p>`);
-  return elementos.join("");
+/** Carga el catálogo antes de habilitar la consulta. */
+async function iniciar() {
+  iniciarTema();
+  seleccionar("#areas").innerHTML = AREAS.map(([id, titulo, texto]) => `<article class="area"><div class="icono-area">${icono(GRUPOS[id].icono)}</div><h3>${titulo}</h3><p>${texto}</p></article>`).join("");
+  establecerCarga(true);
+  try {
+    base = await solicitar("/api/base");
+    preguntas = Object.fromEntries(base.preguntas.map(p => [p.id, p]));
+    conclusiones = Object.fromEntries(base.conclusiones.map(c => [c.id, c]));
+    recomendaciones = Object.fromEntries(base.recomendaciones.map(r => [r.id, r]));
+    seleccionar("#error").hidden = true;
+  } catch (error) { mostrarError(error); } finally { establecerCarga(false); }
 }
+seleccionar("#iniciar-revision").addEventListener("click", iniciarConsulta);
+seleccionar("#volver").addEventListener("click", reiniciar);
+seleccionar("#reintentar").addEventListener("click", () => resultado ? enviar({hechos, historial, cierre, continuar}) : iniciar());
+document.addEventListener("click", manejarClic);
+document.addEventListener("keydown", manejarTecla);
+iniciar();

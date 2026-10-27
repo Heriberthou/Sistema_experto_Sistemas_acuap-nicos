@@ -1,28 +1,52 @@
-"""Lógica trivaluada de Kleene fuerte: D nunca equivale a F."""
+"""Evaluación compartida: lógica de Kleene fuerte con valores V, F y D."""
 
 
 def negar(valor):
-    """Invierte V y F sin cambiar D."""
+    """Intercambia verdadero/falso y conserva el valor desconocido."""
     return {"V": "F", "F": "V", "D": "D"}[valor]
 
 
-def conjuncion(valores):
-    """Aplica Y de Kleene fuerte a una secuencia de valores V/F/D."""
-    return "F" if "F" in valores else "D" if "D" in valores else "V"
-
-
-def disyuncion(valores):
-    """Aplica O de Kleene fuerte a una secuencia de valores V/F/D."""
-    return "V" if "V" in valores else "D" if "D" in valores else "F"
-
-
 def evaluar(nodo, resolver):
-    """Evalúa recursivamente un antecedente usando la función de consulta de hechos."""
-    if "hecho" in nodo:
-        valor = resolver(nodo["hecho"])
-        return valor if nodo["valor"] == "V" else negar(valor)
+    """Devuelve estado, evidencia visitada y preguntas faltantes.
+
+    ``resolver`` devuelve (valor, faltantes) para una pregunta o conclusión.
+    Y/O usan cortocircuito de izquierda a derecha. La comparación explícita
+    ``es = D`` vale V solo cuando la respuesta es Desconozco y nunca es un faltante.
+    """
+    if "q" in nodo or "c" in nodo:
+        identificador = nodo.get("q", nodo.get("c"))
+        valor, faltantes = resolver(identificador)
+        esperado = nodo.get("es", "V")
+        if esperado == "D":
+            estado, faltantes = ("V" if valor == "D" else "F"), []
+        elif valor == "D":
+            estado = "D"
+        else:
+            estado = "V" if valor == esperado else "F"
+        evidencia = [{"hecho": identificador, "valor": valor, "referencia": esperado, "estado": estado}]
+        return estado, evidencia, list(faltantes) if estado == "D" else []
     if "no" in nodo:
-        return negar(evaluar(nodo["no"], resolver))
-    if "todos" in nodo:
-        return conjuncion([evaluar(hijo, resolver) for hijo in nodo["todos"]])
-    return disyuncion([evaluar(hijo, resolver) for hijo in nodo["alguno"]])
+        estado, evidencia, faltantes = evaluar(nodo["no"], resolver)
+        return negar(estado), evidencia, faltantes
+    es_conjuncion = "y" in nodo
+    dominante = "F" if es_conjuncion else "V"
+    neutro = "V" if es_conjuncion else "F"
+    evidencias, pendientes = [], []
+    hay_desconocidos = False
+    for hijo in nodo["y" if es_conjuncion else "o"]:
+        estado, evidencia, faltantes = evaluar(hijo, resolver)
+        evidencias.extend(evidencia)
+        pendientes.extend(identificador for identificador in faltantes if identificador not in pendientes)
+        if estado == dominante:
+            return dominante, evidencias, []
+        hay_desconocidos = hay_desconocidos or estado == "D"
+    return ("D" if hay_desconocidos else neutro), evidencias, pendientes
+
+
+def simbolos(nodo):
+    """Extrae los símbolos de un árbol lógico sin evaluarlo."""
+    if "q" in nodo or "c" in nodo:
+        return {nodo.get("q", nodo.get("c"))}
+    if "no" in nodo:
+        return simbolos(nodo["no"])
+    return set().union(*(simbolos(hijo) for hijo in nodo.get("y", nodo.get("o", []))))
