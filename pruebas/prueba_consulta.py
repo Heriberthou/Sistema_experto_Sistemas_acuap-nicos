@@ -112,3 +112,13 @@ class PruebasConsulta(pruebas.TestCase):
         caso_prueba.assertEqual(conflicto["fase"], "conflicto")
         caso_prueba.assertEqual([c["id"] for c in conflicto["conflictos"]], ["K4"])
         caso_prueba.assertEqual(conflicto["deducidas"][0]["por"], "Q09")
+
+    def test_orden_previas_antes_de_dependientes(caso_prueba):
+        """Primero se pregunta si hay peces, luego lo que depende de ello; y nada se pregunta dos veces."""
+        vistas, _ = caso_prueba.preguntadas({})
+        caso_prueba.assertEqual(len(vistas), len(set(vistas)))
+        for previa, dependientes in (("Q18", ("Q06", "Q07", "Q08", "Q19")), ("Q09", ("Q10", "Q13")), ("Q10", ("Q11",)), ("Q13", ("Q14",))):
+            for dependiente in dependientes:
+                caso_prueba.assertLess(vistas.index(previa), vistas.index(dependiente), f"{previa} antes de {dependiente}")
+        sin_peces, _ = caso_prueba.preguntadas({"Q18": "F"})
+        caso_prueba.assertTrue({"Q06", "Q07", "Q08", "Q19"}.isdisjoint(sin_peces))

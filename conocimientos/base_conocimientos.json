@@ -117,21 +117,27 @@
       "simbolo": "peces_muertos",
       "texto": "¿Se encontró al menos un pez muerto recientemente?",
       "ayuda": "Cuenta los peces que aparecieron muertos en los últimos días. Con uno basta para responder «Sí».",
-      "grupo": "peces"
+      "grupo": "peces",
+      "despues_de": "Q18",
+      "adelanta_previa": true
     },
     {
       "id": "Q07",
       "simbolo": "peces_boqueando",
       "texto": "¿Se observan peces boqueando repetidamente en la superficie?",
       "ayuda": "Observa en la superficie, sobre todo por la mañana. Boquear es abrir y cerrar la boca en la superficie varias veces.",
-      "grupo": "peces"
+      "grupo": "peces",
+      "despues_de": "Q18",
+      "adelanta_previa": true
     },
     {
       "id": "Q08",
       "simbolo": "apetito_reducido",
       "texto": "¿Los peces han disminuido su consumo habitual de alimento?",
       "ayuda": "Compara con lo que comían normalmente: si queda alimento sin consumir pasados unos minutos, responde «Sí».",
-      "grupo": "peces"
+      "grupo": "peces",
+      "despues_de": "Q18",
+      "adelanta_previa": true
     },
     {
       "id": "Q09",
@@ -145,14 +151,18 @@
       "simbolo": "bomba_encendida",
       "texto": "¿La bomba de recirculación está encendida?",
       "ayuda": "Mira o escucha la bomba de recirculación: debe vibrar y mover agua.",
-      "grupo": "equipos"
+      "grupo": "equipos",
+      "despues_de": "Q09",
+      "adelanta_previa": true
     },
     {
       "id": "Q11",
       "simbolo": "agua_circula",
       "texto": "¿Se observa circulación de agua por la salida habitual?",
       "ayuda": "Mira la salida habitual del agua (cama de cultivo o retorno al tanque): debe verse correr agua.",
-      "grupo": "equipos"
+      "grupo": "equipos",
+      "despues_de": "Q10",
+      "adelanta_previa": true
     },
     {
       "id": "Q12",
@@ -166,14 +176,18 @@
       "simbolo": "aireador_encendido",
       "texto": "¿El aireador está encendido?",
       "ayuda": "Si tu sistema no tiene aireador, responde «No».",
-      "grupo": "equipos"
+      "grupo": "equipos",
+      "despues_de": "Q09",
+      "adelanta_previa": true
     },
     {
       "id": "Q14",
       "simbolo": "aire_visible",
       "texto": "¿Se observa salida de aire en el punto de aireación?",
       "ayuda": "Mira el difusor (piedra de aire) en el tanque: deben salir burbujas continuas.",
-      "grupo": "equipos"
+      "grupo": "equipos",
+      "despues_de": "Q13",
+      "adelanta_previa": true
     },
     {
       "id": "Q15",
@@ -208,7 +222,9 @@
       "simbolo": "peces_nuevos",
       "texto": "¿Se introdujeron peces nuevos en los últimos 7 días?",
       "ayuda": "Cuenta cualquier ingreso de peces nuevos durante la última semana.",
-      "grupo": "peces"
+      "grupo": "peces",
+      "despues_de": "Q18",
+      "adelanta_previa": true
     },
     {
       "id": "Q20a",

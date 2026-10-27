@@ -29,6 +29,11 @@ def puntuar(base, hechos, seguros, memoria, bloqueadas):
     for pregunta in reversed(base["preguntas"]):
         if pregunta.get("padre") and pregunta["id"] not in hechos:
             cuenta[pregunta["padre"]] = max(cuenta[pregunta["padre"]], cuenta[pregunta["id"]])
+    # Si una pregunta lo indica (adelanta_previa), su pregunta previa hereda su interés para plantearse a tiempo.
+    for pregunta in base["preguntas"]:
+        previa = pregunta.get("despues_de")
+        if previa and pregunta.get("adelanta_previa") and previa not in hechos:
+            cuenta[previa] = max(cuenta[previa], cuenta[pregunta["id"]])
     return cuenta
 
 
