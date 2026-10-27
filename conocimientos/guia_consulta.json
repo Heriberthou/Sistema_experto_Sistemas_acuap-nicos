@@ -112,6 +112,56 @@
   ],
   "partidas": [
     {
+      "tema": "agua",
+      "texto": "Oxígeno bajo",
+      "meta": "C01"
+    },
+    {
+      "tema": "agua",
+      "texto": "Oxígeno bajo con el aireador funcionando",
+      "meta": "C16"
+    },
+    {
+      "tema": "agua",
+      "texto": "Temperatura fuera de rango",
+      "meta": "C02"
+    },
+    {
+      "tema": "agua",
+      "texto": "pH fuera de rango",
+      "meta": "C03"
+    },
+    {
+      "tema": "agua",
+      "texto": "Amoníaco alto",
+      "meta": "C04"
+    },
+    {
+      "tema": "agua",
+      "texto": "Amoníaco crítico (4 ppm o más)",
+      "meta": "C19"
+    },
+    {
+      "tema": "agua",
+      "texto": "Nitrito alto",
+      "meta": "C05"
+    },
+    {
+      "tema": "agua",
+      "texto": "Nitrato bajo",
+      "meta": "C23"
+    },
+    {
+      "tema": "agua",
+      "texto": "El biofiltro no trabaja bien",
+      "meta": "C13"
+    },
+    {
+      "tema": "agua",
+      "texto": "Agua verde o algas",
+      "meta": "C15"
+    },
+    {
       "tema": "peces",
       "texto": "Peces muertos",
       "meta": "A06"
@@ -123,53 +173,23 @@
     },
     {
       "tema": "peces",
+      "texto": "Boqueo con oxígeno normal",
+      "meta": "C17"
+    },
+    {
+      "tema": "peces",
       "texto": "Peces que comen menos",
       "meta": "C10"
     },
     {
       "tema": "peces",
+      "texto": "Peces sin apetito por agua fría",
+      "meta": "C21"
+    },
+    {
+      "tema": "peces",
       "texto": "Peces nuevos que murieron",
       "meta": "C24"
-    },
-    {
-      "tema": "plantas",
-      "texto": "Lechugas marchitas",
-      "meta": "C27"
-    },
-    {
-      "tema": "plantas",
-      "texto": "Raíces oscuras o con mal olor",
-      "meta": "C28"
-    },
-    {
-      "tema": "plantas",
-      "texto": "Hojas amarillas",
-      "meta": "A07"
-    },
-    {
-      "tema": "plantas",
-      "texto": "Puntas secas o quemadas",
-      "meta": "C26"
-    },
-    {
-      "tema": "agua",
-      "texto": "Oxígeno bajo",
-      "meta": "C01"
-    },
-    {
-      "tema": "agua",
-      "texto": "Amoníaco alto",
-      "meta": "C04"
-    },
-    {
-      "tema": "agua",
-      "texto": "Nitrito alto",
-      "meta": "C05"
-    },
-    {
-      "tema": "agua",
-      "texto": "Agua verde o algas",
-      "meta": "C15"
     },
     {
       "tema": "equipos",
@@ -188,8 +208,58 @@
     },
     {
       "tema": "equipos",
+      "texto": "La bomba está apagada aunque hay luz",
+      "meta": "C07"
+    },
+    {
+      "tema": "equipos",
+      "texto": "La bomba enciende pero no sale agua",
+      "meta": "C06"
+    },
+    {
+      "tema": "equipos",
       "texto": "El aireador no burbujea",
       "meta": "C09"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Hojas amarillas",
+      "meta": "A07"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Amarillamiento en hojas nuevas",
+      "meta": "C25"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Amarillamiento con pH alto",
+      "meta": "C22"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Amarillamiento sin causa clara",
+      "meta": "C29"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Lechugas marchitas",
+      "meta": "C27"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Raíces oscuras o con mal olor",
+      "meta": "C28"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Puntas secas o quemadas",
+      "meta": "C26"
+    },
+    {
+      "tema": "plantas",
+      "texto": "Insectos en las hojas",
+      "meta": "A27"
     }
   ]
 }

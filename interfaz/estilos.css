@@ -1,19 +1,20 @@
 /* Acuavida · estilos compartidos por la consulta y el laboratorio. Claro y oscuro, sin estilos en línea. */
 :root {
-  --fondo:#f3f7f1; --papel:#ffffff; --papel-2:#f7faf6; --tinta:#10322f; --suave:#587570; --verde:#147763; --verde-osc:#0e5a4b;
-  --sobre-verde:#ffffff; --menta:#e1f1e6; --borde:#d6e4d8; --naranja:#c97a14; --naranja-fondo:#fff2dc; --rojo:#b53a24; --rojo-fondo:#fde8e2;
-  --azul:#256ea8; --azul-fondo:#e3f0fa; --ok:#2c8a4f; --ok-fondo:#e2f4e8; --sombra:0 14px 40px #1e5b4218; --radio:20px;
+  --fondo:#eaf6fb; --papel:#ffffff; --papel-2:#f3fafd; --tinta:#0b2a3d; --suave:#4d6b7e; --verde:#0a7ea6; --verde-osc:#07638a;
+  --sobre-verde:#ffffff; --menta:#dff3f8; --borde:#c9e3ee; --naranja:#c97a14; --naranja-fondo:#fff2dc; --rojo:#b53a24; --rojo-fondo:#fde8e2;
+  --azul:#256ea8; --azul-fondo:#e3f0fa; --ok:#2c8a4f; --ok-fondo:#e2f4e8; --lima:#8bd13f; --lima-osc:#5fae2e; --sombra:0 14px 40px #0a5f8a1f; --radio:20px;
   font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif; color:var(--tinta); background:var(--fondo); font-synthesis:none;
   color-scheme:light;
 }
 :root[data-tema="oscuro"] {
-  --fondo:#0d1d1b; --papel:#142926; --papel-2:#183230; --tinta:#e7f3ef; --suave:#9db9b3; --verde:#3fbfa3; --verde-osc:#35a58c;
-  --sobre-verde:#06201b; --menta:#1c3b36; --borde:#27433e; --naranja:#f0a84a; --naranja-fondo:#3a2c14; --rojo:#ff9a85; --rojo-fondo:#3d1f19;
-  --azul:#7cc0f0; --azul-fondo:#15303f; --ok:#6fd592; --ok-fondo:#17352a; --sombra:0 14px 40px #00000040; color-scheme:dark;
+  --fondo:#071c2b; --papel:#0f2d41; --papel-2:#123650; --tinta:#e6f4fb; --suave:#9ec2d6; --verde:#3cc4e8; --verde-osc:#2aa9cc;
+  --sobre-verde:#04202e; --menta:#12425a; --borde:#1f4c66; --naranja:#f0a84a; --naranja-fondo:#3a2c14; --rojo:#ff9a85; --rojo-fondo:#3d1f19;
+  --azul:#7cc0f0; --azul-fondo:#15303f; --ok:#6fd592; --ok-fondo:#17352a; --lima:#9be24f; --lima-osc:#7cc83a; --sombra:0 14px 40px #00000050; color-scheme:dark;
 }
 * { box-sizing:border-box }
 html { scroll-behavior:smooth }
-body { margin:0; min-height:100vh; background:var(--fondo) }
+body { margin:0; min-height:100vh; background:var(--fondo) linear-gradient(180deg,#d6effa 0,var(--fondo) 520px) no-repeat }
+:root[data-tema="oscuro"] body { background:var(--fondo) linear-gradient(180deg,#0a2a40 0,var(--fondo) 520px) no-repeat }
 button,input,select { font:inherit; color:inherit }
 button { cursor:pointer }
 button:disabled { opacity:.5; cursor:not-allowed }
@@ -263,3 +264,31 @@ select { padding:10px 12px; border-radius:10px; border:1px solid var(--borde); b
 .partida::after { content:"?"; opacity:.6 }
 .veredicto-meta { border-left:4px solid var(--verde); padding:12px 16px; margin:12px 0; background:var(--menta); border-radius:8px }
 .veredicto-meta.no { border-color:var(--borde); background:transparent; border:1px solid var(--borde) }
+
+/* Portada con fotografía: agua, peces y lechugas */
+.presentacion { position:relative; display:flex; align-items:center; min-height:640px; margin-top:26px; padding:56px clamp(26px,5vw,64px); border-radius:32px; overflow:hidden; color:#fff; isolation:isolate;
+  background:linear-gradient(95deg,#06293dee 0%,#06293dc4 34%,#06293d40 62%,#06293d00 100%),url("/imagenes/acuaponia.jpg") 62% 44%/cover no-repeat #0a4f73; box-shadow:0 26px 60px #0a5f8a33 }
+.presentacion::after { content:""; position:absolute; inset:auto 0 0 0; height:90px; background:linear-gradient(0deg,#0a7ea655,transparent); z-index:-1 }
+.texto-presentacion { max-width:540px }
+.presentacion h1 { color:#fff; text-shadow:0 3px 24px #04203180 }
+.presentacion h1 em { color:var(--lima) }
+.presentacion .antetitulo { color:#bfeeff }
+.presentacion .introduccion { color:#e3f4fb; text-shadow:0 2px 14px #04203199 }
+.presentacion .nota-breve { color:#cfe8f3 }
+.presentacion .boton-principal { background:linear-gradient(180deg,var(--lima),var(--lima-osc)); border-color:var(--lima-osc); color:#0b2a14; box-shadow:0 10px 26px #5fae2e55 }
+.presentacion .boton-principal:hover:not(:disabled) { background:linear-gradient(180deg,#9be24f,#6dbb34) }
+.presentacion .escena { position:absolute; inset:0; pointer-events:none; min-height:0; z-index:-1 }
+.presentacion .circulo-agua,.presentacion .lechuga-portada,.presentacion .pez-portada,.presentacion .etiqueta-escena { display:none }
+.presentacion .burbuja { border-color:#ffffff; opacity:.5 }
+.presentacion .burbuja.una { left:70%; top:60% } .presentacion .burbuja.dos { left:78%; top:70% } .presentacion .burbuja.tres { left:64%; top:75% }
+.insignia-foto { position:absolute; right:22px; bottom:18px; font-size:12px; color:#fff; background:#06293d99; backdrop-filter:blur(6px); padding:7px 12px; border-radius:20px }
+/* Tarjetas con aspecto de agua clara */
+.area,.partidas,.tarjeta { background:linear-gradient(180deg,var(--papel),var(--papel-2)); border-color:var(--borde); box-shadow:0 8px 26px #0a5f8a14 }
+.area { transition:transform .2s,box-shadow .2s } .area:hover { transform:translateY(-3px); box-shadow:var(--sombra) }
+.area .icono-area { background:linear-gradient(135deg,#bfeaf6,#d9f4c8); color:var(--verde) }
+.tema-partida[aria-pressed="true"] { background:var(--verde); color:var(--sobre-verde); border-color:var(--verde) }
+.partida:hover,.tema-partida:not([aria-pressed="true"]):hover { background:var(--menta) }
+.presentacion + .antetitulo { margin-top:34px }
+.cabecera { border-bottom-color:transparent }
+.simbolo-marca { background:linear-gradient(135deg,var(--verde),#19b5c9) }
+@media (max-width:760px) { .presentacion { min-height:520px; padding:36px 22px; background:linear-gradient(180deg,#06293de6 0%,#06293d99 55%,#06293d33 100%),url("/imagenes/acuaponia.jpg") 70% 70%/cover no-repeat #0a4f73 } }

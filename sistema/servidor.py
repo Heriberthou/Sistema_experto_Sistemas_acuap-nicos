@@ -19,6 +19,7 @@ PUBLICOS = {"/": ("inicio.html", "text/html"), "/inicio.html": ("inicio.html", "
             "/laboratorio.js": ("laboratorio.js", "text/javascript"),
             "/utilidades.js": ("utilidades.js", "text/javascript"),
             "/favicon.svg": ("imagenes/icono.svg", "image/svg+xml")}
+PUBLICOS["/imagenes/acuaponia.jpg"] = ("imagenes/acuaponia.jpg", "image/jpeg")
 for nombre in ("pez.png", "lechuga.png", "expresiones_pez.png", "expresiones_lechuga.png"):
     PUBLICOS[f"/imagenes/{nombre}"] = (f"imagenes/{nombre}", "image/png")
 
