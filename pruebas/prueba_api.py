@@ -37,20 +37,20 @@ class PruebasAPI(pruebas.TestCase):
         estado, cuerpo = caso_prueba.solicitar('GET', '/api/base')
         base = json.loads(cuerpo)
         caso_prueba.assertEqual(estado, 200)
-        caso_prueba.assertEqual((len(base['preguntas']), len(base['conclusiones']), len(base['recomendaciones']), len(base['reglas'])), (34, 29, 28, 58))
+        caso_prueba.assertEqual((len(base['preguntas']), len(base['conclusiones']), len(base['recomendaciones']), len(base['reglas'])), (37, 38, 33, 73))
 
     def test_casos_del_documento_pasan(caso_prueba):
-        """El servidor ejecuta los 36 casos del documento y todos pasan."""
+        """El servidor ejecuta los 40 casos del documento y todos pasan."""
         estado, cuerpo = caso_prueba.solicitar('GET', '/api/casos/ejecutar')
         lista = json.loads(cuerpo)
-        caso_prueba.assertEqual(estado, 200); caso_prueba.assertEqual(len(lista), 36)
+        caso_prueba.assertEqual(estado, 200); caso_prueba.assertEqual(len(lista), 40)
         caso_prueba.assertEqual([c['id'] for c in lista if not c['ok']], [])
 
     def test_consulta_y_comparacion(caso_prueba):
         """La consulta devuelve la primera pregunta y el laboratorio compara una misma meta."""
         estado, cuerpo = caso_prueba.solicitar('POST', '/api/consultar', {'hechos': {}})
         datos = json.loads(cuerpo)
-        caso_prueba.assertEqual(estado, 200); caso_prueba.assertEqual(datos['fase'], 'pregunta'); caso_prueba.assertEqual(datos['pregunta']['id'], 'Q01a')
+        caso_prueba.assertEqual(estado, 200); caso_prueba.assertEqual(datos['fase'], 'pregunta'); caso_prueba.assertEqual(datos['pregunta']['id'], 'Q09')
         estado, cuerpo = caso_prueba.solicitar('POST', '/api/comparar', {'hechos': {'Q06': 'V'}, 'objetivo': 'A01'})
         caso_prueba.assertEqual(estado, 200); caso_prueba.assertIn('coinciden', json.loads(cuerpo))
 

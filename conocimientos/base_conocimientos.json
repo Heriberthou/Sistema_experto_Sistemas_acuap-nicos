@@ -295,6 +295,36 @@
       "grupo": "plantas",
       "padre": "Q15",
       "valor_padre": "V"
+    },
+    {
+      "id": "Q28a",
+      "simbolo": "corte_mayor_2h",
+      "texto": "¿Lleva más de 2 horas sin suministro eléctrico?",
+      "ayuda": "Cuenta desde que se fue la luz o desde la última vez que viste la bomba y el aireador funcionando. Si no lo sabes, responde «Desconozco».",
+      "grupo": "equipos",
+      "padre": "Q09",
+      "valor_padre": "F",
+      "sin_herencia": true
+    },
+    {
+      "id": "Q28b",
+      "simbolo": "corte_mayor_12h",
+      "texto": "¿Lleva más de 12 horas sin suministro eléctrico?",
+      "ayuda": "Cuenta desde que se fue la luz o desde la última vez que viste la bomba y el aireador funcionando. Si no lo sabes, responde «Desconozco».",
+      "grupo": "equipos",
+      "padre": "Q28a",
+      "valor_padre": "V",
+      "inmediata": true
+    },
+    {
+      "id": "Q28c",
+      "simbolo": "corte_mayor_48h",
+      "texto": "¿Lleva más de 48 horas (dos días) sin suministro eléctrico?",
+      "ayuda": "Cuenta desde que se fue la luz o desde la última vez que viste la bomba y el aireador funcionando. Si no lo sabes, responde «Desconozco».",
+      "grupo": "equipos",
+      "padre": "Q28b",
+      "valor_padre": "V",
+      "inmediata": true
     }
   ],
   "parametros": [
@@ -741,6 +771,78 @@
       "descripcion": "Amarillamiento con pH de 7.5 o menos, nitrato de 10 mg/L o más y sin insectos visibles: ninguna causa medible lo explica y se requiere observación adicional.",
       "titulo": "Amarillamiento sin causa medible",
       "grupo": "plantas"
+    },
+    {
+      "id": "C30",
+      "simbolo": "corte_reciente",
+      "tipo": "Condición",
+      "descripcion": "Sin energía desde hace menos de 2 h: sin bomba ni aireador el oxígeno empieza a bajar, pero el agua, las lechugas y los peces aún pueden verse normales. Conviene actuar antes de que aparezcan daños.",
+      "titulo": "Corte de energía reciente",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C31",
+      "simbolo": "corte_prolongado",
+      "tipo": "Condición",
+      "descripcion": "Más de 2 h sin bomba ni aireador: el oxígeno baja y el agua se estanca; empieza el riesgo para los peces.",
+      "titulo": "Corte de energía prolongado",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C32",
+      "simbolo": "corte_largo",
+      "tipo": "Hipótesis",
+      "descripcion": "Más de 12 h sin circulación ni aireación: son esperables lechugas decaídas, estancamiento con algas y peces afectados.",
+      "titulo": "Corte de energía largo",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C33",
+      "simbolo": "corte_critico",
+      "tipo": "Hipótesis",
+      "descripcion": "Más de 48 h sin energía: es probable que haya raíces oscuras, peces muertos y tuberías con residuos.",
+      "titulo": "Corte de energía crítico",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C34",
+      "simbolo": "acumulacion_nitrogenados_corte",
+      "tipo": "Hipótesis",
+      "descripcion": "Sin aireación ni recirculación el biofiltro trabaja mal y el amoníaco y el nitrito pueden acumularse.",
+      "titulo": "Posible acumulación de amoníaco y nitrito por el corte",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C35",
+      "simbolo": "algas_estancamiento",
+      "tipo": "Hipótesis",
+      "descripcion": "Agua verde tras un corte largo: el agua quieta y la luz favorecen las algas, que además consumen oxígeno de noche.",
+      "titulo": "Algas por agua estancada",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C36",
+      "simbolo": "obstruccion_estancamiento",
+      "tipo": "Hipótesis",
+      "descripcion": "Obstrucción visible tras un corte largo: los sólidos y las algas se asientan en prefiltro y tuberías.",
+      "titulo": "Obstrucción por agua estancada",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C37",
+      "simbolo": "peces_afectados_corte",
+      "tipo": "Hipótesis",
+      "descripcion": "Boqueo o mortalidad durante un corte de más de 2 h: señal de asfixia por falta de aireación.",
+      "titulo": "Peces afectados por falta de oxígeno durante el corte",
+      "grupo": "equipos"
+    },
+    {
+      "id": "C38",
+      "simbolo": "lechugas_danadas_corte",
+      "tipo": "Hipótesis",
+      "descripcion": "Marchitez o raíces oscuras tras más de 12 h sin circulación: las raíces no reciben agua ni oxígeno.",
+      "titulo": "Lechugas dañadas por el corte prolongado",
+      "grupo": "equipos"
     }
   ],
   "recomendaciones": [
@@ -748,7 +850,7 @@
       "id": "A01",
       "descripcion": "Restablecer la aireación: comprobar que el aireador esté encendido y burbujee; si no, revisar energía, soplador, mangueras y difusores. Mientras tanto, verter agua del sumidero al tanque desde altura cada 1-2 h.",
       "confirma": "Q14 = V y Q01a = F",
-      "prioridad": 6,
+      "prioridad": 8,
       "tipo": "Verificación",
       "titulo": "Restablecer la aireación",
       "grupo": "equipos",
@@ -764,7 +866,7 @@
       "id": "A02",
       "descripcion": "Restablecer la circulación: limpiar prefiltro y tuberías, abrir la válvula de purga si existe y, si la bomba no mueve agua tras limpiar, reemplazarla. Mantener la aireación mientras tanto.",
       "confirma": "Q11 = V y Q12 = F",
-      "prioridad": 8,
+      "prioridad": 10,
       "tipo": "Verificación",
       "titulo": "Restablecer la circulación",
       "grupo": "equipos",
@@ -781,7 +883,7 @@
       "id": "A03",
       "descripcion": "Reducir la ración, retirar alimento sobrante y sólidos, y volver a medir TAN y nitrito en 24 h con mediciones compatibles.",
       "confirma": "Q04a = F y Q05a = F",
-      "prioridad": 12,
+      "prioridad": 15,
       "tipo": "Verificación",
       "titulo": "Revisar amoníaco y nitrito",
       "grupo": "agua",
@@ -797,7 +899,7 @@
       "id": "A04",
       "descripcion": "Medir la alcalinidad (KH) y el pH del agua de reposición. No corregir el pH con ácidos o bases sin asesoría; ningún cambio debe superar 0.2 unidades por día.",
       "confirma": "Q03a = F, Q03c = F y pH estable",
-      "prioridad": 14,
+      "prioridad": 18,
       "tipo": "Verificación",
       "titulo": "Revisar la alcalinidad y el pH",
       "grupo": "agua",
@@ -813,7 +915,7 @@
       "id": "A05",
       "descripcion": "Completar hoy las mediciones que siguen en D (oxígeno, TAN, nitrito, pH, temperatura) y retirar el alimento no consumido.",
       "confirma": "Q01a, Q02a, Q03a, Q04a y Q05a distintos de D",
-      "prioridad": 13,
+      "prioridad": 17,
       "tipo": "Verificación",
       "titulo": "Completar mediciones y retirar el alimento sobrante",
       "grupo": "agua",
@@ -844,7 +946,7 @@
       "id": "A07",
       "descripcion": "Registrar qué hojas amarillean (nuevas, viejas o todas) y medir pH y nitrato (Q20a) antes de corregir nada: el amarillamiento es solo una señal; no corregir nutrientes sin identificar la causa.",
       "confirma": "Causa identificada",
-      "prioridad": 28,
+      "prioridad": 33,
       "tipo": "Verificación",
       "titulo": "Revisar las lechugas con calma",
       "grupo": "plantas",
@@ -859,7 +961,7 @@
       "id": "A08",
       "descripcion": "Cubrir con sombra (30-60 %) toda superficie de agua, medir el oxígeno al amanecer y limpiar los filtros obstruidos por algas.",
       "confirma": "Q16 = F y Q01a = F (medido al amanecer)",
-      "prioridad": 18,
+      "prioridad": 22,
       "tipo": "Verificación",
       "titulo": "Dar sombra y limpiar filtros",
       "grupo": "agua",
@@ -891,7 +993,7 @@
       "id": "A10",
       "descripcion": "Durante el ciclado no corregir por TAN o nitrito altos: medir a diario. Actuar solo si el TAN se acerca a 4 ppm (suspender el alimento) o aparecen signos de estrés en peces.",
       "confirma": "Q04c = F y sin signos de estrés",
-      "prioridad": 17,
+      "prioridad": 21,
       "tipo": "Verificación",
       "titulo": "Interpretar el ciclado inicial",
       "grupo": "agua",
@@ -907,7 +1009,7 @@
       "id": "A11",
       "descripcion": "Con la aireación activa y oxígeno bajo: retirar alimento sobrante y reducir la ración, comprobar que los difusores burbujeen con fuerza y medir tras cada cambio; si persiste < 5 mg/L, valorar retirar algunos peces.",
       "confirma": "Q01a = F",
-      "prioridad": 7,
+      "prioridad": 9,
       "tipo": "Verificación",
       "titulo": "Mejorar el oxígeno con la aireación activa",
       "grupo": "agua",
@@ -925,7 +1027,7 @@
       "id": "A12",
       "descripcion": "Medir hoy TAN y nitrito con kit compatible: el nitrito puede causar boqueo aunque el oxígeno sea normal.",
       "confirma": "Q04a y Q05a distintos de D",
-      "prioridad": 9,
+      "prioridad": 12,
       "tipo": "Verificación",
       "titulo": "Medir amoníaco y nitrito",
       "grupo": "agua",
@@ -939,7 +1041,7 @@
       "id": "A13",
       "descripcion": "Dar sombra (30-60 %) a tanque y filtros y reforzar la aireación: el agua caliente retiene menos oxígeno y vuelve más tóxico el amoníaco.",
       "confirma": "Q02c = F y Q01a = F",
-      "prioridad": 10,
+      "prioridad": 13,
       "tipo": "Verificación",
       "titulo": "Dar sombra y reforzar la aireación",
       "grupo": "agua",
@@ -955,7 +1057,7 @@
       "id": "A14",
       "descripcion": "Cubrir y aislar tanque y filtros y mantener el tanque elevado del suelo frío: el frío reduce el apetito y la actividad bacteriana.",
       "confirma": "Q02a = F",
-      "prioridad": 15,
+      "prioridad": 19,
       "tipo": "Verificación",
       "titulo": "Aislar del frío",
       "grupo": "agua",
@@ -971,7 +1073,7 @@
       "id": "A15",
       "descripcion": "Con TAN > 1 ppm: suspender el alimento, retirar sobrante y sólidos y cambiar de 1/3 a 1/2 del agua con agua declorada a la misma temperatura; medir el TAN a las 24 h.",
       "confirma": "Q04a = F",
-      "prioridad": 5,
+      "prioridad": 7,
       "tipo": "Verificación",
       "titulo": "Cambiar parte del agua (TAN alto)",
       "grupo": "agua",
@@ -987,7 +1089,7 @@
       "id": "A16",
       "descripcion": "Con nitrato < 10 mg/L y plantas amarillas: aumentar ligeramente la ración si los peces la consumen completa, o retirar algunas plantas.",
       "confirma": "Q20a = F y hojas nuevas verdes",
-      "prioridad": 19,
+      "prioridad": 23,
       "tipo": "Verificación",
       "titulo": "Ajustar la ración (nitrato bajo)",
       "grupo": "plantas",
@@ -1002,7 +1104,7 @@
       "id": "A17",
       "descripcion": "Con pH > 7.5 y plantas amarillas: repetir la medición; un pH alto limita hierro y otros nutrientes. Consultar antes de ajustarlo.",
       "confirma": "Q03b = F y hojas nuevas verdes",
-      "prioridad": 20,
+      "prioridad": 24,
       "tipo": "Verificación",
       "titulo": "Repetir la medición de pH",
       "grupo": "plantas",
@@ -1017,7 +1119,7 @@
       "id": "A18",
       "descripcion": "Con TAN ≥ 4 ppm las bacterias nitrificantes mueren: repetir el cambio parcial de agua y medir el TAN dos veces al día hasta bajar de 4 ppm. Si no baja, puede ser necesario restablecer el biofiltro.",
       "confirma": "Q04c = F",
-      "prioridad": 4,
+      "prioridad": 6,
       "tipo": "Verificación",
       "titulo": "Repetir el cambio de agua (TAN crítico)",
       "grupo": "agua",
@@ -1033,7 +1135,7 @@
       "id": "A19",
       "descripcion": "Corregir primero la condición que frena la nitrificación (oxígeno < 2 mg/L, pH < 6 o temperatura < 17 °C) y volver a medir el nitrito a las 48 h.",
       "confirma": "Q05a = F",
-      "prioridad": 11,
+      "prioridad": 14,
       "tipo": "Verificación",
       "titulo": "Corregir lo que frena el biofiltro",
       "grupo": "agua",
@@ -1049,7 +1151,7 @@
       "id": "A20",
       "descripcion": "Reducir la ración a cerca del 1 % de la biomasa y retirar lo no consumido: con agua fría los peces comen menos.",
       "confirma": "Sin alimento sobrante",
-      "prioridad": 16,
+      "prioridad": 20,
       "tipo": "Verificación",
       "titulo": "Reducir la ración",
       "grupo": "peces",
@@ -1080,7 +1182,7 @@
       "id": "A22",
       "descripcion": "Comprobar que el nivel del agua en la cama cubra las raíces y que el flujo de entrada y salida sea continuo; si no lo es, restablecer la circulación (A02) y mover a la sombra las plantas más caídas.",
       "confirma": "Las plantas recuperan firmeza en 24 h",
-      "prioridad": 21,
+      "prioridad": 25,
       "tipo": "Verificación",
       "titulo": "Comprobar que el agua llegue a las raíces",
       "grupo": "plantas",
@@ -1095,7 +1197,7 @@
       "id": "A23",
       "descripcion": "Dar sombra (30-60 %) a las camas en las horas de más calor y bajar la temperatura del agua: el calor limita la absorción de calcio. Revisar a los 3-5 días si las hojas nuevas salen sin puntas secas.",
       "confirma": "Q22 = F en la siguiente revisión",
-      "prioridad": 22,
+      "prioridad": 26,
       "tipo": "Verificación",
       "titulo": "Dar sombra a las camas",
       "grupo": "plantas",
@@ -1110,7 +1212,7 @@
       "id": "A24",
       "descripcion": "Mejorar el oxígeno en la zona de raíces: comprobar que el aireador burbujee y que el agua circule por las camas, no sobrecargar la cama y medir el oxígeno tras cada cambio; si sigue por debajo de 5 mg/L, aplicar A11.",
       "confirma": "Q01a = F tras los cambios",
-      "prioridad": 23,
+      "prioridad": 27,
       "tipo": "Verificación",
       "titulo": "Mejorar el oxígeno en las raíces",
       "grupo": "plantas",
@@ -1126,7 +1228,7 @@
       "id": "A25",
       "descripcion": "Inspeccionar las raíces de una planta afectada (las sanas son claras y sin olor); separar las plantas con raíces oscuras o viscosas para que no se extienda el problema y anotar si empeora en 48 h.",
       "confirma": "Raíces nuevas claras a los 7 días",
-      "prioridad": 24,
+      "prioridad": 28,
       "tipo": "Verificación",
       "titulo": "Inspeccionar las raíces",
       "grupo": "plantas",
@@ -1141,7 +1243,7 @@
       "id": "A26",
       "descripcion": "Con pH > 7.5 y amarillamiento en hojas nuevas: bajar el pH solo de forma gradual (no más de 0.2 unidades por día) y consultar antes de aplicar cualquier suplemento de hierro.",
       "confirma": "Hojas nuevas verdes tras 2-3 semanas con pH estable",
-      "prioridad": 25,
+      "prioridad": 29,
       "tipo": "Verificación",
       "titulo": "Bajar el pH de forma gradual",
       "grupo": "plantas",
@@ -1157,7 +1259,7 @@
       "id": "A27",
       "descripcion": "Retirar a mano los insectos o enjuagar las hojas con agua; no aplicar insecticidas en el sistema porque llegan al agua y pueden dañar a los peces. Revisar de nuevo en 48 h.",
       "confirma": "Q25 = F en la siguiente revisión",
-      "prioridad": 26,
+      "prioridad": 30,
       "tipo": "Verificación",
       "titulo": "Quitar los insectos sin dañar a los peces",
       "grupo": "plantas",
@@ -1172,7 +1274,7 @@
       "id": "A28",
       "descripcion": "No cambiar nada de forma brusca: fotografiar las hojas afectadas, repetir pH y nitrato en 48-72 h y consultar a una persona con experiencia en cultivo si el síntoma persiste.",
       "confirma": "Causa identificada o síntoma desaparecido",
-      "prioridad": 27,
+      "prioridad": 31,
       "tipo": "Verificación",
       "titulo": "Observar y medir de nuevo",
       "grupo": "plantas",
@@ -1181,6 +1283,87 @@
         "Fotografía y anota lo que ves, con fecha y hora.",
         "Vuelve a medir en 24 h.",
         "Si el problema persiste, consulta a una persona con experiencia."
+      ]
+    },
+    {
+      "id": "A29",
+      "descripcion": "Mientras no haya energía: aportar oxígeno a mano, no alimentar y reducir el consumo de oxígeno.",
+      "confirma": "Q09 = V y Q13 = V",
+      "prioridad": 4,
+      "tipo": "Verificación",
+      "titulo": "Proteger a los peces durante el corte",
+      "grupo": "equipos",
+      "verificacion": "Los peces dejan de boquear y el oxígeno se mantiene en 5 mg/L o más",
+      "pasos": [
+        "Suspende el alimento: los peces que digieren consumen más oxígeno y producen más amoníaco.",
+        "Vierte agua del sumidero al tanque desde altura cada 1-2 h, o deja caer un chorro lento desde un recipiente elevado.",
+        "Si tienes un soplador a pilas, inversor o batería, conéctalo al difusor.",
+        "Cubre el tanque del sol para evitar que el agua se caliente y pierda oxígeno.",
+        "Evita abrir o mover el sistema y vigila si los peces boquean."
+      ]
+    },
+    {
+      "id": "A30",
+      "descripcion": "Tras un corte, comprobar amoníaco y nitrito antes de retomar la alimentación normal.",
+      "confirma": "Q04a = F y Q05a = F",
+      "prioridad": 16,
+      "tipo": "Verificación",
+      "titulo": "Medir amoníaco y nitrito al volver la energía",
+      "grupo": "equipos",
+      "verificacion": "Amoníaco por debajo de 0.25 ppm y nitrito por debajo de 1 mg/L",
+      "pasos": [
+        "Al volver la energía, confirma que bomba y aireador arrancaron.",
+        "Mide amoníaco (TAN) y nitrito en las siguientes 2-4 h y otra vez a las 24 h.",
+        "Si suben, cambia una parte del agua con agua declorada y mantén el alimento reducido.",
+        "Reanuda el alimento poco a poco cuando ambos valores estén bajos."
+      ]
+    },
+    {
+      "id": "A31",
+      "descripcion": "Después de más de 12 h sin energía: evaluar peces, lechugas, raíces y tuberías antes de volver a la rutina.",
+      "confirma": "Q06 = F, Q23 = F y Q26 = F",
+      "prioridad": 5,
+      "tipo": "Verificación",
+      "titulo": "Revisar y recuperar el sistema tras un corte largo",
+      "grupo": "equipos",
+      "verificacion": "No hay peces nuevos muertos y las lechugas se recuperan",
+      "pasos": [
+        "Retira los peces muertos de inmediato para no contaminar el agua.",
+        "Quita las lechugas marchitas o con raíces oscuras y viscosas; enjuaga las raíces sanas con agua limpia.",
+        "Revisa el prefiltro y las tuberías (ver la recomendación de limpieza).",
+        "Con la energía de vuelta, deja funcionar bomba y aireador sin interrupciones y mide oxígeno, amoníaco y nitrito.",
+        "Espera 2-3 días antes de alimentar con normalidad y observa a los peces."
+      ]
+    },
+    {
+      "id": "A32",
+      "descripcion": "Retirar residuos y algas que se asentaron mientras el agua estaba quieta.",
+      "confirma": "Q12 = F",
+      "prioridad": 11,
+      "tipo": "Verificación",
+      "titulo": "Limpiar prefiltro y tuberías tras el estancamiento",
+      "grupo": "equipos",
+      "verificacion": "Se observa circulación normal por la salida habitual",
+      "pasos": [
+        "Apaga la bomba y retira los sólidos del prefiltro.",
+        "Enjuaga el prefiltro con agua del sistema, nunca con cloro.",
+        "Revisa codos y tuberías; destapa con un cepillo o con un chorro de agua.",
+        "Vuelve a encender y comprueba el caudal en la salida habitual."
+      ]
+    },
+    {
+      "id": "A33",
+      "descripcion": "Si el suministro es poco confiable, instalar un respaldo y un plan de emergencia.",
+      "confirma": "Q09 = V",
+      "prioridad": 32,
+      "tipo": "Verificación",
+      "titulo": "Preparar un respaldo para futuros cortes",
+      "grupo": "equipos",
+      "verificacion": "Existe un respaldo que mantiene al menos el aireador encendido",
+      "pasos": [
+        "Considera un soplador con batería o un inversor con respaldo para el aireador.",
+        "Instala un recipiente elevado de unos 200 litros que deje caer un chorro lento al tanque de peces.",
+        "Anota un plan de emergencia: quién revisa, qué se hace cada 1-2 h y cuándo se suspende el alimento."
       ]
     }
   ],
@@ -1405,12 +1588,15 @@
           {
             "q": "Q12",
             "es": "V"
+          },
+          {
+            "c": "C08"
           }
         ]
       },
-      "expresion": "C06 O C07 O Q12 = V",
+      "expresion": "C06 O C07 O Q12 = V O C08",
       "entonces": "C11",
-      "explicacion": "Bomba sin flujo, detenida u obstrucción visible: posible falla de recirculación.",
+      "explicacion": "Bomba sin flujo, detenida, sin energía u obstrucción visible: posible falla de recirculación.",
       "cita": "F03, tablas 6-7, pp. 7-8; F02, p. 5 (adaptación)",
       "fuentes": [
         "F02",
@@ -2335,6 +2521,305 @@
         "F01"
       ],
       "inferencia": false
+    },
+    {
+      "id": "R59",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "q": "Q28a",
+            "es": "F"
+          }
+        ]
+      },
+      "expresion": "Q09 = F Y Q28a = F",
+      "entonces": "C30",
+      "explicacion": "Sin energía desde hace menos de 2 horas. Los umbrales de tiempo (2, 12 y 48 h) son una propuesta de este sistema: la fuente no fija horas.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R60",
+      "si": {
+        "q": "Q28a",
+        "es": "V"
+      },
+      "expresion": "Q28a = V",
+      "entonces": "C31",
+      "explicacion": "Más de 2 horas sin energía. Los umbrales de tiempo (2, 12 y 48 h) son una propuesta de este sistema: la fuente no fija horas.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R61",
+      "si": {
+        "q": "Q28b",
+        "es": "V"
+      },
+      "expresion": "Q28b = V",
+      "entonces": "C32",
+      "explicacion": "Más de 12 horas sin energía. Los umbrales de tiempo (2, 12 y 48 h) son una propuesta de este sistema: la fuente no fija horas.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R62",
+      "si": {
+        "q": "Q28c",
+        "es": "V"
+      },
+      "expresion": "Q28c = V",
+      "entonces": "C33",
+      "explicacion": "Más de 48 horas sin energía. Los umbrales de tiempo (2, 12 y 48 h) son una propuesta de este sistema: la fuente no fija horas.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R63",
+      "si": {
+        "c": "C31"
+      },
+      "expresion": "C31",
+      "entonces": "C34",
+      "explicacion": "Un corte de más de 2 horas deja al biofiltro sin oxígeno ni flujo.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R64",
+      "si": {
+        "y": [
+          {
+            "c": "C32"
+          },
+          {
+            "q": "Q16",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C32 Y Q16 = V",
+      "entonces": "C35",
+      "explicacion": "Tras más de 12 horas sin circulación el agua verde se explica por estancamiento.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R65",
+      "si": {
+        "y": [
+          {
+            "c": "C32"
+          },
+          {
+            "q": "Q12",
+            "es": "V"
+          }
+        ]
+      },
+      "expresion": "C32 Y Q12 = V",
+      "entonces": "C36",
+      "explicacion": "Tras más de 12 horas sin circulación los residuos obstruyen el prefiltro y las tuberías.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R66",
+      "si": {
+        "y": [
+          {
+            "c": "C31"
+          },
+          {
+            "o": [
+              {
+                "q": "Q06",
+                "es": "V"
+              },
+              {
+                "q": "Q07",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "C31 Y (Q06 = V O Q07 = V)",
+      "entonces": "C37",
+      "explicacion": "Con más de 2 horas sin aireación, el boqueo o la mortalidad apuntan a asfixia.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R67",
+      "si": {
+        "y": [
+          {
+            "c": "C32"
+          },
+          {
+            "o": [
+              {
+                "q": "Q23",
+                "es": "V"
+              },
+              {
+                "q": "Q26",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "expresion": "C32 Y (Q23 = V O Q26 = V)",
+      "entonces": "C38",
+      "explicacion": "Con más de 12 horas sin circulación, la marchitez o las raíces oscuras se explican por el corte.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R68",
+      "si": {
+        "o": [
+          {
+            "c": "C30"
+          },
+          {
+            "c": "C31"
+          }
+        ]
+      },
+      "expresion": "C30 O C31",
+      "entonces": "A29",
+      "explicacion": "Mientras dura el corte hay que proteger a los peces.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R69",
+      "si": {
+        "c": "C34"
+      },
+      "expresion": "C34",
+      "entonces": "A30",
+      "explicacion": "Hay que medir amoníaco y nitrito al volver la energía.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R70",
+      "si": {
+        "o": [
+          {
+            "c": "C32"
+          },
+          {
+            "c": "C33"
+          }
+        ]
+      },
+      "expresion": "C32 O C33",
+      "entonces": "A31",
+      "explicacion": "Tras un corte largo hay que revisar y recuperar el sistema.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R71",
+      "si": {
+        "c": "C36"
+      },
+      "expresion": "C36",
+      "entonces": "A32",
+      "explicacion": "Hay que limpiar prefiltro y tuberías.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R72",
+      "si": {
+        "c": "C35"
+      },
+      "expresion": "C35",
+      "entonces": "A08",
+      "explicacion": "Las algas se controlan con sombra y limpieza.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
+    },
+    {
+      "id": "R73",
+      "si": {
+        "c": "C08"
+      },
+      "expresion": "C08",
+      "entonces": "A33",
+      "explicacion": "Un corte puede repetirse: conviene tener un respaldo.",
+      "cita": "F03, tabla 7, p. 8; F01, p. 22 (inferencia propuesta)",
+      "fuentes": [
+        "F01",
+        "F03"
+      ],
+      "inferencia": true
     }
   ],
   "fuentes": [
@@ -2690,6 +3175,80 @@
       ],
       "anula": [],
       "mensaje": "Las respuestas de una misma medición o compuerta no son compatibles entre sí: un valor no puede estar en dos intervalos a la vez."
+    },
+    {
+      "id": "K10",
+      "tipo": "aviso",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "q": "Q28a",
+            "es": "F"
+          },
+          {
+            "q": "Q16",
+            "es": "V"
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Indicaste un corte de menos de 2 horas y agua verde: las algas no se forman en tan poco tiempo, así que probablemente ya existían antes del corte."
+    },
+    {
+      "id": "K11",
+      "tipo": "aviso",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "q": "Q28a",
+            "es": "F"
+          },
+          {
+            "q": "Q01b",
+            "es": "V"
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Con un corte de menos de 2 horas, un oxígeno menor a 2 mg/L sugiere otra causa previa (muchos peces o una falla de aireación anterior). Conviene repetir la medición."
+    },
+    {
+      "id": "K12",
+      "tipo": "aviso",
+      "si": {
+        "y": [
+          {
+            "q": "Q09",
+            "es": "F"
+          },
+          {
+            "q": "Q28a",
+            "es": "F"
+          },
+          {
+            "o": [
+              {
+                "q": "Q23",
+                "es": "V"
+              },
+              {
+                "q": "Q26",
+                "es": "V"
+              }
+            ]
+          }
+        ]
+      },
+      "anula": [],
+      "mensaje": "Con un corte de menos de 2 horas es poco probable que la marchitez o las raíces oscuras se deban al corte: probablemente ya existían."
     }
   ]
 }

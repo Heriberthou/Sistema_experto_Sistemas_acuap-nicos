@@ -28,13 +28,13 @@ class PruebasCasos(pruebas.TestCase):
                 informe = evaluar_caso(BASE, caso)
                 caso_prueba.assertEqual(informe["diferencias"], [], informe["id"])
 
-    def test_las_58_reglas_se_activan(caso_prueba):
+    def test_las_73_reglas_se_activan(caso_prueba):
         """Cobertura: cada regla de la base se activa en al menos uno de los casos válidos."""
         activadas = set()
         for caso in CASOS:
             if not caso.get("error_esperado"):
                 activadas.update(ejecutar(BASE, hechos_del_caso(caso), "adelante", caso["objetivo"])["reglas_activadas"])
-        caso_prueba.assertEqual(len(BASE["reglas"]), 58)
+        caso_prueba.assertEqual(len(BASE["reglas"]), 73)
         caso_prueba.assertEqual({regla["id"] for regla in BASE["reglas"]} - activadas, set())
 
     def test_ambos_mecanismos_coinciden(caso_prueba):
@@ -186,8 +186,8 @@ class PruebasRestriccionesYCalidad(pruebas.TestCase):
                 ejecutar(BASE, hechos)
 
     def test_base_valida_y_acíclica(caso_prueba):
-        """La base declara 34 preguntas, 29 conclusiones, 28 recomendaciones y 58 reglas con fuente y cita."""
-        caso_prueba.assertEqual((len(BASE["preguntas"]), len(BASE["conclusiones"]), len(BASE["recomendaciones"]), len(BASE["reglas"])), (34, 29, 28, 58))
+        """La base declara 37 preguntas, 38 conclusiones, 33 recomendaciones y 73 reglas con fuente y cita."""
+        caso_prueba.assertEqual((len(BASE["preguntas"]), len(BASE["conclusiones"]), len(BASE["recomendaciones"]), len(BASE["reglas"])), (37, 38, 33, 73))
         caso_prueba.assertTrue(all(regla["fuentes"] and regla["cita"] for regla in BASE["reglas"]))
         caso_prueba.assertEqual([r["id"] for r in BASE["recomendaciones"]][:3], ["A06", "A21", "A09"])
         caso_prueba.assertEqual(BASE["recomendaciones"][-1]["id"], "A07")

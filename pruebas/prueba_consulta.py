@@ -24,9 +24,9 @@ class PruebasConsulta(pruebas.TestCase):
         caso_prueba.fail("La consulta no terminó")
 
     def test_primera_pregunta_y_reinicio(caso_prueba):
-        """Sin hechos empieza por la primera medición; cada consulta nace de sus hechos."""
+        """Sin hechos empieza por la causa raíz (energía); cada consulta nace de sus hechos."""
         inicio = consultar(caso_prueba.base, {})
-        caso_prueba.assertEqual((inicio["fase"], inicio["pregunta"]["id"]), ("pregunta", "Q01a"))
+        caso_prueba.assertEqual((inicio["fase"], inicio["pregunta"]["id"]), ("pregunta", "Q09"))
         consultar(caso_prueba.base, {"Q06": "V"})
         caso_prueba.assertFalse(consultar(caso_prueba.base, {})["resultados"])
 
@@ -93,6 +93,35 @@ class PruebasConsulta(pruebas.TestCase):
         caso_prueba.assertEqual(resultado["hechos"], {"Q09": "F", **{q: "D" for q in vistas}})
         con_energia, _ = caso_prueba.preguntadas({"Q09": "V"})
         caso_prueba.assertTrue({"Q10", "Q13", "Q14"} <= set(con_energia))
+
+    def test_sin_electricidad_sigue_preguntando_la_duracion(caso_prueba):
+        """Sin energía se pregunta cuánto lleva el corte; la escalera sigue solo si la respuesta anterior fue Sí."""
+        vistas, _ = caso_prueba.preguntadas({"Q09": "F"})
+        caso_prueba.assertIn("Q28a", vistas)
+        caso_prueba.assertNotIn("Q28b", vistas)
+        caso_prueba.assertTrue({"Q16", "Q12", "Q23"} & set(vistas))
+        caso_prueba.assertEqual(caso_prueba.preguntadas({"Q09": "F", "Q28a": "V"})[0].count("Q28b"), 1)
+        caso_prueba.assertNotIn("Q28c", caso_prueba.preguntadas({"Q09": "F", "Q28a": "V", "Q28b": "F"})[0])
+        caso_prueba.assertNotIn("Q28a", caso_prueba.preguntadas({"Q09": "V"})[0])
+
+    def test_gravedad_depende_del_tiempo_sin_energia(caso_prueba):
+        """Corte reciente: sin daños esperados; corte largo: cadena de consecuencias; corte crítico: daños probables."""
+        def ids(hechos):
+            """Conclusiones y acciones que devuelve la consulta."""
+            return {r["id"] for r in consultar(caso_prueba.base, hechos)["resultados"]}
+        reciente = ids({"Q09": "F", "Q28a": "F", "Q16": "F", "Q23": "F", "Q06": "F", "Q07": "F", "Q12": "F"})
+        caso_prueba.assertTrue({"C30", "C08", "C09", "C11"} <= reciente)
+        caso_prueba.assertTrue({"C31", "C32", "C33", "C35", "C36", "C37", "C38"}.isdisjoint(reciente))
+        largo = ids({"Q09": "F", "Q28a": "V", "Q28b": "V", "Q28c": "F", "Q16": "V", "Q12": "V", "Q23": "V", "Q07": "V"})
+        caso_prueba.assertTrue({"C32", "C34", "C35", "C36", "C37", "C38", "C27", "A31", "A32"} <= largo)
+        caso_prueba.assertNotIn("C33", largo)
+        critico = ids({"Q09": "F", "Q28a": "V", "Q28b": "V", "Q28c": "V"})
+        caso_prueba.assertIn("C33", critico)
+
+    def test_avisos_de_corte_reciente(caso_prueba):
+        """Un corte de menos de 2 h no explica algas, oxígeno crítico ni marchitez: se avisa sin cambiar hechos."""
+        avisos = {a["id"] for a in consultar(caso_prueba.base, {"Q09": "F", "Q28a": "F", "Q16": "V", "Q01a": "V", "Q01b": "V", "Q21": "V", "Q23": "V"})["avisos"]}
+        caso_prueba.assertTrue({"K10", "K11", "K12"} <= avisos)
 
     def test_otras_deducciones_por_restricciones(caso_prueba):
         """Q18 = No omite Q06-Q08; Q13 = No omite Q14; Q10 = No omite Q11."""

@@ -14,7 +14,7 @@
 | Ruta | Uso |
 |---|---|
 | GET `/api/base`, `/api/casos` | catálogos |
-| GET `/api/casos/ejecutar` | ejecuta los 36 casos |
+| GET `/api/casos/ejecutar` | ejecuta los 40 casos |
 | POST `/api/consultar` | `{hechos, cierre:{descartadas,final}, continuar}` → fase `pregunta`, `conflicto`, `confirmacion` o `cerrada` |
 | POST `/api/inferir`, `/api/comparar` | un mecanismo o ambos para una meta |
 

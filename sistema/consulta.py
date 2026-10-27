@@ -27,7 +27,7 @@ def puntuar(base, hechos, seguros, memoria, bloqueadas):
             cuenta.update(q for q in simbolos(restriccion["si"]) if q not in hechos)
     # Una compuerta sin reglas propias hereda el interés de la pregunta más relevante que habilita.
     for pregunta in reversed(base["preguntas"]):
-        if pregunta.get("padre") and pregunta["id"] not in hechos:
+        if pregunta.get("padre") and pregunta["id"] not in hechos and not pregunta.get("sin_herencia"):
             cuenta[pregunta["padre"]] = max(cuenta[pregunta["padre"]], cuenta[pregunta["id"]])
     # Si una pregunta lo indica (adelanta_previa), su pregunta previa hereda su interés para plantearse a tiempo.
     for pregunta in base["preguntas"]:
@@ -44,10 +44,10 @@ def elegir_pregunta(base, hechos, cuenta):
     orden = {p["id"]: i for i, p in enumerate(base["preguntas"])}
 
     def clave(pregunta):
-        """Más reglas primero; en empate, seguridad, primer escalón y orden del catálogo."""
+        """Las preguntas «inmediatas» (siguiente escalón de una duración) primero; luego más reglas, en empate seguridad, primer escalón y orden del catálogo."""
         identificador = pregunta["id"]
         grupo = 0 if identificador in SEGURIDAD else 1 if identificador in PRIMER_ESCALON else 2
-        return (-cuenta[identificador], grupo, orden[identificador])
+        return (0 if pregunta.get("inmediata") else 1, -cuenta[identificador], grupo, orden[identificador])
 
     candidatas.sort(key=clave)
     return candidatas

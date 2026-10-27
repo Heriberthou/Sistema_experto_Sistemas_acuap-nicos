@@ -1,4 +1,4 @@
-"""Validación de entradas y restricciones K1-K9, independiente del motor."""
+"""Validación de entradas y restricciones K1-K12, independiente del motor."""
 from .escaleras import completar
 from .logica import evaluar
 
@@ -28,7 +28,7 @@ def _estado(arbol, hechos):
 
 
 def revisar_consistencia(base, hechos):
-    """Aplica K1-K9 y devuelve (hechos efectivos, violaciones, avisos).
+    """Aplica K1-K12 y devuelve (hechos efectivos, violaciones, avisos).
 
     Las violaciones (K1-K5 y K9) tratan como D los hechos implicados, sin borrar
     las respuestas originales. Los avisos (K6, K7, K8) no cambian ningún hecho.
