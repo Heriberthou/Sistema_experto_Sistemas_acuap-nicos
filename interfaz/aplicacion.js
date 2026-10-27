@@ -85,6 +85,19 @@ function botones(valores = ["V", "F", "D"]) {
   return `<div class="respuestas">${valores.map(valor => `<button type="button" data-respuesta="${valor}" class="${valor === "D" ? "nsnc" : ""}">${rotulos[valor][0]}<kbd>${rotulos[valor][1]}</kbd></button>`).join("")}</div>`;
 }
 
+/** Explica qué preguntas se omitieron porque otra respuesta las vuelve imposibles (restricciones K1-K5). */
+function nota_deducidas() {
+  const deducidas = resultado.deducidas || [];
+  if (!deducidas.length) return;
+  const porCausa = new Map();
+  for (const d of deducidas) porCausa.set(d.por, [...(porCausa.get(d.por) || []), d]);
+  const partes = [...porCausa.values()].map(lista => `Como respondiste «No» a «${lista[0].por_texto}», no pregunto: ${lista.map(d => `«${d.texto}»`).join(", ")}.`);
+  const nota = document.createElement("p");
+  nota.className = "deducidas";
+  nota.textContent = `Omití ${deducidas.length === 1 ? "una pregunta" : deducidas.length + " preguntas"} que ya no tienen sentido. ${partes.join(" ")}`;
+  seleccionar("#tarjeta-pregunta").append(nota);
+}
+
 /** Pinta la pregunta activa; todas se contestan con Sí, No o Desconozco. */
 function presentarPregunta() {
   const pregunta = resultado.pregunta, grupo = GRUPOS[pregunta.grupo];
@@ -92,6 +105,7 @@ function presentarPregunta() {
   const pasos = pregunta.es_medicion && pregunta.escalones > 1
     ? `<p class="paso-medicion">${Array.from({length: pregunta.escalones}, (_, i) => `<i class="${i < pregunta.escalon ? "hecho" : ""}"></i>`).join("")} Medición · paso ${pregunta.escalon} de ${pregunta.escalones}</p>` : "";
   seleccionar("#tarjeta-pregunta").innerHTML = `<span class="etiqueta-pregunta">${icono(grupo.icono)} ${escapar(etiqueta)}${resultado.distintiva ? " · para distinguir otra posibilidad" : ""}</span>${pregunta.contexto ? `<p class="contexto">${escapar(pregunta.contexto)}</p>` : ""}<h2 id="texto-pregunta">${escapar(pregunta.texto)}</h2>${pasos}${botones()}<details class="ayuda"><summary>¿Cómo puedo comprobarlo?</summary><p>${escapar(pregunta.ayuda)}</p></details><div class="acciones-pregunta"><button id="atras" type="button" class="boton-texto">← Atrás</button><span class="texto-secundario">Atajos: S, N, D</span></div>`;
+  nota_deducidas();
   seleccionar("#atras").disabled = !puedeRetroceder();
   const especie = pregunta.grupo === "plantas" ? "lechuga" : "pez";
   seleccionar("#mascota-consulta").className = `mascota ${especie} pensando late`;

@@ -73,3 +73,42 @@ class PruebasConsulta(pruebas.TestCase):
         for hechos in ({"Q01a": 15}, {"Q99": "V"}, {"Q06": "x"}):
             with caso_prueba.assertRaises(ValueError):
                 consultar(caso_prueba.base, hechos)
+
+    def preguntadas(caso_prueba, hechos, limite=40):
+        """Identificadores que el sistema pregunta, contestando Desconozco, hasta que deja de preguntar."""
+        hechos, vistas = dict(hechos), []
+        for _ in range(limite):
+            resultado = consultar(caso_prueba.base, hechos)
+            if resultado["fase"] != "pregunta":
+                break
+            vistas.append(resultado["pregunta"]["id"])
+            hechos[vistas[-1]] = "D"
+        return vistas, resultado
+
+    def test_sin_electricidad_no_pregunta_equipos_encendidos(caso_prueba):
+        """Con Q09 = No, bomba y aireador no pueden estar encendidos: no se preguntan y se informan como deducidas."""
+        vistas, resultado = caso_prueba.preguntadas({"Q09": "F"})
+        caso_prueba.assertTrue({"Q10", "Q11", "Q13", "Q14"}.isdisjoint(vistas))
+        caso_prueba.assertEqual({d["id"] for d in resultado["deducidas"]}, {"Q10", "Q11", "Q13", "Q14"})
+        caso_prueba.assertEqual(resultado["hechos"], {"Q09": "F", **{q: "D" for q in vistas}})
+        con_energia, _ = caso_prueba.preguntadas({"Q09": "V"})
+        caso_prueba.assertTrue({"Q10", "Q13", "Q14"} <= set(con_energia))
+
+    def test_otras_deducciones_por_restricciones(caso_prueba):
+        """Q18 = No omite Q06-Q08; Q13 = No omite Q14; Q10 = No omite Q11."""
+        for hechos, omitidas in (({"Q18": "F"}, {"Q06", "Q07", "Q08"}), ({"Q13": "F"}, {"Q14"}), ({"Q10": "F"}, {"Q11"})):
+            vistas, resultado = caso_prueba.preguntadas(hechos)
+            caso_prueba.assertTrue(omitidas.isdisjoint(vistas), hechos)
+            caso_prueba.assertEqual({d["id"] for d in resultado["deducidas"]}, omitidas)
+        _, resultado = caso_prueba.preguntadas({})
+        caso_prueba.assertEqual(resultado["deducidas"], [])
+
+    def test_deduccion_conserva_resultados_coherentes(caso_prueba):
+        """Sin electricidad se deduce C08 y que el aireador no funciona (C09); una respuesta contradictoria sigue avisando K4."""
+        resultado = consultar(caso_prueba.base, {"Q09": "F"})
+        ids = {r["id"] for r in resultado["resultados"]}
+        caso_prueba.assertTrue({"C08", "C09", "A09"} <= ids)
+        conflicto = consultar(caso_prueba.base, {"Q09": "F", "Q13": "V"})
+        caso_prueba.assertEqual(conflicto["fase"], "conflicto")
+        caso_prueba.assertEqual([c["id"] for c in conflicto["conflictos"]], ["K4"])
+        caso_prueba.assertEqual(conflicto["deducidas"][0]["por"], "Q09")

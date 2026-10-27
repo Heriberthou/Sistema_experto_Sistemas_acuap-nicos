@@ -93,6 +93,36 @@ def alternativa_pendiente(base, hechos, seguros, memoria, bloqueadas):
     return opciones[0] if opciones else None
 
 
+def deducir_descartadas(base, hechos):
+    """Preguntas que ya no tienen sentido: si el antecedente de una restricción K1-K5 ya se cumple en
+    su primera parte, el resto no puede ser verdad y se asume No sin preguntarlo (por ejemplo, sin
+    electricidad el aireador y la bomba no pueden estar encendidos). Se repite hasta que no cambie nada."""
+    textos = {p["id"]: p["texto"] for p in base["preguntas"]}
+    efectivos, deducidas = dict(hechos), []
+    cambio = True
+    while cambio:
+        cambio = False
+        for restriccion in base["restricciones"]:
+            partes = (restriccion.get("si") or {}).get("y", [])
+            if restriccion["tipo"] != "contradiccion" or len(partes) != 2:
+                continue
+            causa, resto = partes
+            if "q" not in causa or efectivos.get(causa["q"]) != causa["es"]:
+                continue
+            for literal in (resto["o"] if "o" in resto else [resto]):
+                pregunta = literal.get("q")
+                if literal.get("es") == "V" and pregunta and pregunta not in efectivos:
+                    efectivos[pregunta] = "F"
+                    deducidas.append({"id": pregunta, "texto": textos[pregunta], "valor": "F", "por": causa["q"],
+                                      "por_texto": textos[causa["q"]], "restriccion": restriccion["id"]})
+                    cambio = True
+    origen = {d["id"]: d for d in deducidas}
+    for d in deducidas:  # la causa que se muestra es siempre una respuesta del usuario, no otra deducción
+        while d["por"] in origen:
+            d["por"], d["por_texto"] = origen[d["por"]]["por"], origen[d["por"]]["por_texto"]
+    return efectivos, deducidas
+
+
 def consultar(base, hechos, cierre=None, continuar=False):
     """Deriva resultados, valida y decide si pregunta, pide confirmación o cierra la consulta."""
     cierre = cierre or {}
@@ -103,6 +133,8 @@ def consultar(base, hechos, cierre=None, continuar=False):
     salidas = {e["id"] for e in base["conclusiones"] + base["recomendaciones"]}
     if set(descartadas) - salidas:
         raise ValueError("Conclusión descartada desconocida")
+    original = hechos
+    hechos, deducidas = deducir_descartadas(base, original)
     seguros, violaciones, avisos, bloqueadas, calidad = preparar(base, hechos, descartadas)
     sustento = calcular_sustento(base)
     memoria, pasos = adelante(base, seguros, bloqueadas)
@@ -139,8 +171,8 @@ def consultar(base, hechos, cierre=None, continuar=False):
     for identificador in sorted(salidas):
         _, faltantes = busqueda.demostrar(identificador)
         pendientes.extend(h for h in faltantes if h not in pendientes)
-    respondidas = len(hechos)
-    return {"fase": fase, "hechos": hechos, "pregunta": describir_pregunta(base, pregunta, hechos) if pregunta else None,
+    respondidas = len(original)
+    return {"fase": fase, "hechos": original, "deducidas": deducidas, "pregunta": describir_pregunta(base, pregunta, hechos) if pregunta else None,
             "distintiva": distintiva, "conflictos": violaciones, "avisos": avisos, "calidad": calidad,
             "lecturas": lecturas(base, hechos, seguros), "resultados": resultados, "traza": pasos,
             "principal": principal if fase in ("confirmacion", "cerrada") else None, "resumen": resumen,

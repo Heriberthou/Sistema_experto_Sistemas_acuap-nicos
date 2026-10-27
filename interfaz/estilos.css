@@ -250,3 +250,5 @@ select { padding:10px 12px; border-radius:10px; border:1px solid var(--borde); b
 .subtitulo-pasos { font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--suave); margin:12px 0 6px }
 .pasos { margin:0 0 12px; padding-left:20px; font-size:14px; line-height:1.55 }
 .pasos li { margin-bottom:4px }
+
+.deducidas { margin:14px 0 0; padding:10px 12px; border-radius:12px; background:var(--superficie-2, rgba(0,0,0,.04)); color:var(--suave); font-size:13px; line-height:1.5 }

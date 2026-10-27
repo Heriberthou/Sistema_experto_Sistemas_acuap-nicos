@@ -16,6 +16,7 @@ Abrir http://127.0.0.1:8000/ (no abrir el HTML directamente: necesita la API loc
 
 1. Todas las preguntas se responden **Sí, No o Desconozco** (atajos S, N, D). Las mediciones son escaleras de rangos (Q01a–c, Q02a–c…): cada paso descarta intervalos.
 2. El servidor elige la siguiente pregunta por puntaje (reglas pendientes + restricciones), con desempate por seguridad y primeros pasos.
+   Las preguntas que una respuesta ya vuelve imposibles se omiten (por ejemplo, sin electricidad no se pregunta por bomba ni aireador): se deducen de las restricciones K1–K5, se asumen No y se informan en pantalla. Si el usuario las contesta de forma contradictoria, K1–K5 siguen avisando.
 3. Si hay respuestas contradictorias (K1–K5, K9) se muestran para corregirlas o continuar sin esos datos.
 4. Cierre tipo Akinator: el sistema propone su conclusión principal y pide confirmación (máx. 3 rondas; «No» la descarta y busca otra).
 5. Resultado: acciones por urgencia con verificación, causas con nivel de sustento (Medida, Observada, Hipótesis), calidad de la consulta (Confiable, Parcial, No fiable, Insuficiente), datos faltantes y traza de reglas con fuentes.
