@@ -61,3 +61,10 @@ Sin energía también se infiere **falla de recirculación (C11)**, que activa l
 ## Empezar desde una sospecha (encadenamiento hacia atrás)
 
 Además de la consulta completa (hacia adelante), la pantalla de inicio permite elegir un área y una **sospecha**, por ejemplo «Peces muertos» o «Se fue la luz». El sistema toma esa sospecha como meta, la comprueba hacia atrás y solo pregunta lo necesario. Termina con un veredicto (**sí se cumple**, **no se cumple** o **faltan datos**), las acciones recomendadas y el botón «Revisar todo mi sistema» para continuar con la consulta completa. Las sospechas disponibles (30, cubren todos los parámetros de calidad del agua) están en `conocimientos/guia_consulta.json` (`partidas`) y se sirven en `GET /api/guia`; `POST /api/consultar` acepta el campo opcional `objetivo`.
+
+## Laboratorio académico: cómo leerlo
+
+- **Hechos de entrada:** arriba se resaltan las preguntas con respuesta (verde = Sí, azul = No); las demás quedan plegadas en «Preguntas sin responder» y cuentan como Desconozco.
+- **Árbol de razonamiento:** se lee de arriba hacia abajo. La meta (verde) se sustenta en conclusiones (azul) y estas en preguntas respondidas (recuadro punteado con su Sí/No).
+- **Hacia adelante** parte de las respuestas y deduce todo lo posible; **hacia atrás** parte de la meta y solo usa las respuestas que la sustentan. El laboratorio les da las mismas respuestas para compararlos.
+- La secuencia detallada de reglas con sus fuentes sigue disponible en «Más detalle».

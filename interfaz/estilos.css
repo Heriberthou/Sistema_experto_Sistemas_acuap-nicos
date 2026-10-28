@@ -295,3 +295,41 @@ select { padding:10px 12px; border-radius:10px; border:1px solid var(--borde); b
 .simbolo-marca { background:linear-gradient(135deg,var(--verde),#19b5c9) }
 @media (max-width:900px) { .presentacion { grid-template-columns:1fr } .presentacion .escena { min-height:300px } }
 @media (max-width:760px) { .presentacion { min-height:520px; padding:36px 22px; background:linear-gradient(180deg,#06293de6 0%,#06293d99 55%,#06293d33 100%),url("/imagenes/acuaponia.jpg") 70% 70%/cover no-repeat #0a4f73 } }
+
+/* Laboratorio: entradas resaltadas y árbol de razonamiento */
+.rejilla-entradas { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; margin-top:8px }
+.entrada-laboratorio { border:1px solid var(--borde); border-radius:12px; padding:10px 12px; background:var(--papel-2) }
+.entrada-laboratorio.valor-V { border-color:var(--ok); background:var(--ok-fondo) }
+.entrada-laboratorio.valor-F { border-color:var(--azul); background:var(--azul-fondo) }
+.entrada-laboratorio > span { font-weight:750; color:var(--verde) }
+.sin-responder { margin-top:16px; border-top:1px dashed var(--borde); padding-top:12px }
+.sin-responder > summary { cursor:pointer; font-weight:650; color:var(--suave) }
+.ficha { display:inline-block; margin:2px 6px 2px 0; padding:4px 10px; border-radius:20px; font-size:12.5px; font-weight:650; border:1px solid var(--borde) }
+.ficha.valor-V { background:var(--ok-fondo); border-color:var(--ok); color:var(--ok) }
+.ficha.valor-F { background:var(--azul-fondo); border-color:var(--azul); color:var(--azul) }
+.estado-meta { font-size:15px; margin:6px 0 }
+.leyenda-arbol { font-size:13px; color:var(--suave); margin:4px 0 }
+.arbol { overflow-x:auto; padding:6px 0 14px; margin:8px 0 }
+.arbol ul { display:flex; justify-content:center; gap:14px; padding:22px 0 0; margin:0; list-style:none; position:relative }
+.arbol > ul { padding-top:0; min-width:min-content }
+.arbol li { position:relative; display:flex; flex-direction:column; align-items:center; padding:0 6px }
+.arbol li::before,.arbol li::after { content:""; position:absolute; top:-22px; width:50%; height:22px; border-top:2px solid var(--borde) }
+.arbol li::before { right:50% } .arbol li::after { left:50%; border-left:2px solid var(--borde) }
+.arbol li::before { border-right:2px solid var(--borde) }
+.arbol li:first-child::before,.arbol li:last-child::after { border-top-color:transparent }
+.arbol li:only-child::before,.arbol li:only-child::after { display:none }
+.arbol > ul > li::before,.arbol > ul > li::after { display:none }
+.arbol ul ul::before { content:""; position:absolute; top:0; left:50%; height:22px; border-left:2px solid var(--borde) }
+.nodo { position:relative; display:flex; flex-direction:column; gap:2px; align-items:center; text-align:center; width:178px; padding:9px 10px; border-radius:14px; border:2px solid var(--borde); background:var(--papel); font-size:12.5px; line-height:1.3 }
+.nodo b { font-size:13px }
+.nodo small { color:var(--suave); font-size:10.5px } .nodo small code { font-size:10px }
+.nodo-A { border-color:var(--ok); background:var(--ok-fondo) }
+.nodo-C { border-color:var(--azul); background:var(--azul-fondo) }
+.nodo-q.valor-V { border-color:var(--ok); } .nodo-q.valor-F { border-color:var(--azul) }
+.nodo-q { width:150px; border-style:dashed; background:var(--papel-2) }
+.respuesta { font-style:normal; font-weight:750; padding:2px 10px; border-radius:20px; background:var(--menta) }
+.nodo-q.valor-V .respuesta { background:var(--ok); color:var(--sobre-verde) } .nodo-q.valor-F .respuesta { background:var(--azul); color:var(--sobre-verde) }
+.otras-ramas { margin:10px 0 } .otras-ramas > summary { cursor:pointer; font-weight:650; color:var(--suave) }
+.bloque-resultado details { margin-top:10px }
+.entradas-laboratorio { display:block }
+.controles-laboratorio label { min-width:0 } .controles-laboratorio select { width:100%; min-width:0 }
