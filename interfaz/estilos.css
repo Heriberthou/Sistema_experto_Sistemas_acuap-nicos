@@ -333,3 +333,18 @@ select { padding:10px 12px; border-radius:10px; border:1px solid var(--borde); b
 .bloque-resultado details { margin-top:10px }
 .entradas-laboratorio { display:block }
 .controles-laboratorio label { min-width:0 } .controles-laboratorio select { width:100%; min-width:0 }
+
+/* Dirección y orden del razonamiento */
+.nodo { position:relative }
+.nodo .orden { position:absolute; top:-10px; left:-10px; width:24px; height:24px; display:grid; place-items:center; border-radius:50%; background:var(--tinta); color:var(--fondo); font-style:normal; font-size:12px; font-weight:800; box-shadow:0 2px 6px #0003 }
+.nodo .inicio,.nodo .visto { font-style:normal; font-size:10px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; padding:2px 8px; border-radius:10px; background:var(--lima); color:#10320f; margin-bottom:2px }
+.nodo .visto { background:var(--ok-fondo); color:var(--ok); border:1px solid var(--ok) }
+.flujo { margin:8px 0 4px; padding:8px 12px; border-radius:10px; font-size:13px }
+.flujo-adelante { background:var(--ok-fondo); color:var(--ok) } .flujo-atras { background:var(--azul-fondo); color:var(--azul) }
+.arbol li.con-flecha::before { }
+.arbol.sube li.con-flecha > .nodo::after,.arbol.baja li.con-flecha > .nodo::after { position:absolute; left:50%; transform:translateX(-50%); font-size:15px; line-height:1; font-weight:900 }
+.arbol.sube li.con-flecha > .nodo::after { content:"▲"; top:-24px; color:var(--ok) }
+.arbol.baja li.con-flecha > .nodo::after { content:"▼"; top:-19px; color:var(--azul) }
+.recorrido { margin:12px 0 4px; padding-left:0; list-style:none; font-size:13px; color:var(--suave) }
+.recorrido li { margin:5px 0; padding:7px 10px; border-radius:10px; background:var(--papel-2); border:1px solid var(--borde); line-height:1.5 }
+.recorrido b { color:var(--tinta) }
